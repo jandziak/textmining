@@ -1,0 +1,12 @@
+Package: textmining
+Version: 0.0.1
+Date: 2016-05-25
+Title: Text mining combo
+Author: Jan Idziak
+Maintainer: Jan Idziak <JanIdziak@gmail.com>
+Description: At the beggining is just simple package, later I will change it for
+    some more.
+Suggests:
+    testthat
+License: GNU 
+RoxygenNote: 5.0.1
