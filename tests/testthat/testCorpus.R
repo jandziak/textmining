@@ -36,3 +36,8 @@ test_that("Meta data many articles", {
   rd <- new_corpus(paste("doc_", 1:100, sep = ""))
   expect_equal(getMeta(rd, 15, "language"), "en")
 })
+
+test_that("Getter for meta data out of bands", {
+  rd <- new_corpus(c("doc_1", "doc_2"))
+  expect_error(getMeta(rd, 3, "language"), "index \"i\" out of bands")
+})

@@ -35,6 +35,8 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, i, parameter) {
+  if(length(get(parameter, x)) < i)
+    stop("index \"i\" out of bands")
   get(parameter, x)[i]
 }
 
