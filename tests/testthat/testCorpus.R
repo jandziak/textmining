@@ -22,4 +22,8 @@ test_that("Getter index out of bands", {
   expect_error(getDoc(rd, 3), "index \"i\" out of bands")
 })
 
+test_that("Meta data one article", {
+  rd <- new_corpus(c("doc_1"))
+  expect_equal(getMeta(rd, 1, "language"), "en")
+})
 

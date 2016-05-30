@@ -8,7 +8,7 @@ new_corpus <- function(x = NULL, ...) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x
+  x <- list(text = x, language = rep("en", length(x)))
 }
 
 #' Function to access documents from corpus
@@ -20,10 +20,22 @@ new_corpus <- function(x = NULL, ...) {
 #'
 #' @export
 getDoc <- function(x, i) {
-  if (length(x) < i)
+  if (length(x$text) < i)
     stop("index \"i\" out of bands")
-  x[i]
+  x$text[i]
 }
 
+#' Function to access metadata for documents from new corpus
+#'
+#' @param x corpus
+#' @param i index
+#' @param parameter name of metadata to be extracted
+#'
+#' @return returns i-th document of corpus x
+#'
+#' @export
+getMeta <- function(x, i, parameter) {
+  get(parameter, x)
+}
 
 
