@@ -32,3 +32,7 @@ test_that("Meta data two articles", {
   expect_equal(getMeta(rd, 1, "language"), "en")
 })
 
+test_that("Meta data many articles", {
+  rd <- new_corpus(paste("doc_", 1:100, sep = ""))
+  expect_equal(getMeta(rd, 15, "language"), "en")
+})
