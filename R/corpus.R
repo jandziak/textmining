@@ -20,5 +20,10 @@ new_corpus <- function(x = NULL, ...) {
 #'
 #' @export
 getDoc <- function(x, i) {
-  x[i]
+  if (length(x) < i)
+    stop('index "i" out of bands')
+   x[i]
 }
+
+
+
