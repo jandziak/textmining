@@ -35,7 +35,7 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, i, parameter) {
-  get(parameter, x)
+  get(parameter, x)[i]
 }
 
 
