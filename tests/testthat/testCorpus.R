@@ -3,8 +3,8 @@ test_that("No argument in constructor", {
 })
 
 test_that("One argument constructor", {
-  rd <- new_corpus("ala")
-  expect_equal(getDoc(rd, 1), "ala")
+  rd <- new_corpus("doc_1")
+  expect_equal(getDoc(rd, 1), "doc_1")
 })
 
 test_that("Simple vector constructor", {
@@ -19,4 +19,7 @@ test_that("Complex vector constructor", {
 
 test_that("Getter index out of bands", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_error(getDoc(rd,3), 'index "i" out of bands')})
+  expect_error(getDoc(rd, 3), "index \"i\" out of bands")
+})
+
+
