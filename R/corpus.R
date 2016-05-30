@@ -8,7 +8,9 @@ new_corpus <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- list(text = x, language = rep("en", length(x)))
+  x <- structure(list(text = x, language = rep("en",
+                                               length(x))), class = "new_corpus")
+  x
 }
 
 #' Function to access documents from corpus

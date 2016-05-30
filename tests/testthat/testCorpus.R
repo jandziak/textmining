@@ -47,3 +47,7 @@ test_that("Getter for meta data, no metadata with a given name", {
   expect_error(getMeta(rd, 3, "author"), "There is no metadata: \"author\"")
 })
 
+test_that("Class value for new corpus is appropriate", {
+  rd <- new_corpus("doc_1")
+  expect_equal(class(rd), "new_corpus")
+})
