@@ -41,3 +41,9 @@ test_that("Getter for meta data out of bands", {
   rd <- new_corpus(c("doc_1", "doc_2"))
   expect_error(getMeta(rd, 3, "language"), "index \"i\" out of bands")
 })
+
+test_that("Getter for meta data, no metadata with a given name", {
+  rd <- new_corpus(c("doc_1", "doc_2"))
+  expect_error(getMeta(rd, 3, "author"), "There is no metadata: \"author\"")
+})
+

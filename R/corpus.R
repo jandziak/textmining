@@ -35,9 +35,10 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, i, parameter) {
-  if(length(get(parameter, x)) < i)
+  meta_vector <- try(get(parameter, x), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  if (length(meta_vector) < i)
     stop("index \"i\" out of bands")
-  get(parameter, x)[i]
+  meta_vector[i]
 }
-
-
