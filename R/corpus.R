@@ -20,5 +20,5 @@ new_corpus <- function(x = NULL, ...) {
 #'
 #' @export
 getDoc <- function(x, i) {
-  x
+  x[i]
 }
