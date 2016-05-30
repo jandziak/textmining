@@ -4,7 +4,7 @@
 #' @return returns new corpus list
 #'
 #' @export
-new_corpus <- function(x = NULL, ...) {
+new_corpus <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
