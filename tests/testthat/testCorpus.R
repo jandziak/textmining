@@ -105,3 +105,15 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
   expect_error(getMeta(rd, 2, "author"), "There is no metadata: \"author\"")
 })
+
+test_that("Class value for new parsed is appropriate", {
+  rd <- new_parsed(list(c("parsed", "doc_1")))
+  expect_equal(class(rd), "new_parsed")
+})
+
+context("Parse corpus")
+test_that("Parse single simple article",{
+  rd <- new_corpus("Not parsed doc_1")
+  rd <- parse(rd)
+  expect_equal(rd, new_parsed(list(c("Not", "parsed", "doc_1"))))
+})

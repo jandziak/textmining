@@ -55,6 +55,18 @@ new_parsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = lapply(x, function(y) y), language = rep("en", length(x))))
+  x <- structure(list(text = lapply(x, function(y) y), language = rep("en", length(x))),
+                 class = "new_parsed")
+  x
+}
+
+#' Function to parse new corpus
+#'
+#' @param x corpus
+#' @return returns new parsed list
+#'
+#' @export
+parse <- function(x) {
+  x <- new_parsed(strsplit(x$text, " "))
   x
 }
