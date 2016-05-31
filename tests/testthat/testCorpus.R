@@ -53,7 +53,6 @@ test_that("Class value for new corpus is appropriate", {
   expect_equal(class(rd), "new_corpus")
 })
 
-
 context("Test parsed text")
 test_that("No argument in constructor of parsed text", {
   expect_error(new_parsed(), "argument \"x\" is missing")
@@ -80,5 +79,3 @@ test_that("Getter index out of bands new parsed ", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
   expect_error(getDoc(rd, 3), "index \"i\" out of bands")
 })
-
-
