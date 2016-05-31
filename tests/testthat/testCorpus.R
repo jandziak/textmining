@@ -55,3 +55,6 @@ test_that("Class value for new corpus is appropriate", {
 
 
 context("Test parsed text")
+test_that("No argument in constructor of parsed text", {
+  expect_error(new_parsed(), "argument \"x\" is missing")
+})

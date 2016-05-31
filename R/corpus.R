@@ -44,3 +44,15 @@ getMeta <- function(x, i, parameter) {
     stop("index \"i\" out of bands")
   meta_vector[i]
 }
+
+#' Function to create new parsed corpus
+#'
+#' @param x source
+#' @return returns new corpus list
+#'
+#' @export
+new_parsed <- function(x = NULL) {
+  if (is.null(x)) {
+    stop("argument \"x\" is missing")
+  }
+}
