@@ -55,6 +55,6 @@ new_parsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- list(text = lapply(x, function(y) y))
+  x <- structure(list(text = lapply(x, function(y) y), language = rep("en", length(x))))
   x
 }
