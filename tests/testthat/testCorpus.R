@@ -74,3 +74,11 @@ test_that("Complex vector constructor", {
   rd <- new_parsed(doc_list)
   expect_equal(getDoc(rd, 14), c("parsed", "doc_14"))
 })
+
+
+test_that("Getter index out of bands new parsed ", {
+  rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
+  expect_error(getDoc(rd, 3), "index \"i\" out of bands")
+})
+
+
