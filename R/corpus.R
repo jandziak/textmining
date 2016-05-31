@@ -47,7 +47,6 @@ getMeta <- function(x, i, parameter) {
 
 #' Function to create new parsed corpus
 #'
-#'
 #' @param x source
 #' @return returns new corpus list
 #'
@@ -56,7 +55,7 @@ new_parsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, language = rep("en", length(x))),
+  x <- structure(list(text = lapply(x, function(y) y), language = rep("en", length(x))),
                  class = "new_parsed")
   x
 }
