@@ -58,3 +58,4 @@ new_parsed <- function(x = NULL) {
   x <- list(text = lapply(x, function(y) y))
   x
 }
+
