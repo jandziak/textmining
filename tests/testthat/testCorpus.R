@@ -65,12 +65,12 @@ test_that("One argument constructor", {
 })
 
 test_that("Simple list constructor of new parsed text", {
-  rd <- new_corpus(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
+  rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
   expect_equal(getDoc(rd, 2), c("parsed", "doc_2"))
 })
 
 test_that("Complex vector constructor", {
   doc_list <- lapply(1:100, function(y) c("parsed", paste("doc_", y, sep = "")))
-  rd <- new_corpus(doc_list)
+  rd <- new_parsed(doc_list)
   expect_equal(getDoc(rd, 14), c("parsed", "doc_14"))
 })
