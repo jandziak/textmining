@@ -1,3 +1,4 @@
+context("Test new corpus")
 test_that("No argument in constructor", {
   expect_error(new_corpus(), "argument \"x\" is missing")
 })
@@ -51,3 +52,6 @@ test_that("Class value for new corpus is appropriate", {
   rd <- new_corpus("doc_1")
   expect_equal(class(rd), "new_corpus")
 })
+
+
+context("Test parsed text")
