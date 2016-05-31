@@ -24,7 +24,7 @@ new_corpus <- function(x = NULL) {
 getDoc <- function(x, i) {
   if (length(x$text) < i)
     stop("index \"i\" out of bands")
-  x$text[i]
+  x$text[[i]]
 }
 
 #' Function to access metadata for documents from new corpus
@@ -55,4 +55,6 @@ new_parsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
+  x <- list(text = lapply(x, function(y) y))
+  x
 }

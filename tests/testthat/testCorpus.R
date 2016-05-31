@@ -58,3 +58,9 @@ context("Test parsed text")
 test_that("No argument in constructor of parsed text", {
   expect_error(new_parsed(), "argument \"x\" is missing")
 })
+
+test_that("One argument constructor", {
+  rd <- new_parsed(list(c("parsed", "doc_1")))
+  expect_equal(getDoc(rd, 1), c("parsed", "doc_1"))
+})
+
