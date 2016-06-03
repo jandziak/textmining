@@ -131,3 +131,9 @@ context("Test tabelarised text")
 test_that("No argument in constructor of tabularised", {
   expect_error(new_tabularised(), "argument \"x\" is missing")
 })
+
+test_that("Tabelarise one doc", {
+  df <- data.frame(word = c("be","am"), count = c(1,2))
+  rd <- new_tabularised(list(df))
+  expect_equal(getDoc(rd,1), df)
+})
