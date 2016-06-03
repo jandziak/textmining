@@ -126,3 +126,8 @@ test_that("Parse two simple articles",{
   expect_equal(getDoc(rd,2), getDoc(test, 2))
   expect_equal(rd, test)
 })
+
+context("Test tabelarised text")
+test_that("No argument in constructor of tabularised", {
+  expect_error(new_tabularised(), "argument \"x\" is missing")
+})

@@ -72,3 +72,16 @@ parse <- function(x) {
   x <- new_parsed(parsed_doc_list)
   x
 }
+
+#' Function to create new tabularised corpus
+#'
+#' @param x source
+#' @return returns new corpus list
+#'
+#' @export
+new_tabularised <- function(x = NULL) {
+  if (is.null(x)) {
+    stop("argument \"x\" is missing")
+  }
+}
+
