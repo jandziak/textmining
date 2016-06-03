@@ -86,4 +86,3 @@ new_tabularised <- function(x = NULL) {
   x <- structure(list(text = x, language = rep("en", length(x))))
   x
 }
-
