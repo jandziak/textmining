@@ -117,7 +117,6 @@ test_that("Parse single simple article",{
   rd <- parse(rd)
   expect_equal(rd, new_parsed(list(c("Not", "parsed", "doc_1"))))
 })
-<<<<<<< HEAD
 
 test_that("Parse two simple articles",{
   rd <- new_corpus(c("Not parsed doc_1", "Not parsed doc_2"))
@@ -127,5 +126,3 @@ test_that("Parse two simple articles",{
   expect_equal(getDoc(rd,2), getDoc(test, 2))
   expect_equal(rd, test)
 })
-=======
->>>>>>> origin/master
