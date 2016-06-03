@@ -137,3 +137,19 @@ test_that("Tabelarise one doc", {
   rd <- new_tabularised(list(df))
   expect_equal(getDoc(rd,1), df)
 })
+
+test_that("Tabelarised two doc", {
+  df_1 <- data.frame(word = c("be","am"), count = c(1,2))
+  df_2 <- data.frame(word = c("have","has"), count = c(2,1))
+  rd <- new_tabularised(list(df_1,df_2))
+  expect_equal(getDoc(rd,1), df_1)
+  expect_equal(getDoc(rd,2), df_2)
+})
+
+test_that("Tabelarised many doc", {
+  df <- data.frame(word = c("be","am"), count = c(1,2))
+  list_df <- lapply(1:100, function(x) df)
+  rd <- new_tabularised(list_df)
+  expect_equal(getDoc(rd,1), df)
+  expect_equal(getDoc(rd,50), df)
+})
