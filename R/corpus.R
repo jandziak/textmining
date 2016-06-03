@@ -67,6 +67,8 @@ new_parsed <- function(x = NULL) {
 #'
 #' @export
 parse <- function(x) {
-  x <- new_parsed(strsplit(x$text, " "))
+  parsed_doc_list <- sapply(x$text, function(y) strsplit(y, " "))
+  names(parsed_doc_list) <- NULL
+  x <- new_parsed(parsed_doc_list)
   x
 }
