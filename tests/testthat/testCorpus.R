@@ -153,3 +153,25 @@ test_that("Tabelarised many doc", {
   expect_equal(getDoc(rd,1), df)
   expect_equal(getDoc(rd,50), df)
 })
+
+test_that("Tabelarised meta data for one doc exists" ,{
+  df <- data.frame(word = c("be","am"), count = c(1,2))
+  rd <- new_tabularised(list(df))
+  expect_equal(getMeta(rd,1, "language"), "en")
+})
+
+test_that("Tabelarised  meta data for two doc exists", {
+  df_1 <- data.frame(word = c("be","am"), count = c(1,2))
+  df_2 <- data.frame(word = c("have","has"), count = c(2,1))
+  rd <- new_tabularised(list(df_1,df_2))
+  expect_equal(getMeta(rd,1, "language"), "en")
+  expect_equal(getMeta(rd,2, "language"), "en")
+})
+
+test_that("Tabelarised  meta data for many doc exists", {
+  df <- data.frame(word = c("be","am"), count = c(1,2))
+  list_df <- lapply(1:100, function(x) df)
+  rd <- new_tabularised(list_df)
+  expect_equal(getMeta(rd,1, "language"), "en")
+  expect_equal(getMeta(rd,50, "language"), "en")
+})
