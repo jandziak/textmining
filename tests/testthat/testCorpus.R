@@ -196,3 +196,9 @@ test_that("Parsed one document tabelarises", {
   df <- data.frame(word = c("doc_1", "parsed"), count = c(1, 1))
   expect_equal(rd, new_tabularised(list(df)))
 })
+
+context("Document class")
+test_that("Document class created with no argument", {
+  rd <- new_document("doc_1")
+  expect_equal(rd$text, "doc_1")
+})

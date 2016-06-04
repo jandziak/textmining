@@ -112,4 +112,15 @@ make_tabled <- function(x) {
   s <- lapply(list_parsed, tabler)
   s <- new_tabularised(s)
   s
-  }
+}
+
+#' Function to store single document with meta data
+#'
+#' @param x source
+#' @return returns new document class
+#'
+#' @export
+new_document <- function(x) {
+  x <- list(text = x)
+  x
+}
