@@ -198,7 +198,8 @@ test_that("Parsed one document tabelarises", {
 })
 
 context("Document class")
-test_that("Document class created with no argument", {
+test_that("Document class created with single text", {
   rd <- new_document("doc_1")
   expect_equal(rd$text, "doc_1")
 })
+
