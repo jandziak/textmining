@@ -86,3 +86,30 @@ new_tabularised <- function(x = NULL) {
   x <- structure(list(text = x, language = rep("en", length(x))))
   x
 }
+
+#' Helper function for tabelarising documents
+#'
+#' @param x parsed document
+#' @return returns table of words and counts
+#'
+#' @export
+tabler <- function(x) {
+  x <- x %>%
+    table %>%
+    as.data.frame
+  names(x) <- c("word", "count")
+  x
+}
+
+#' Function to create tabelarised object from parsed
+#'
+#' @param x source
+#' @return returns new tabelarised object
+#'
+#' @export
+make_tabled <- function(x) {
+  list_parsed <- x$text
+  s <- lapply(list_parsed, tabler)
+  s <- new_tabularised(s)
+  s
+  }

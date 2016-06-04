@@ -188,3 +188,11 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   rd <- new_tabularised(list(df_1, df_2))
   expect_error(getMeta(rd, 2, "author"), "There is no metadata: \"author\"")
 })
+
+context("Table function")
+test_that("Parsed one document tabelarises", {
+  rd <- new_parsed(list(c("doc_1", "parsed")))
+  rd <- make_tabled(rd)
+  df <- data.frame(word = c("doc_1", "parsed"), count = c(1, 1))
+  expect_equal(rd, new_tabularised(list(df)))
+})
