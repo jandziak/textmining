@@ -83,7 +83,8 @@ new_tabularised <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, language = rep("en", length(x))))
+  x <- structure(list(text = x, language = rep("en", length(x))),
+                 class = "WordCountsTable")
   x
 }
 

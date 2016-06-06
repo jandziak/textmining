@@ -189,6 +189,13 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   expect_error(getMeta(rd, 2, "author"), "There is no metadata: \"author\"")
 })
 
+test_that("Document test for class", {
+  df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
+  rd <- new_tabularised(list(df_1))
+  expect_equal(class(rd), "WordCountsTable")
+})
+
+
 context("Table function")
 test_that("Parsed one document tabelarises", {
   rd <- new_parsed(list(c("doc_1", "parsed")))
