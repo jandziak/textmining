@@ -105,9 +105,9 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
 })
 
-test_that("Class value for new parsed is appropriate", {
-  rd <- new_parsed(list(c("parsed", "doc_1")))
-  expect_equal(class(rd), "new_parsed")
+test_that("Getter for meta data, no metadata with a given name for new parsed", {
+  rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
+  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
 })
 
 context("Parse corpus")
@@ -224,3 +224,7 @@ test_that("Meta data for document class", {
   expect_equal(getMeta(rd,"language"), "en")
 })
 
+test_that("Getter for meta data, no metadata with a given name for TextDocument", {
+  rd <- new_document("doc_1")
+  expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
+})

@@ -37,9 +37,12 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "TextDocument")
-    return(get(parameter, x$meta))
+  if (class(x) == "TextDocument") {
+    meta_vector <- try(get(parameter, x$meta), silent = T)
+  }
+  else {
   meta_vector <- try(get(parameter, x), silent = T)
+  }
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
   if (length(meta_vector) < i)
