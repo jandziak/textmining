@@ -203,3 +203,6 @@ test_that("Document class created with single text", {
   expect_equal(rd$text, "doc_1")
 })
 
+test_that("Document class no argument in constructor", {
+  expect_error(new_document(), "argument \"x\" is missing")
+})

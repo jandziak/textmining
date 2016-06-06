@@ -120,7 +120,10 @@ make_tabled <- function(x) {
 #' @return returns new document class
 #'
 #' @export
-new_document <- function(x) {
+new_document <- function(x = NULL) {
+  if (is.null(x)) {
+    stop("argument \"x\" is missing")
+  }
   x <- list(text = x)
   x
 }
