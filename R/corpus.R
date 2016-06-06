@@ -36,7 +36,7 @@ getDoc <- function(x, i) {
 #' @return returns i-th document of corpus x
 #'
 #' @export
-getMeta <- function(x, i, parameter) {
+getMeta <- function(x, parameter, i=1) {
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))

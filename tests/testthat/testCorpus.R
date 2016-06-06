@@ -25,27 +25,27 @@ test_that("Getter index out of bands", {
 
 test_that("Meta data one article", {
   rd <- new_corpus(c("doc_1"))
-  expect_equal(getMeta(rd, 1, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data two articles", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_equal(getMeta(rd, 1, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data many articles", {
   rd <- new_corpus(paste("doc_", 1:100, sep = ""))
-  expect_equal(getMeta(rd, 15, "language"), "en")
+  expect_equal(getMeta(rd, "language", 15), "en")
 })
 
 test_that("Getter for meta data out of bands", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_error(getMeta(rd, 3, "language"), "index \"i\" out of bands")
+  expect_error(getMeta(rd, "language", 3), "index \"i\" out of bands")
 })
 
 test_that("Getter for meta data, no metadata with a given name", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_error(getMeta(rd, 3, "author"), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "author", 3), "There is no metadata: \"author\"")
 })
 
 test_that("Class value for new corpus is appropriate", {
@@ -81,28 +81,28 @@ test_that("Getter index out of bands new parsed ", {
 
 test_that("Meta data one article parsed text", {
   rd <- new_parsed(list(c("parsed", "doc_1")))
-  expect_equal(getMeta(rd, 1, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data two articles", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
-  expect_equal(getMeta(rd, 1, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data many articles", {
   doc_list <- lapply(1:100, function(y) c("parsed", paste("doc_", y, sep = "")))
   rd <- new_parsed(doc_list)
-  expect_equal(getMeta(rd, 15, "language"), "en")
+  expect_equal(getMeta(rd, "language", 15), "en")
 })
 
 test_that("Getter for meta data out of bands", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
-  expect_error(getMeta(rd, 3, "language"), "index \"i\" out of bands")
+  expect_error(getMeta(rd, "language", 3), "index \"i\" out of bands")
 })
 
 test_that("Getter for meta data, no metadata with a given name for new parsed", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
-  expect_error(getMeta(rd, 2, "author"), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
 })
 
 test_that("Class value for new parsed is appropriate", {
@@ -156,37 +156,37 @@ test_that("Tabelarised many doc", {
 test_that("Tabelarised meta data for one doc exists", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
   rd <- new_tabularised(list(df))
-  expect_equal(getMeta(rd, 1, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Tabelarised  meta data for two doc exists", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
   rd <- new_tabularised(list(df_1, df_2))
-  expect_equal(getMeta(rd, 1, "language"), "en")
-  expect_equal(getMeta(rd, 2, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
+  expect_equal(getMeta(rd, "language", 2), "en")
 })
 
 test_that("Tabelarised  meta data for many doc exists", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
   list_df <- lapply(1:100, function(x) df)
   rd <- new_tabularised(list_df)
-  expect_equal(getMeta(rd, 1, "language"), "en")
-  expect_equal(getMeta(rd, 50, "language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
+  expect_equal(getMeta(rd, "language", 50), "en")
 })
 
 test_that("Getter for meta data out of bands", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
   rd <- new_tabularised(list(df_1, df_2))
-  expect_error(getMeta(rd, 3, "language"), "index \"i\" out of bands")
+  expect_error(getMeta(rd, "language", 3), "index \"i\" out of bands")
 })
 
 test_that("Getter for meta data, no metadata with a given name for new parsed", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
   rd <- new_tabularised(list(df_1, df_2))
-  expect_error(getMeta(rd, 2, "author"), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
 })
 
 test_that("Document test for class", {
@@ -217,4 +217,9 @@ test_that("Document class no argument in constructor", {
 test_that("Document test for class", {
   rd <- new_document("doc")
   expect_equal(class(rd), "TextDocument")
+})
+
+test_that("Meta data for document class", {
+  rd <- new_document("doc_1")
+  expect_equal(getMeta(rd,"language"), "doc_1")
 })
