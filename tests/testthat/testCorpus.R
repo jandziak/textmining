@@ -206,3 +206,8 @@ test_that("Document class created with single text", {
 test_that("Document class no argument in constructor", {
   expect_error(new_document(), "argument \"x\" is missing")
 })
+
+test_that("Document test for class", {
+  rd <- new_document("doc")
+  expect_equal(class(rd), "TextDocument")
+})

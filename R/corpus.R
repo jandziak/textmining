@@ -124,6 +124,6 @@ new_document <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- list(text = x)
+  x <- structure(list(text = x), class = "TextDocument")
   x
 }
