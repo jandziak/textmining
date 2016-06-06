@@ -221,5 +221,6 @@ test_that("Document test for class", {
 
 test_that("Meta data for document class", {
   rd <- new_document("doc_1")
-  expect_equal(getMeta(rd,"language"), "doc_1")
+  expect_equal(getMeta(rd,"language"), "en")
 })
+

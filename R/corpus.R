@@ -37,6 +37,8 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
+  if (class(x) == "TextDocument")
+    return(get(parameter, x$meta))
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
@@ -125,6 +127,6 @@ new_document <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x), class = "TextDocument")
+  x <- structure(list(text = x, meta = list(language = "en")), class = "TextDocument")
   x
 }
