@@ -45,7 +45,7 @@ test_that("Getter for meta data out of bands", {
 
 test_that("Getter for meta data, no metadata with a given name", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_error(getMeta(rd, "author", 3), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "randomMeta", 3), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Class value for new corpus is appropriate", {
@@ -102,12 +102,12 @@ test_that("Getter for meta data out of bands", {
 
 test_that("Getter for meta data, no metadata with a given name for new parsed", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
-  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Getter for meta data, no metadata with a given name for new parsed", {
   rd <- new_parsed(list(c("parsed", "doc_1"), c("parsed", "doc_2")))
-  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 context("Parse corpus")
@@ -186,7 +186,7 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
   rd <- new_tabularised(list(df_1, df_2))
-  expect_error(getMeta(rd, "author", 2), "There is no metadata: \"author\"")
+  expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Document test for class", {
@@ -228,3 +228,4 @@ test_that("Getter for meta data, no metadata with a given name for TextDocument"
   rd <- new_document("doc_1")
   expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
 })
+
