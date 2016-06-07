@@ -228,4 +228,3 @@ test_that("Getter for meta data, no metadata with a given name for TextDocument"
   rd <- new_document("doc_1")
   expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
 })
-
