@@ -4,12 +4,12 @@
 #' @return returns new corpus list
 #'
 #' @export
-new_corpus <- function(x = NULL) {
+tmCorpus <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
   doc_list <- lapply(x, tmTextDocument)
-  x <- structure(doc_list, class = "new_corpus")
+  x <- structure(doc_list, class = "tmCorpus")
   x
 }
 
@@ -22,7 +22,7 @@ new_corpus <- function(x = NULL) {
 #'
 #' @export
 getDoc <- function(x, i) {
-  if (class(x) == "new_corpus") {
+  if (class(x) == "tmCorpus") {
     if (length(x) < i)
       stop("index \"i\" out of bands")
     x[[i]]$text
@@ -44,7 +44,7 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "new_corpus") {
+  if (class(x) == "tmCorpus") {
     if (length(x) < i) {
       meta_vector <- try(get(parameter, x[[1]]$meta))
       if (class(meta_vector) == "try-error")

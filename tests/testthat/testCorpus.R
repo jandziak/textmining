@@ -1,56 +1,56 @@
 context("Test new corpus")
 test_that("No argument in constructor", {
-  expect_error(new_corpus(), "argument \"x\" is missing")
+  expect_error(tmCorpus(), "argument \"x\" is missing")
 })
 
 test_that("One argument constructor", {
-  rd <- new_corpus("doc_1")
+  rd <- tmCorpus("doc_1")
   expect_equal(getDoc(rd, 1), "doc_1")
 })
 
 test_that("Simple vector constructor", {
-  rd <- new_corpus(c("doc_1", "doc_2"))
+  rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_equal(getDoc(rd, 2), "doc_2")
 })
 
 test_that("Complex vector constructor", {
-  rd <- new_corpus(paste("doc_", 1:100, sep = ""))
+  rd <- tmCorpus(paste("doc_", 1:100, sep = ""))
   expect_equal(getDoc(rd, 14), "doc_14")
 })
 
 test_that("Getter index out of bands", {
-  rd <- new_corpus(c("doc_1", "doc_2"))
+  rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_error(getDoc(rd, 3), "index \"i\" out of bands")
 })
 
 test_that("Meta data one article", {
-  rd <- new_corpus(c("doc_1"))
+  rd <- tmCorpus(c("doc_1"))
   expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data two articles", {
-  rd <- new_corpus(c("doc_1", "doc_2"))
+  rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Meta data many articles", {
-  rd <- new_corpus(paste("doc_", 1:100, sep = ""))
+  rd <- tmCorpus(paste("doc_", 1:100, sep = ""))
   expect_equal(getMeta(rd, "language", 15), "en")
 })
 
 test_that("Getter for meta data out of bands", {
-  rd <- new_corpus(c("doc_1", "doc_2"))
+  rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_error(getMeta(rd, "language", 3), "index \"i\" out of bands")
 })
 
 test_that("Getter for meta data, no metadata with a given name", {
-  rd <- new_corpus(c("doc_1", "doc_2"))
+  rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Class value for new corpus is appropriate", {
-  rd <- new_corpus("doc_1")
-  expect_equal(class(rd), "new_corpus")
+  rd <- tmCorpus("doc_1")
+  expect_equal(class(rd), "tmCorpus")
 })
 
 context("Test parsed text")
@@ -112,13 +112,13 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
 
 context("Parse corpus")
 test_that("Parse single simple article",{
-  rd <- new_corpus("Not parsed doc_1")
+  rd <- tmCorpus("Not parsed doc_1")
   rd <- parse(rd)
   expect_equal(rd, new_parsed(list(c("Not", "parsed", "doc_1"))))
 })
 
 test_that("Parse two simple articles",{
-  rd <- new_corpus(c("Not parsed doc_1", "Not parsed doc_2"))
+  rd <- tmCorpus(c("Not parsed doc_1", "Not parsed doc_2"))
   rd <- parse(rd)
   test <- new_parsed(list(c("Not", "parsed", "doc_1"), c("Not", "parsed", "doc_2")))
   expect_equal(getDoc(rd,1), getDoc(test, 1))
