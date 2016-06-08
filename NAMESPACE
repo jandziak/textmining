@@ -2,4 +2,10 @@
 
 export(getDoc)
 export(getMeta)
-export(new_corpus)
+export(make_tabled)
+export(parse)
+export(tabler)
+export(tmCorpus)
+export(tmParsed)
+export(tmTextDocument)
+export(tmWordCountsTable)
