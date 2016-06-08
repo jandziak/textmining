@@ -207,8 +207,8 @@ test_that("Parsed one document tabelarises", {
 context("Document class")
 test_that("Document class created with single text", {
   rd <- tmTextDocument("doc_1")
-  expect_equal(rd$text, "doc_1")
-})
+  expect_equal(getDoc(rd), "doc_1")
+ })
 
 test_that("Document class no argument in constructor", {
   expect_error(tmTextDocument(), "argument \"x\" is missing")
