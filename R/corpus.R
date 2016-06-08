@@ -22,7 +22,7 @@ tmCorpus <- function(x = NULL) {
 #'
 #' @export
 getDoc <- function(x, i = 1) {
-  if (class(x) == "tmCorpus" || class(x) == "new_parsed") {
+  if (class(x) == "tmCorpus" || class(x) == "tmParsed") {
     if (length(x) < i)
       stop("index \"i\" out of bands")
     x[[i]]$text
@@ -44,7 +44,7 @@ getDoc <- function(x, i = 1) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "tmCorpus" || class(x) == "new_parsed") {
+  if (class(x) == "tmCorpus" || class(x) == "tmParsed") {
     if (length(x) < i) {
       meta_vector <- try(get(parameter, x[[1]]$meta))
       if (class(meta_vector) == "try-error")
@@ -76,13 +76,13 @@ getMeta <- function(x, parameter, i=1) {
 #' @return returns new corpus list
 #'
 #' @export
-new_parsed <- function(x = NULL) {
+tmParsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
   doc_list <- lapply(x, tmTextDocument)
   x <- structure(doc_list,
-                 class = "new_parsed")
+                 class = "tmParsed")
   x
 }
 
@@ -95,7 +95,7 @@ new_parsed <- function(x = NULL) {
 parse <- function(x) {
   parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y,1), " "))
   names(parsed_doc_list) <- NULL
-  x <- new_parsed(parsed_doc_list)
+  x <- tmParsed(parsed_doc_list)
   x
 }
 
