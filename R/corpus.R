@@ -37,7 +37,7 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "TextDocument") {
+  if (class(x) == "tmTextDocument") {
     meta_vector <- try(get(parameter, x$meta), silent = T)
   }
   else {
@@ -126,10 +126,11 @@ make_tabled <- function(x) {
 #' @return returns new document class
 #'
 #' @export
-new_document <- function(x = NULL) {
+tmTextDocument <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, meta = list(language = "en")), class = "TextDocument")
+  x <- structure(list(text = x, meta = structure(list(language = "en"))), class = "tmTextDocument")
   x
 }
+

@@ -206,25 +206,27 @@ test_that("Parsed one document tabelarises", {
 
 context("Document class")
 test_that("Document class created with single text", {
-  rd <- new_document("doc_1")
+  rd <- tmTextDocument("doc_1")
   expect_equal(rd$text, "doc_1")
 })
 
 test_that("Document class no argument in constructor", {
-  expect_error(new_document(), "argument \"x\" is missing")
+  expect_error(tmTextDocument(), "argument \"x\" is missing")
 })
 
 test_that("Document test for class", {
-  rd <- new_document("doc")
-  expect_equal(class(rd), "TextDocument")
+  rd <- tmTextDocument("doc")
+  expect_equal(class(rd), "tmTextDocument")
 })
 
 test_that("Meta data for document class", {
-  rd <- new_document("doc_1")
+  rd <- tmTextDocument("doc_1")
   expect_equal(getMeta(rd,"language"), "en")
 })
 
 test_that("Getter for meta data, no metadata with a given name for TextDocument", {
-  rd <- new_document("doc_1")
+  rd <- tmTextDocument("doc_1")
   expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
 })
+
+
