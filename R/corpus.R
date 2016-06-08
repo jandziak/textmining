@@ -8,8 +8,8 @@ new_corpus <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, language = rep("en",
-                                               length(x))), class = "new_corpus")
+  doc_list <- lapply(x, tmTextDocument)
+  x <- structure(doc_list, class = "new_corpus")
   x
 }
 
@@ -22,9 +22,16 @@ new_corpus <- function(x = NULL) {
 #'
 #' @export
 getDoc <- function(x, i) {
+  if (class(x) == "new_corpus") {
+    if (length(x) < i)
+      stop("index \"i\" out of bands")
+    x[[i]]$text
+  }
+  else {
   if (length(x$text) < i)
     stop("index \"i\" out of bands")
   x$text[[i]]
+  }
 }
 
 #' Function to access metadata for documents from new corpus
@@ -37,6 +44,19 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
+  if (class(x) == "new_corpus") {
+    if (length(x) < i) {
+      meta_vector <- try(get(parameter, x[[1]]$meta))
+      if (class(meta_vector) == "try-error")
+        stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+      else
+        stop("index \"i\" out of bands")
+    }
+    else {
+      x <- x[[i]]
+      i <- 1
+    }
+  }
   if (class(x) == "tmTextDocument") {
     meta_vector <- try(get(parameter, x$meta), silent = T)
   }
@@ -72,7 +92,7 @@ new_parsed <- function(x = NULL) {
 #'
 #' @export
 parse <- function(x) {
-  parsed_doc_list <- sapply(x$text, function(y) strsplit(y, " "))
+  parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y,1), " "))
   names(parsed_doc_list) <- NULL
   x <- new_parsed(parsed_doc_list)
   x

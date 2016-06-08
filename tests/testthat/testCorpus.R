@@ -45,7 +45,7 @@ test_that("Getter for meta data out of bands", {
 
 test_that("Getter for meta data, no metadata with a given name", {
   rd <- new_corpus(c("doc_1", "doc_2"))
-  expect_error(getMeta(rd, "randomMeta", 3), "There is no metadata: \"randomMeta\"")
+  expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Class value for new corpus is appropriate", {
