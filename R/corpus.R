@@ -21,8 +21,8 @@ tmCorpus <- function(x = NULL) {
 #' @return returns i-th document of corpus x
 #'
 #' @export
-getDoc <- function(x, i) {
-  if (class(x) == "tmCorpus") {
+getDoc <- function(x, i = 1) {
+  if (class(x) == "tmCorpus" || class(x) == "new_parsed") {
     if (length(x) < i)
       stop("index \"i\" out of bands")
     x[[i]]$text
@@ -44,7 +44,7 @@ getDoc <- function(x, i) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "tmCorpus") {
+  if (class(x) == "tmCorpus" || class(x) == "new_parsed") {
     if (length(x) < i) {
       meta_vector <- try(get(parameter, x[[1]]$meta))
       if (class(meta_vector) == "try-error")
@@ -80,7 +80,8 @@ new_parsed <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = lapply(x, function(y) y), language = rep("en", length(x))),
+  doc_list <- lapply(x, tmTextDocument)
+  x <- structure(doc_list,
                  class = "new_parsed")
   x
 }
@@ -134,7 +135,7 @@ tabler <- function(x) {
 #'
 #' @export
 make_tabled <- function(x) {
-  list_parsed <- x$text
+  list_parsed <- lapply(x, function(y) y$text)
   s <- lapply(list_parsed, tabler)
   s <- new_tabularised(s)
   s
