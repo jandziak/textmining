@@ -87,13 +87,13 @@ parse <- function(x) {
 #' @return returns new corpus list
 #'
 #' @export
-new_tabularised <- function(x = NULL) {
+tmWordCountsTable <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
   doc_list <- lapply(x, tmTextDocument)
   x <- structure(doc_list,
-                 class = "WordCountsTable")
+                 class = "tmWordCountsTable")
   x
 }
 
@@ -120,7 +120,7 @@ tabler <- function(x) {
 make_tabled <- function(x) {
   list_parsed <- lapply(x, function(y) y$text)
   s <- lapply(list_parsed, tabler)
-  s <- new_tabularised(s)
+  s <- tmWordCountsTable(s)
   s
 }
 

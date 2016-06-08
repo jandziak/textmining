@@ -128,19 +128,19 @@ test_that("Parse two simple articles",{
 
 context("Test tabelarised text")
 test_that("No argument in constructor of tabularised", {
-  expect_error(new_tabularised(), "argument \"x\" is missing")
+  expect_error(tmWordCountsTable(), "argument \"x\" is missing")
 })
 
 test_that("Tabelarise one doc", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
-  rd <- new_tabularised(list(df))
+  rd <- tmWordCountsTable(list(df))
   expect_equal(getDoc(rd, 1), df)
 })
 
 test_that("Tabelarised two doc", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
-  rd <- new_tabularised(list(df_1, df_2))
+  rd <- tmWordCountsTable(list(df_1, df_2))
   expect_equal(getDoc(rd, 1), df_1)
   expect_equal(getDoc(rd, 2), df_2)
 })
@@ -148,21 +148,21 @@ test_that("Tabelarised two doc", {
 test_that("Tabelarised many doc", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
   list_df <- lapply(1:100, function(x) df)
-  rd <- new_tabularised(list_df)
+  rd <- tmWordCountsTable(list_df)
   expect_equal(getDoc(rd, 1), df)
   expect_equal(getDoc(rd, 50), df)
 })
 
 test_that("Tabelarised meta data for one doc exists", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
-  rd <- new_tabularised(list(df))
+  rd <- tmWordCountsTable(list(df))
   expect_equal(getMeta(rd, "language"), "en")
 })
 
 test_that("Tabelarised  meta data for two doc exists", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
-  rd <- new_tabularised(list(df_1, df_2))
+  rd <- tmWordCountsTable(list(df_1, df_2))
   expect_equal(getMeta(rd, "language"), "en")
   expect_equal(getMeta(rd, "language", 2), "en")
 })
@@ -170,7 +170,7 @@ test_that("Tabelarised  meta data for two doc exists", {
 test_that("Tabelarised  meta data for many doc exists", {
   df <- data.frame(word = c("be", "am"), count = c(1, 2))
   list_df <- lapply(1:100, function(x) df)
-  rd <- new_tabularised(list_df)
+  rd <- tmWordCountsTable(list_df)
   expect_equal(getMeta(rd, "language"), "en")
   expect_equal(getMeta(rd, "language", 50), "en")
 })
@@ -178,21 +178,21 @@ test_that("Tabelarised  meta data for many doc exists", {
 test_that("Getter for meta data out of bands", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
-  rd <- new_tabularised(list(df_1, df_2))
+  rd <- tmWordCountsTable(list(df_1, df_2))
   expect_error(getMeta(rd, "language", 3), "index \"i\" out of bands")
 })
 
 test_that("Getter for meta data, no metadata with a given name for new parsed", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
   df_2 <- data.frame(word = c("have", "has"), count = c(2, 1))
-  rd <- new_tabularised(list(df_1, df_2))
+  rd <- tmWordCountsTable(list(df_1, df_2))
   expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
 test_that("Document test for class", {
   df_1 <- data.frame(word = c("be", "am"), count = c(1, 2))
-  rd <- new_tabularised(list(df_1))
-  expect_equal(class(rd), "WordCountsTable")
+  rd <- tmWordCountsTable(list(df_1))
+  expect_equal(class(rd), "tmWordCountsTable")
 })
 
 
@@ -201,7 +201,7 @@ test_that("Parsed one document tabelarises", {
   rd <- tmParsed(list(c("doc_1", "parsed")))
   rd <- make_tabled(rd)
   df <- data.frame(word = c("doc_1", "parsed"), count = c(1, 1))
-  expect_equal(rd, new_tabularised(list(df)))
+  expect_equal(rd, tmWordCountsTable(list(df)))
 })
 
 context("Document class")
