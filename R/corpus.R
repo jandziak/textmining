@@ -22,16 +22,12 @@ tmCorpus <- function(x = NULL) {
 #'
 #' @export
 getDoc <- function(x, i = 1) {
-  if (class(x) == "tmCorpus" || class(x) == "tmParsed") {
+   if (class(x) == "tmTextDocument") {
+      return(x$text)
+   }
     if (length(x) < i)
       stop("index \"i\" out of bands")
     x[[i]]$text
-  }
-  else {
-  if (length(x$text) < i)
-    stop("index \"i\" out of bands")
-  x$text[[i]]
-  }
 }
 
 #' Function to access metadata for documents from new corpus
@@ -44,30 +40,15 @@ getDoc <- function(x, i = 1) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) == "tmCorpus" || class(x) == "tmParsed") {
-    if (length(x) < i) {
-      meta_vector <- try(get(parameter, x[[1]]$meta))
-      if (class(meta_vector) == "try-error")
-        stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
-      else
-        stop("index \"i\" out of bands")
-    }
-    else {
-      x <- x[[i]]
-      i <- 1
-    }
+  if (class(x) != "tmTextDocument") {
+    if (length(x) < i)
+      stop("index \"i\" out of bands")
+    x <- x[[i]]
   }
-  if (class(x) == "tmTextDocument") {
-    meta_vector <- try(get(parameter, x$meta), silent = T)
-  }
-  else {
-  meta_vector <- try(get(parameter, x), silent = T)
-  }
+  meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
-  if (length(meta_vector) < i)
-    stop("index \"i\" out of bands")
-  meta_vector[i]
+  meta_vector
 }
 
 #' Function to create new parsed corpus
@@ -86,6 +67,7 @@ tmParsed <- function(x = NULL) {
   x
 }
 
+
 #' Function to parse new corpus
 #'
 #' @param x corpus
@@ -93,7 +75,7 @@ tmParsed <- function(x = NULL) {
 #'
 #' @export
 parse <- function(x) {
-  parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y,1), " "))
+  parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y), " "))
   names(parsed_doc_list) <- NULL
   x <- tmParsed(parsed_doc_list)
   x
@@ -109,7 +91,8 @@ new_tabularised <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, language = rep("en", length(x))),
+  doc_list <- lapply(x, tmTextDocument)
+  x <- structure(doc_list,
                  class = "WordCountsTable")
   x
 }
