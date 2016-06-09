@@ -144,7 +144,7 @@ tmTextDocument <- function(x = NULL) {
 #'
 #' @param x source
 #' @param FUN transformation function
-#' @return returns new tabelarised object
+#' @return returns corpus object after transformation
 #'
 #' @export
 transform <- function(x, FUN){
