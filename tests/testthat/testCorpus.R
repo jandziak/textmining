@@ -236,3 +236,15 @@ test_that("Chenge to small letters", {
   expect_equal(rd, tmCorpus("doc"))
 })
 
+test_that("Chenge to small letters different input/outcome", {
+  rd <- tmCorpus("Doc")
+  rd <- transform(rd, tolower)
+  expect_equal(rd, tmCorpus("doc"))
+})
+
+test_that("Chenge to small letters different input/outcome", {
+  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
+  rd <- transform(rd, tolower)
+  expect_equal(rd, tmCorpus(c("doc", "doc two", "three")))
+})
+

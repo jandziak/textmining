@@ -148,6 +148,6 @@ tmTextDocument <- function(x = NULL) {
 #'
 #' @export
 transform <- function(x, FUN){
-  x <- FUN(getDoc(x))
+  x <- x %>% sapply(., function(y) FUN(getDoc(y)))
   tmCorpus(x)
 }
