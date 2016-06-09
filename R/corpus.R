@@ -140,3 +140,14 @@ tmTextDocument <- function(x = NULL) {
   x
 }
 
+#' Transform function to lowercase
+#'
+#' @param x source
+#' @param FUN transformation function
+#' @return returns new tabelarised object
+#'
+#' @export
+transform <- function(x, FUN){
+  x <- FUN(getDoc(x))
+  tmCorpus(x)
+}

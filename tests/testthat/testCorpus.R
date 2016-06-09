@@ -229,4 +229,10 @@ test_that("Getter for meta data, no metadata with a given name for TextDocument"
   expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
 })
 
+context("Change to lowercase small letters corpus")
+test_that("Chenge to small letters", {
+  rd <- tmCorpus("doc")
+  rd <- transform(rd, tolower)
+  expect_equal(rd, tmCorpus("doc"))
+})
 
