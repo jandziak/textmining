@@ -120,13 +120,14 @@ tabler <- function(x) {
 
 #' Function to create tabelarised object from parsed
 #'
-#' @param x source
-#' @return returns new tabelarised object
+#' @param x tmParsed source
+#' @return returns tmWordCountsTable object
 #'
 #' @export
 make_tabled <- function(x) {
-  list_parsed <- lapply(x, function(y) y$text)
-  s <- lapply(list_parsed, tabler)
+  list_parsed <- lapply(x, function(y) tabler(y$text))
+  s <- list_parsed
+  #s <- lapply(list_parsed, tabler)
   s <- tmWordCountsTable(s)
   s
 }
