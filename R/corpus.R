@@ -162,6 +162,6 @@ transform <- function(x, FUN){
 #' @return returns tmMetaData object
 #'
 #' @export
-tmMetaData <- function(){
-  structure(list(language = "en"), class = "tmMetaData")
+tmMetaData <- function(language = "en", ...){
+  structure(list(language = language, ...), class = "tmMetaData")
 }

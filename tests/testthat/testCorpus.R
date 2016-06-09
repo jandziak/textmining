@@ -259,3 +259,8 @@ test_that("Default constructor of meta data", {
   meta <- tmMetaData()
   expect_equal(getMeta(meta, "language"), "en")
 })
+
+test_that("Default constructor of meta data", {
+  meta <- tmMetaData(language = "pl")
+  expect_equal(getMeta(meta, "language"), "pl")
+})
