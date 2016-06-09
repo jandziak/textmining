@@ -42,12 +42,17 @@ getDoc <- function(x, i = 1) {
 #'
 #' @export
 getMeta <- function(x, parameter, i=1) {
-  if (class(x) != "tmTextDocument") {
+  if (class(x) != "tmTextDocument" && class(x) != "tmMetaData") {
     if (length(x) < i)
       stop("index \"i\" out of bands")
     x <- x[[i]]
   }
-  meta_vector <- try(get(parameter, x$meta), silent = T)
+  if (class(x) == "tmMetaData") {
+    meta_vector <- try(get(parameter, x), silent = T)
+  }
+  else {
+    meta_vector <- try(get(parameter, x$meta), silent = T)
+  }
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
   meta_vector
@@ -150,4 +155,13 @@ tmTextDocument <- function(x = NULL) {
 transform <- function(x, FUN){
   x <- x %>% sapply(., function(y) FUN(getDoc(y)))
   tmCorpus(x)
+}
+
+#' Constructor of metadata class
+#'
+#' @return returns tmMetaData object
+#'
+#' @export
+tmMetaData <- function(){
+  structure(list(language = "en"), class = "tmMetaData")
 }

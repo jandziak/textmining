@@ -248,3 +248,14 @@ test_that("Chenge to small letters different input/outcome", {
   expect_equal(rd, tmCorpus(c("doc", "doc two", "three")))
 })
 
+test_that("Chenge to small letters different input/outcome", {
+  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
+  rd <- transform(rd, toupper)
+  expect_equal(rd, tmCorpus(c("DOC", "DOC TWO", "THREE")))
+})
+
+context("Default metadata constructor")
+test_that("Default constructor of meta data", {
+  meta <- tmMetaData()
+  expect_equal(getMeta(meta, "language"), "en")
+})
