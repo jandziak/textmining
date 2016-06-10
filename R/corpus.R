@@ -125,9 +125,8 @@ tabler <- function(x) {
 #'
 #' @export
 make_tabled <- function(x) {
-  list_parsed <- lapply(x, function(y) tabler(y$text))
-  s <- list_parsed
-  #s <- lapply(list_parsed, tabler)
+  list_parsed <- lapply(x, function(y) y$text)
+  s <- lapply(list_parsed, tabler)
   s <- tmWordCountsTable(s)
   s
 }
