@@ -162,6 +162,16 @@ transform <- function(x, FUN){
 #' @return returns tmMetaData object
 #'
 #' @export
-tmMetaData <- function(language = "en", ...){
-  structure(list(language = language, ...), class = "tmMetaData")
+tmMetaData <- function(id = 1,
+                       language = "en",
+                       author = character(0),
+                       timestamp = Sys.time(),
+                       title = paste("Document_", id, sep=""),
+                       ...){
+  structure(list(id = id,
+                 language = language,
+                 author = author,
+                 timestamp = timestamp,
+                 title = title, ...),
+                 class = "tmMetaData")
 }

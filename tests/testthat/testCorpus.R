@@ -258,6 +258,9 @@ context("Default metadata constructor")
 test_that("Default constructor of meta data", {
   meta <- tmMetaData()
   expect_equal(getMeta(meta, "language"), "en")
+  expect_equal(getMeta(meta, "author"), character(0))
+  expect_equal(getMeta(meta, "title"), "Document_1")
+  expect_equal(getMeta(meta, "id"), 1)
 })
 
 test_that("Default constructor of meta data", {
