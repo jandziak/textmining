@@ -137,11 +137,11 @@ make_tabled <- function(x) {
 #' @return returns new document class
 #'
 #' @export
-tmTextDocument <- function(x = NULL) {
+tmTextDocument <- function(x = NULL, ...) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, meta = structure(list(language = "en"))), class = "tmTextDocument")
+  x <- structure(list(text = x, meta = tmMetaData(...)), class = "tmTextDocument")
   x
 }
 
