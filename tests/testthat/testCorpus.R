@@ -261,6 +261,8 @@ test_that("Default constructor of meta data", {
   expect_equal(getMeta(meta, "author"), character(0))
   expect_equal(getMeta(meta, "title"), "Document_1")
   expect_equal(getMeta(meta, "id"), 1)
+  expect_equal(getMeta(meta, "date"), Sys.Date())
+
 })
 
 test_that("Default constructor of meta data", {

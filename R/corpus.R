@@ -165,13 +165,13 @@ transform <- function(x, FUN){
 tmMetaData <- function(id = 1,
                        language = "en",
                        author = character(0),
-                       timestamp = Sys.time(),
+                       date = Sys.Date(),
                        title = paste("Document_", id, sep=""),
                        ...){
   structure(list(id = id,
                  language = language,
                  author = author,
-                 timestamp = timestamp,
+                 date = date,
                  title = title, ...),
                  class = "tmMetaData")
 }
