@@ -269,3 +269,9 @@ test_that("Default constructor of meta data", {
   meta <- tmMetaData(language = "pl")
   expect_equal(getMeta(meta, "language"), "pl")
 })
+
+test_that("tmMetaData id is proper in many documents", {
+  rd <- tmCorpus(c("doc_1", "doc_2"))
+  expect_equal(getMeta(rd, "id", 2), 2)
+  expect_equal(getMeta(rd, "id", 1), 1)
+})
