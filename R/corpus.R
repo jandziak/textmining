@@ -175,3 +175,10 @@ tmMetaData <- function(id = 1,
                  title = title, ...),
                  class = "tmMetaData")
 }
+
+setDoc <- function(rd, i = 1, doc){
+  rd[[i]]$text <- doc
+  rd
+}
+
+

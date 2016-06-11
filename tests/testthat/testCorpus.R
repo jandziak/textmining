@@ -275,3 +275,11 @@ test_that("tmMetaData id is proper in many documents", {
   expect_equal(getMeta(rd, "id", 2), 2)
   expect_equal(getMeta(rd, "id", 1), 1)
 })
+
+context("setDocument")
+test_that("Document setter for one document works", {
+  rd <- tmCorpus(c("doc_1", "doc_2"))
+  rd <- setDoc(rd, 1, "new_doc")
+  expect_equal(rd, tmCorpus(c("new_doc", "doc_2")))
+})
+
