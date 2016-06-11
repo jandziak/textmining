@@ -22,15 +22,22 @@ tmCorpus <- function(x = NULL) {
 #'
 #' @export
 getDoc <- function(x, i = 1) {
-  if (class(x) == "tmTextDocument") {
-      x$text
-  }
-  else {
+  UseMethod("getDoc")
+}
+
+#' @export
+getDoc.default <- function(x, i = 1) {
   if (length(x) < i)
     stop("index \"i\" out of bands")
   x[[i]]$text
-  }
 }
+
+#' @export
+getDoc.tmTextDocument <- function(x){
+  x$text
+}
+
+
 
 #' Function to access metadata for documents from new corpus
 #'
