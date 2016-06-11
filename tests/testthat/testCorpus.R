@@ -282,4 +282,8 @@ test_that("Document setter for one document works", {
   rd <- setDoc(rd, 1, "new_doc")
   expect_equal(rd, tmCorpus(c("new_doc", "doc_2")))
 })
+test_that("Setter index out of bands", {
+  rd <- tmCorpus(c("doc_1", "doc_2"))
+  expect_error(setDoc(rd, 3, "doc"), "index \"i\" out of bands")
+})
 

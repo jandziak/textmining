@@ -177,6 +177,8 @@ tmMetaData <- function(id = 1,
 }
 
 setDoc <- function(rd, i = 1, doc){
+  if (length(rd) < i)
+    stop("index \"i\" out of bands")
   rd[[i]]$text <- doc
   rd
 }
