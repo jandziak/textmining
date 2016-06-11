@@ -48,18 +48,27 @@ getDoc.tmTextDocument <- function(x){
 #' @return returns i-th document of corpus x
 #'
 #' @export
-getMeta <- function(x, parameter, i=1) {
-  if (class(x) != "tmTextDocument" && class(x) != "tmMetaData") {
-    if (length(x) < i)
-      stop("index \"i\" out of bands")
-    x <- x[[i]]
-  }
-  if (class(x) == "tmMetaData") {
-    meta_vector <- try(get(parameter, x), silent = T)
-  }
-  else {
-    meta_vector <- try(get(parameter, x$meta), silent = T)
-  }
+getMeta <- function(x, parameter, i = 1) {
+  UseMethod("getMeta")
+}
+
+getMeta.tmMetaData <- function(x, parameter) {
+  meta_vector <- try(get(parameter, x), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  meta_vector
+}
+getMeta.tmTextDocument <- function(x, parameter) {
+  meta_vector <- try(get(parameter, x$meta), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  meta_vector
+}
+
+getMeta.default <- function(x, parameter, i=1) {
+  if (length(x) < i)
+    stop("index \"i\" out of bands")
+  meta_vector <- try(get(parameter, x[[i]]$meta), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
   meta_vector
