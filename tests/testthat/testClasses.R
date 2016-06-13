@@ -250,3 +250,31 @@ test_that("Setter for tmTextDocument", {
   expect_equal(rd, tmTextDocument("not a doc_1"))
 })
 
+context("setMeta")
+test_that("Document setter for one document works", {
+  rd <- tmCorpus(c("doc_1"))
+  rd <- setMeta(rd, "language", "pl", 1)
+  expect_equal(getMeta(rd, "language", 1), "pl")
+})
+
+test_that("Setter index out of bands", {
+  rd <- tmCorpus(c("doc_1", "doc_2"))
+  expect_error(setMeta(rd, "language", "pl", 3), "index \"i\" out of bands")
+})
+
+test_that("Setter for tmTextDocument", {
+  rd <- tmTextDocument("doc_1")
+  rd <- setMeta(rd, "language", "pl")
+  expect_equal(getMeta(rd, "language"), "pl")
+})
+
+test_that("Setter index out of bands", {
+  rd <- tmCorpus(c("doc_1", "doc_2"))
+  expect_error(setMeta(rd, "randomMeta", "randomValue"), "There is no metadata: \"randomMeta\"")
+})
+
+test_that("setDoc for tmMetaData", {
+  rd <- tmMetaData()
+  rd <- setMeta(rd, "language", "pl")
+  expect_equal(getMeta(rd, "language"), "pl")
+})

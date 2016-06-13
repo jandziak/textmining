@@ -83,3 +83,42 @@ setDoc.tmTextDocument <- function(x, doc) {
   x$text <- doc
   x
 }
+
+#' Function to access meta data for textmining objects
+#'
+#' @param x object to retrive document fe tmCorpus or tmTextDocument
+#' @param i index
+#' @param parameter name of metadata to be extracted
+#'
+#' @return returns i-th document of corpus x
+#'
+#' @export
+setMeta <- function(x, parameter, value, i = 1) {
+  UseMethod("setMeta")
+}
+
+setMeta.tmMetaData <- function(x, parameter, value) {
+  meta_vector <- try(get(parameter, x), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  x[[parameter]] <- value
+  x
+}
+
+setMeta.tmTextDocument <- function(x, parameter, value) {
+  meta_vector <- try(get(parameter, x$meta), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  x$meta[[parameter]] <- value
+  x
+}
+
+setMeta.default <- function(x, parameter, value, i = 1) {
+  if (length(x) < i)
+    stop("index \"i\" out of bands")
+  meta_vector <- try(get(parameter, x[[i]]$meta), silent = T)
+  if (class(meta_vector) == "try-error")
+    stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
+  x[[i]]$meta[[parameter]] <- value
+  x
+}
