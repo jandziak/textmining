@@ -235,7 +235,7 @@ test_that("tmMetaData id is proper in many documents", {
 context("setDocument")
 test_that("Document setter for one document works", {
   rd <- tmCorpus(c("doc_1", "doc_2"))
-  rd <- setDoc(rd, 1, "new_doc")
+  rd <- setDoc(rd, "new_doc", 1)
   expect_equal(rd, tmCorpus(c("new_doc", "doc_2")))
 })
 test_that("Setter index out of bands", {
