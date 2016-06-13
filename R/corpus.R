@@ -199,4 +199,18 @@ setDoc <- function(rd, i = 1, doc){
   rd
 }
 
-
+#' Function to create ngram docs
+#'
+#' @param x source
+#' @return returns tmParsed document of ngrams
+#'
+#' @export
+ngram <- function(x) {
+  parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y), " "))
+  names(parsed_doc_list) <- NULL
+  k <- length(parsed_doc_list[[1]])
+  parsed_doc_list <- sapply(1:(k-1),
+                            function(i) paste(parsed_doc_list[[1]][i], parsed_doc_list[[1]][i+1]))
+  x <- tmParsed(list(parsed_doc_list))
+  x
+}

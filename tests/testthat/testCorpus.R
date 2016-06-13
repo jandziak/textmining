@@ -287,3 +287,9 @@ test_that("Setter index out of bands", {
   expect_error(setDoc(rd, 3, "doc"), "index \"i\" out of bands")
 })
 
+context("ngrams")
+test_that("Create ngram document from Corpus", {
+  rd <- tmCorpus(c("This is document"))
+  rd <- ngram(rd)
+  expect_equal(rd, tmParsed(list(c("This is", "is document"))))
+})
