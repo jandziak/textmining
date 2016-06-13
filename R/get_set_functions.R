@@ -66,9 +66,20 @@ getMeta.default <- function(x, parameter, i = 1) {
 #' @return x with changed i-th document
 #'
 #' @export
-setDoc <- function(rd, i = 1, doc) {
-  if (length(rd) < i)
+setDoc <- function(x, doc, i = 1) {
+  UseMethod("setDoc")
+}
+
+#' @export
+setDoc.default <- function(x, doc, i = 1) {
+  if (length(x) < i)
     stop("index \"i\" out of bands")
-  rd[[i]]$text <- doc
-  rd
+  x[[i]]$text <- doc
+  x
+}
+
+#' @export
+setDoc.tmTextDocument <- function(x, doc) {
+  x$text <- doc
+  x
 }

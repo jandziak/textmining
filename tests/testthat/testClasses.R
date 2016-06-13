@@ -242,3 +242,9 @@ test_that("Setter index out of bands", {
   rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_error(setDoc(rd, 3, "doc"), "index \"i\" out of bands")
 })
+
+test_that("Setter for tmTextDocument", {
+  rd <- tmTextDocument("doc_1")
+  rd <- setDoc(rd, "not a doc_1")
+  expect_equal(rd, tmTextDocument("not a doc_1"))
+})
