@@ -8,7 +8,7 @@ tmCorpus <- function(x = NULL) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  doc_list <- lapply(x, function(y) tmTextDocument(y, id =  parent.frame()$i[]))
+  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
   x <- structure(doc_list, class = "tmCorpus")
   x
 }
@@ -24,8 +24,7 @@ tmParsed <- function(x = NULL) {
     stop("argument \"x\" is missing")
   }
   doc_list <- lapply(x, tmTextDocument)
-  x <- structure(doc_list,
-                 class = "tmParsed")
+  x <- structure(doc_list, class = "tmParsed")
   x
 }
 
@@ -40,8 +39,7 @@ tmWordCountsTable <- function(x = NULL) {
     stop("argument \"x\" is missing")
   }
   doc_list <- lapply(x, tmTextDocument)
-  x <- structure(doc_list,
-                 class = "tmWordCountsTable")
+  x <- structure(doc_list, class = "tmWordCountsTable")
   x
 }
 
@@ -64,16 +62,8 @@ tmTextDocument <- function(x = NULL, ...) {
 #' @return returns tmMetaData object
 #'
 #' @export
-tmMetaData <- function(id = 1,
-                       language = "en",
-                       author = character(0),
-                       date = Sys.Date(),
-                       title = paste("Document_", id, sep=""),
-                       ...){
-  structure(list(id = id,
-                 language = language,
-                 author = author,
-                 date = date,
-                 title = title, ...),
-            class = "tmMetaData")
+tmMetaData <- function(id = 1, language = "en", author = character(0), date = Sys.Date(),
+                       title = paste("Document_", id, sep = ""), ...) {
+  structure(list(id = id, language = language, author = author, date = date, title = title,
+                 ...), class = "tmMetaData")
 }

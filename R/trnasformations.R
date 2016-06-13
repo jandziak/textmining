@@ -1,4 +1,3 @@
-
 #' Function to parse new corpus
 #'
 #' @param x corpus
@@ -12,7 +11,6 @@ parse <- function(x) {
   x
 }
 
-
 #' Helper function for tabelarising documents
 #'
 #' @param x parsed document
@@ -20,9 +18,7 @@ parse <- function(x) {
 #'
 #' @export
 tabler <- function(x) {
-  x <- x %>%
-    table %>%
-    as.data.frame
+  x <- x %>% table %>% as.data.frame
   names(x) <- c("word", "count")
   x
 }
@@ -40,8 +36,6 @@ make_tabled <- function(x) {
   s
 }
 
-
-
 #' Transform function to lowercase
 #'
 #' @param x source
@@ -49,7 +43,7 @@ make_tabled <- function(x) {
 #' @return returns corpus object after transformation
 #'
 #' @export
-transform <- function(x, FUN){
+transform <- function(x, FUN) {
   x <- x %>% sapply(., function(y) FUN(getDoc(y)))
   tmCorpus(x)
 }
@@ -64,8 +58,8 @@ ngram <- function(x) {
   parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y), " "))
   names(parsed_doc_list) <- NULL
   k <- length(parsed_doc_list[[1]])
-  parsed_doc_list <- sapply(1:(k-1),
-                            function(i) paste(parsed_doc_list[[1]][i], parsed_doc_list[[1]][i+1]))
+  parsed_doc_list <- sapply(1:(k - 1), function(i) paste(parsed_doc_list[[1]][i],
+                                                         parsed_doc_list[[1]][i + 1]))
   x <- tmParsed(list(parsed_doc_list))
   x
 }

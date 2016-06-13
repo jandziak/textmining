@@ -53,6 +53,7 @@ test_that("Class value for new corpus is appropriate", {
   expect_equal(class(rd), "tmCorpus")
 })
 
+
 context("Test parsed text")
 test_that("No argument in constructor of parsed text", {
   expect_error(tmParsed(), "argument \"x\" is missing")
@@ -180,6 +181,7 @@ test_that("Document test for class", {
   expect_equal(class(rd), "tmWordCountsTable")
 })
 
+
 context("Document class")
 test_that("Document class created with single text", {
   rd <- tmTextDocument("doc_1")
@@ -197,13 +199,14 @@ test_that("Document test for class", {
 
 test_that("Meta data for document class", {
   rd <- tmTextDocument("doc_1")
-  expect_equal(getMeta(rd,"language"), "en")
+  expect_equal(getMeta(rd, "language"), "en")
 })
 
-test_that("Getter for meta data, no metadata with a given name for TextDocument", {
-  rd <- tmTextDocument("doc_1")
-  expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
-})
+test_that("Getter for meta data, no metadata with a given name for TextDocument",
+          {
+            rd <- tmTextDocument("doc_1")
+            expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
+          })
 
 
 context("Default metadata constructor")
@@ -227,6 +230,7 @@ test_that("tmMetaData id is proper in many documents", {
   expect_equal(getMeta(rd, "id", 2), 2)
   expect_equal(getMeta(rd, "id", 1), 1)
 })
+
 
 context("setDocument")
 test_that("Document setter for one document works", {

@@ -18,7 +18,7 @@ getDoc.default <- function(x, i = 1) {
 }
 
 #' @export
-getDoc.tmTextDocument <- function(x){
+getDoc.tmTextDocument <- function(x) {
   x$text
 }
 
@@ -41,6 +41,7 @@ getMeta.tmMetaData <- function(x, parameter) {
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
   meta_vector
 }
+
 getMeta.tmTextDocument <- function(x, parameter) {
   meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
@@ -48,7 +49,7 @@ getMeta.tmTextDocument <- function(x, parameter) {
   meta_vector
 }
 
-getMeta.default <- function(x, parameter, i=1) {
+getMeta.default <- function(x, parameter, i = 1) {
   if (length(x) < i)
     stop("index \"i\" out of bands")
   meta_vector <- try(get(parameter, x[[i]]$meta), silent = T)
@@ -57,9 +58,7 @@ getMeta.default <- function(x, parameter, i=1) {
   meta_vector
 }
 
-
-
-setDoc <- function(rd, i = 1, doc){
+setDoc <- function(rd, i = 1, doc) {
   if (length(rd) < i)
     stop("index \"i\" out of bands")
   rd[[i]]$text <- doc
