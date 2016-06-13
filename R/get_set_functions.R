@@ -58,6 +58,14 @@ getMeta.default <- function(x, parameter, i = 1) {
   meta_vector
 }
 
+#' Function to change documents for textmining objects
+#'
+#' @param x object to retrive document fe tmCorpus or tmTextDocument
+#' @param i index
+#'
+#' @return x with changed i-th document
+#'
+#' @export
 setDoc <- function(rd, i = 1, doc) {
   if (length(rd) < i)
     stop("index \"i\" out of bands")
