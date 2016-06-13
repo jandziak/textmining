@@ -1,7 +1,7 @@
-#' Function to create new corpus
+#' Function to create tmCorpus
 #'
 #' @param x source
-#' @return returns new corpus list
+#' @return returns tmCorpus object
 #'
 #' @export
 tmCorpus <- function(x = NULL) {
@@ -13,10 +13,10 @@ tmCorpus <- function(x = NULL) {
   x
 }
 
-#' Function to create new parsed corpus
+#' Function to create tmParsed
 #'
 #' @param x source
-#' @return returns new corpus list
+#' @return returns tmParsed object
 #'
 #' @export
 tmParsed <- function(x = NULL) {
@@ -28,10 +28,10 @@ tmParsed <- function(x = NULL) {
   x
 }
 
-#' Function to create new tabularised corpus
+#' Function to create tmWordCountsTable
 #'
 #' @param x source
-#' @return returns new corpus list
+#' @return returns tmWordCountsTable object
 #'
 #' @export
 tmWordCountsTable <- function(x = NULL) {
@@ -43,10 +43,11 @@ tmWordCountsTable <- function(x = NULL) {
   x
 }
 
-#' Function to store single document with meta data
+#' Function to create single tmTextDocument with meta data.
+#' The object can store any from of documents: raw (string), parsed or table of words counts.
 #'
 #' @param x source
-#' @return returns new document class
+#' @return returns tmTextDocument
 #'
 #' @export
 tmTextDocument <- function(x = NULL, ...) {
@@ -57,7 +58,13 @@ tmTextDocument <- function(x = NULL, ...) {
   x
 }
 
-#' Constructor of metadata class
+#' Function to create tmMetaData
+#'
+#' @param id id of document
+#' @param language string language of document
+#' @param author string authors name
+#' @param date Date - date of reading in/date of publication
+#' @param title string title of document
 #'
 #' @return returns tmMetaData object
 #'

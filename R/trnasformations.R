@@ -1,7 +1,7 @@
-#' Function to parse new corpus
+#' Function to parse tmCorpus. As an outpus we have tmParsed object
 #'
-#' @param x corpus
-#' @return returns new parsed list
+#' @param x tmCorpus object
+#' @return returns tmParsed object
 #'
 #' @export
 parse <- function(x) {
@@ -13,8 +13,8 @@ parse <- function(x) {
 
 #' Helper function for tabelarising documents
 #'
-#' @param x parsed document
-#' @return returns table of words and counts
+#' @param x parsed tmTextDocument object.
+#' @return returns tmTextDocument with table of words counts
 #'
 #' @export
 tabler <- function(x) {
@@ -23,7 +23,7 @@ tabler <- function(x) {
   x
 }
 
-#' Function to create tabelarised object from parsed
+#' Function to create tmWordCountsTable object from tmParsed
 #'
 #' @param x tmParsed source
 #' @return returns tmWordCountsTable object
@@ -50,8 +50,8 @@ transform <- function(x, FUN) {
 
 #' Function to create ngram docs
 #'
-#' @param x source
-#' @return returns tmParsed document of ngrams
+#' @param x tmCorpus object
+#' @return returns tmParsed object of ngrams
 #'
 #' @export
 ngram <- function(x) {

@@ -1,9 +1,9 @@
-#' Function to access documents from corpus
+#' Function to access documents for textmining objects
 #'
-#' @param x corpus
+#' @param x object to retrive document fe tmCorpus or tmTextDocument
 #' @param i index
 #'
-#' @return returns i-th document of corpus x
+#' @return returns i-th document of object x
 #'
 #' @export
 getDoc <- function(x, i = 1) {
@@ -22,9 +22,9 @@ getDoc.tmTextDocument <- function(x) {
   x$text
 }
 
-#' Function to access metadata for documents from new corpus
+#' Function to access meta data for textmining objects
 #'
-#' @param x corpus
+#' @param x object to retrive document fe tmCorpus or tmTextDocument
 #' @param i index
 #' @param parameter name of metadata to be extracted
 #'
