@@ -110,21 +110,6 @@ test_that("Getter for meta data, no metadata with a given name for new parsed", 
   expect_error(getMeta(rd, "randomMeta", 2), "There is no metadata: \"randomMeta\"")
 })
 
-context("Parse corpus")
-test_that("Parse single simple article",{
-  rd <- tmCorpus("Not parsed doc_1")
-  rd <- parse(rd)
-  expect_equal(rd, tmParsed(list(c("Not", "parsed", "doc_1"))))
-})
-
-test_that("Parse two simple articles",{
-  rd <- tmCorpus(c("Not parsed doc_1", "Not parsed doc_2"))
-  rd <- parse(rd)
-  test <- tmParsed(list(c("Not", "parsed", "doc_1"), c("Not", "parsed", "doc_2")))
-  expect_equal(getDoc(rd,1), getDoc(test, 1))
-  expect_equal(getDoc(rd,2), getDoc(test, 2))
-  expect_equal(rd, test)
-})
 
 context("Test tabelarised text")
 test_that("No argument in constructor of tabularised", {
@@ -195,20 +180,11 @@ test_that("Document test for class", {
   expect_equal(class(rd), "tmWordCountsTable")
 })
 
-
-context("Table function")
-test_that("Parsed one document tabelarises", {
-  rd <- tmParsed(list(c("doc_1", "parsed")))
-  rd <- make_tabled(rd)
-  df <- data.frame(word = c("doc_1", "parsed"), count = c(1, 1))
-  expect_equal(rd, tmWordCountsTable(list(df)))
-})
-
 context("Document class")
 test_that("Document class created with single text", {
   rd <- tmTextDocument("doc_1")
   expect_equal(getDoc(rd), "doc_1")
- })
+})
 
 test_that("Document class no argument in constructor", {
   expect_error(tmTextDocument(), "argument \"x\" is missing")
@@ -229,30 +205,6 @@ test_that("Getter for meta data, no metadata with a given name for TextDocument"
   expect_error(getMeta(rd, "randomMeta"), "There is no metadata: \"randomMeta\"")
 })
 
-context("Change to lowercase small letters corpus")
-test_that("Chenge to small letters", {
-  rd <- tmCorpus("doc")
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus("doc"))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus("Doc")
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus("doc"))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus(c("doc", "doc two", "three")))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
-  rd <- transform(rd, toupper)
-  expect_equal(rd, tmCorpus(c("DOC", "DOC TWO", "THREE")))
-})
 
 context("Default metadata constructor")
 test_that("Default constructor of meta data", {
@@ -285,11 +237,4 @@ test_that("Document setter for one document works", {
 test_that("Setter index out of bands", {
   rd <- tmCorpus(c("doc_1", "doc_2"))
   expect_error(setDoc(rd, 3, "doc"), "index \"i\" out of bands")
-})
-
-context("ngrams")
-test_that("Create ngram document from Corpus", {
-  rd <- tmCorpus(c("This is document"))
-  rd <- ngram(rd)
-  expect_equal(rd, tmParsed(list(c("This is", "is document"))))
 })
