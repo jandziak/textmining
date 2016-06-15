@@ -6,18 +6,7 @@
 #' @export
 tmCorpus <- function(x = NULL, source = NULL, method = "base") {
   if (!is.null(source)) {
-    if (method == "base") {
-    files <- dir(path = source, pattern = "*.txt")
-    x <- sapply(files, function(x) read.table(paste("tmp/", x, sep = ""), stringsAsFactors = FALSE))
-    x <- as.character(x)
-    } else if (method == "stylo") {
-    x <- stylo::load.corpus(corpus.dir = source)
-    x <- as.character(x)
-    } else {
-    x <- tm::VCorpus(tm::DirSource(directory = "tmp"))
-    x <- sapply(x, NLP::content)
-    x <- as.character(x)
-    }
+    x <- tmReadDirCorpus(source, method)
   }
   if (is.null(x)) {
     stop("argument \"x\" is missing")
@@ -87,4 +76,26 @@ tmMetaData <- function(id = 1, language = "en", author = character(0), date = Sy
                        title = paste("Document_", id, sep = ""), ...) {
   structure(list(id = id, language = language, author = author, date = date, title = title,
                  ...), class = "tmMetaData")
+}
+
+#' Function to create tmCorpus
+#'
+#' @param source directory containing files to read
+#' @param method method of data extraction to be used
+#'
+#' @return returns character vector
+tmReadDirCorpus <- function(source, method) {
+  if (method == "base") {
+    files <- dir(path = source, pattern = "*.txt")
+    x <- sapply(files, function(x) read.table(paste("tmp/", x, sep = ""), stringsAsFactors = FALSE))
+    x <- as.character(x)
+  } else if (method == "stylo") {
+    x <- stylo::load.corpus(corpus.dir = source)
+    x <- as.character(x)
+  } else {
+    x <- tm::VCorpus(tm::DirSource(directory = "tmp"))
+    x <- sapply(x, NLP::content)
+    x <- as.character(x)
+  }
+  x
 }
