@@ -6,7 +6,8 @@
 #' @export
 tmCorpus <- function(x = NULL, source = NULL) {
   if (!is.null(source)) {
-    x <- read.table("tmp/tmp1.txt", stringsAsFactors = FALSE)
+    files <- dir(path = source, pattern = "*.txt")
+    x <- sapply(files, function(x) read.table(paste("tmp/", x, sep = ""), stringsAsFactors = FALSE))
     x <- as.character(x)
   }
   if (is.null(x)) {
