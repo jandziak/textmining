@@ -10,9 +10,11 @@ tmCorpus <- function(x = NULL, source = NULL, method = "base") {
     files <- dir(path = source, pattern = "*.txt")
     x <- sapply(files, function(x) read.table(paste("tmp/", x, sep = ""), stringsAsFactors = FALSE))
     x <- as.character(x)
-    } else {
-    x <- load.corpus(corpus.dir = source)
+    } else if (method == "stylo") {
+    x <- stylo::load.corpus(corpus.dir = source)
     x <- as.character(x)
+    } else {
+
     }
   }
   if (is.null(x)) {
