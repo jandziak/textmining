@@ -4,7 +4,11 @@
 #' @return returns tmCorpus object
 #'
 #' @export
-tmCorpus <- function(x = NULL) {
+tmCorpus <- function(x = NULL, source = NULL) {
+  if (!is.null(source)) {
+    x <- read.table("tmp/tmp1.txt", stringsAsFactors = FALSE)
+    x <- as.character(x)
+  }
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
