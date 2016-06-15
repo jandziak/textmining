@@ -10,4 +10,6 @@ Suggests:
     testthat
 License: GPL-3
 RoxygenNote: 5.0.1
-Imports: stylo
+Imports: stylo,
+    tm,
+    NLP

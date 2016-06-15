@@ -14,7 +14,9 @@ tmCorpus <- function(x = NULL, source = NULL, method = "base") {
     x <- stylo::load.corpus(corpus.dir = source)
     x <- as.character(x)
     } else {
-
+    x <- tm::VCorpus(tm::DirSource(directory = "tmp"))
+    x <- sapply(x, NLP::content)
+    x <- as.character(x)
     }
   }
   if (is.null(x)) {
