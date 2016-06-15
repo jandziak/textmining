@@ -4,11 +4,16 @@
 #' @return returns tmCorpus object
 #'
 #' @export
-tmCorpus <- function(x = NULL, source = NULL) {
+tmCorpus <- function(x = NULL, source = NULL, method = "base") {
   if (!is.null(source)) {
+    if (method == "base") {
     files <- dir(path = source, pattern = "*.txt")
     x <- sapply(files, function(x) read.table(paste("tmp/", x, sep = ""), stringsAsFactors = FALSE))
     x <- as.character(x)
+    } else {
+    x <- load.corpus(corpus.dir = source)
+    x <- as.character(x)
+    }
   }
   if (is.null(x)) {
     stop("argument \"x\" is missing")
