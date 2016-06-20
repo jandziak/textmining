@@ -110,3 +110,78 @@ tmReadDirCorpus <- function(source, method, parse = F) {
   }
   x
 }
+
+#' Function to create tmTopicModel
+#'
+#' @param model LDA model
+#'
+#' @return returns object of a class tmTopicModel
+#'
+#' @export
+tmTopicModel <- function(model) {
+  class(model) <- "tmTopicModel"
+  model
+}
+
+#' Helper function to use mallet topic modelling with tmCorpus
+#'
+#' @param doc single document
+#'
+#' @return returns named character vector
+#'
+mallet_prepare <- function(doc) {
+  x <- getDoc(doc)
+  names(x) <- getMeta(doc, parameter = "title")
+  return(x)
+}
+
+#' Function to create train Topic Model
+#'
+#' @param x tmCorpus object
+#' @param stoplist_file directory of file with stopwords
+#' @param token_regexp regular expression patterns
+#' @param no_of_topics number of topics
+#' @param alpha_opt parameter of mallet model
+#' @param burn_in parameter of mallet model
+#' @param train parameter of mallet model
+#' @param maximize parameter of mallet model
+#'
+#'
+#' @return returns object of a class tmTopicModel
+#'
+#' @export
+train <- function(x,
+                  stoplist_file = "en.txt",
+                  token_regexp = "[A-za-z]+",
+                  no_of_topics = 20,
+                  alpha_opt = 20,
+                  burn_in = 50,
+                  train = 200,
+                  maximize = 10) {
+    require(rJava)
+  text_array <- sapply(x, mallet_prepare)
+  text_array <- as.character(text_array)
+
+  if(is.null(names(text_array)))
+    names <- 1:length(text_array)
+  else
+    names <- names(text_array)
+  mallet.instances = mallet::mallet.import(id.array = as.character(names),
+                                   text.array = as.character(text_array),
+                                   stoplist.file = stoplist_file,
+                                   token.regexp = token_regexp)
+
+  topic.model = mallet::MalletLDA(num.topics = no_of_topics)
+  topic.model$loadDocuments(mallet.instances)
+
+  vocabulary = topic.model$getVocabulary()
+  word.freqs = mallet::mallet.word.freqs(topic.model)
+
+
+  topic.model$setAlphaOptimization(alpha_opt, burn_in)
+
+  topic.model$train(train)
+  topic.model$maximize(maximize)
+
+  tmTopicModel(topic.model)
+}

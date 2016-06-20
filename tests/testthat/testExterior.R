@@ -42,3 +42,10 @@ test_that("Read and parse using stylo", {
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmParsed(list(c("this", "is", "written", "file"))))
 })
+
+context("Train function attached to the corpus")
+test_that("Class of the model is tmTopicModel", {
+  x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  model <- suppressMessages(train(x))
+  expect_equal(class(model), "tmTopicModel")
+})
