@@ -6,6 +6,7 @@ test_that("Reading corpus from other files works", {
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmCorpus("This is written file"))
 })
+
 test_that("Reading corpus from other files works", {
   dir.create("tmp")
   write.table("This is written file", "tmp/tmp1.txt")
@@ -39,6 +40,5 @@ test_that("Read and parse using stylo", {
   writeLines("this is written file", "tmp/tmp1.txt")
   rd <- try(tmParsed(source = "tmp", method = "stylo"))
   unlink("tmp", recursive = TRUE)
-  print(rd)
   expect_equal(rd, tmParsed(list(c("this", "is", "written", "file"))))
 })
