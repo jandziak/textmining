@@ -90,7 +90,7 @@ tmMetaData <- function(id = 1, language = "en", author = character(0), date = Sy
 tmReadDirCorpus <- function(source, method, parse = F) {
   if (parse == T) {
     if (method == "stylo") {
-      x <- stylo::load.corpus.and.parse(corpus.dir = "tmp")
+      x <- stylo::load.corpus.and.parse(corpus.dir = source)
       names(x) <- NULL
     }
   }
