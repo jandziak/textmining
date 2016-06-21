@@ -49,3 +49,13 @@ test_that("Class of the model is tmTopicModel", {
   model <- suppressMessages(train(x))
   expect_equal(class(model), "tmTopicModel")
 })
+
+context("Predict function attached to the corpus")
+test_that("Predict class for topic model tmTopicModel", {
+  x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  model <- suppressMessages(train(x))
+  y <- tmCorpus(rep("as, aa a a a a ada s a a da d as a", 100))
+  pred <- predict(model, y)
+  expect_equal(class(pred), "data.frame")
+})
+

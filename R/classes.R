@@ -158,14 +158,15 @@ train <- function(x,
                   burn_in = 50,
                   train = 200,
                   maximize = 10) {
-    require(rJava)
+
+  require(rJava)
   text_array <- sapply(x, mallet_prepare)
-  text_array <- as.character(text_array)
 
   if(is.null(names(text_array)))
     names <- 1:length(text_array)
   else
     names <- names(text_array)
+
   mallet.instances = mallet::mallet.import(id.array = as.character(names),
                                    text.array = as.character(text_array),
                                    stoplist.file = stoplist_file,
@@ -183,5 +184,51 @@ train <- function(x,
   topic.model$train(train)
   topic.model$maximize(maximize)
 
+  topic.model <- list(model = topic.model)
   tmTopicModel(topic.model)
 }
+
+#' Function to predict topic model probabilities for existing topic model
+#'
+#' @param topic.model tmTopicModel obiect
+#' @param x tmCorpus object
+#' @param stoplist_file directory of file with stopwords
+#' @param token_regexp regular expression patterns
+#' @param burn_in parameter of mallet model
+#' @param sampling_interval parameter of mallet model
+#' @param n_iterations parameter of mallet model
+#' @param random_seed parameter of mallet model
+#'
+#'
+#' @return returns the table of topic probabilities
+#'
+#' @export
+predict <- function(topic.model, x,
+                    stoplist_file = "en.txt",
+                    token_regexp = "[A-Za-z]+",
+                    n_iterations = 100,
+                    sampling_interval = 10, # aka "thinning"
+                    burn_in = 10,
+                    random_seed = NULL){
+  require(rJava)
+  new_texts <- sapply(x, mallet_prepare)
+
+  mallet.instances = mallet::mallet.import(id.array = as.character(names(new_texts)),
+                                   text.array = as.character(new_texts),
+                                   stoplist.file = stoplist_file,
+                                   token.regexp = token_regexp)
+  comp_inst <- compatible_instances(as.character(names(new_texts)),
+                                    as.character(new_texts), mallet.instances)
+  inf <- inferencer(topic.model$model)
+  inf_top <- infer_topics(inf, comp_inst,
+                          n_iterations=n_iterations,
+                          sampling_interval=sampling_interval, # aka "thinning"
+                          burn_in=burn_in,
+                          random_seed=random_seed)
+
+  ml_inst <- as.data.frame(inf_top)
+
+  ml_inst
+}
+
+
