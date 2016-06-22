@@ -88,8 +88,11 @@ tmMetaData <- function(id = 1, language = "en", author = character(0),
 #'
 #' @param source directory containing files to read
 #' @param method method of data extraction to be used
+#' @param parse bool decide if documents should be parsed
 #'
 #' @return returns character vector
+#'
+#' @export
 tmReadDirCorpus <- function(source, method, parse = F) {
   if (parse == T) {
     if (method == "stylo") {
@@ -131,7 +134,6 @@ tmTopicModel <- function(model) {
 #' @param doc single document
 #'
 #' @return returns named character vector
-#'
 mallet_prepare <- function(doc) {
   x <- getDoc(doc)
   names(x) <- getMeta(doc, parameter = "title")
@@ -241,7 +243,8 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
 #' table_of_topics <- topic_table(model, tmCorpus)
 #' table_of_topics$topics
 #' table_of_topics$words
-
+#'
+#' @export
 topic_table <- function(model, deparsed_corpus){
 
   doc_topics <- model$doc_topics
@@ -266,6 +269,8 @@ topic_table <- function(model, deparsed_corpus){
 #'
 #' @examples
 #' topic_wordcloud(table_of_topics)
+#'
+#' @export
 topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
                            rot_per = 0, random_order = FALSE){
   current_topic = sort(topic_table$words[topic_id, ], decreasing = T
@@ -275,7 +280,7 @@ topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
                  rot.per = rot_per)
 }
 
-#' Function to extract the article from the Project Gutenberg page
+#' Function to plot topic network
 #'
 #' @param no_of_words Number of words from each topic to be included in graph
 #' @param topic_words Words words extracted from the topic_table function
@@ -283,6 +288,8 @@ topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
 #' @return network The graph visualising the network
 #' @examples
 #' gepi_network(20, topic_words)
+#'
+#' @export
 gepi_network <- function(no_of_words, topic_words) {
   topic_names <- paste("Topic_", 1:dim(topic_words)[1], sep = "")
   row.names(topic_words) <- topic_names
