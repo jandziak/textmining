@@ -239,10 +239,6 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
 #'
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.
-#' @examples
-#' table_of_topics <- topic_table(model, tmCorpus)
-#' table_of_topics$topics
-#' table_of_topics$words
 #'
 #' @export
 topic_table <- function(model, deparsed_corpus){
@@ -267,9 +263,6 @@ topic_table <- function(model, deparsed_corpus){
 #' @param rot_per wordcloud param
 #' @param random_order order of words
 #'
-#' @examples
-#' topic_wordcloud(table_of_topics)
-#'
 #' @export
 topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
                            rot_per = 0, random_order = FALSE){
@@ -286,8 +279,6 @@ topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
 #' @param topic_words Words words extracted from the topic_table function
 #'
 #' @return network The graph visualising the network
-#' @examples
-#' gepi_network(20, topic_words)
 #'
 #' @export
 gepi_network <- function(no_of_words, topic_words) {
