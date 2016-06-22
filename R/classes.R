@@ -270,7 +270,7 @@ topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
                            rot_per = 0, random_order = FALSE){
   current_topic = sort(topic_table$words[topic_id, ], decreasing = T
                        )[1:no_of_words]
-  wordcloud(names(current_topic), current_topic,
+  wordcloud::wordcloud(names(current_topic), current_topic,
                  random.order = random_order,
                  rot.per = rot_per)
 }
