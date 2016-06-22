@@ -13,7 +13,8 @@ test_that("Reading corpus from other files works", {
   write.table("This is written file 2", "tmp/tmp2.txt")
   rd <- try(tmCorpus(source = "tmp"))
   unlink("tmp", recursive = TRUE)
-  expect_equal(rd, tmCorpus(c("This is written file","This is written file 2")))
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
 })
 
 test_that("Reading corpus from other files works", {
@@ -22,7 +23,8 @@ test_that("Reading corpus from other files works", {
   writeLines("This is written file 2", "tmp/tmp2.txt")
   rd <- try(tmCorpus(source = "tmp", method = "stylo"))
   unlink("tmp", recursive = TRUE)
-  expect_equal(rd, tmCorpus(c("This is written file","This is written file 2")))
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
 })
 
 test_that("Reading corpus from other files works", {
@@ -31,7 +33,8 @@ test_that("Reading corpus from other files works", {
   writeLines("This is written file 2", "tmp/tmp2.txt")
   rd <- try(tmCorpus(source = "tmp", method = "tm"))
   unlink("tmp", recursive = TRUE)
-  expect_equal(rd, tmCorpus(c("This is written file","This is written file 2")))
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
 })
 
 context("Read and parse document")
@@ -58,4 +61,3 @@ test_that("Predict class for topic model tmTopicModel", {
   pred <- predict(model, y)
   expect_equal(class(pred), "data.frame")
 })
-

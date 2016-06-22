@@ -50,7 +50,8 @@ tmWordCountsTable <- function(x = NULL) {
 }
 
 #' Function to create single tmTextDocument with meta data.
-#' The object can store any from of documents: raw (string), parsed or table of words counts.
+#' The object can store any from of documents: raw (string), parsed or table of
+#' words counts.
 #'
 #' @param x source
 #' @return returns tmTextDocument
@@ -60,7 +61,8 @@ tmTextDocument <- function(x = NULL, ...) {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  x <- structure(list(text = x, meta = tmMetaData(...)), class = "tmTextDocument")
+  x <- structure(list(text = x, meta = tmMetaData(...)),
+                 class = "tmTextDocument")
   x
 }
 
@@ -75,10 +77,11 @@ tmTextDocument <- function(x = NULL, ...) {
 #' @return returns tmMetaData object
 #'
 #' @export
-tmMetaData <- function(id = 1, language = "en", author = character(0), date = Sys.Date(),
+tmMetaData <- function(id = 1, language = "en", author = character(0),
+                       date = Sys.Date(),
                        title = paste("Document_", id, sep = ""), ...) {
-  structure(list(id = id, language = language, author = author, date = date, title = title,
-                 ...), class = "tmMetaData")
+  structure(list(id = id, language = language, author = author, date = date,
+                 title = title, ...), class = "tmMetaData")
 }
 
 #' Function to create tmCorpus
@@ -93,11 +96,11 @@ tmReadDirCorpus <- function(source, method, parse = F) {
       x <- stylo::load.corpus.and.parse(corpus.dir = source)
       names(x) <- NULL
     }
-  }
-  else {
+  } else {
     if (method == "base") {
       files <- dir(path = source, pattern = "*.txt")
-      x <- sapply(files, function(x) read.table(paste(source, "/", x, sep = ""), stringsAsFactors = FALSE))
+      x <- sapply(files, function(x) read.table(paste(source, "/", x, sep = ""),
+                                                stringsAsFactors = FALSE))
       x <- as.character(x)
     } else if (method == "stylo") {
       x <- stylo::load.corpus(corpus.dir = source)
@@ -150,39 +153,32 @@ mallet_prepare <- function(doc) {
 #' @return returns object of a class tmTopicModel
 #'
 #' @export
-train <- function(x,
-                  stoplist_file = "en.txt",
-                  token_regexp = "[A-Za-z]+",
-                  no_of_topics = 20,
-                  alpha_opt = 20,
-                  burn_in = 50,
-                  train = 200,
+train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
+                  no_of_topics = 20, alpha_opt = 20, burn_in = 50, train = 200,
                   maximize = 10) {
 
   require(rJava)
   text_array <- sapply(x, mallet_prepare)
 
-  if(is.null(names(text_array)))
-    names <- 1:length(text_array)
-  else
-    names <- names(text_array)
+  if (is.null(names(text_array)))
+    names <- 1:length(text_array) else names <- names(text_array)
 
-  mallet.instances = mallet::mallet.import(id.array = as.character(names),
-                                   text.array = as.character(text_array),
-                                   stoplist.file = stoplist_file,
-                                   token.regexp = token_regexp)
+  mallet.instances <-
+    mallet::mallet.import(id.array = as.character(names),
+                          text.array = as.character(text_array),
+                          stoplist.file = stoplist_file,
+                          token.regexp = token_regexp)
 
-  topic.model = mallet::MalletLDA(num.topics = no_of_topics)
+  topic.model <- mallet::MalletLDA(num.topics = no_of_topics)
   topic.model$loadDocuments(mallet.instances)
-
-  vocabulary = topic.model$getVocabulary()
-  word.freqs = mallet::mallet.word.freqs(topic.model)
-
 
   topic.model$setAlphaOptimization(alpha_opt, burn_in)
 
   topic.model$train(train)
   topic.model$maximize(maximize)
+
+  vocabulary <- topic.model$getVocabulary()
+  word.freqs <- mallet::mallet.word.freqs(topic.model)
 
   topic.model <- list(model = topic.model)
   tmTopicModel(topic.model)
@@ -203,32 +199,28 @@ train <- function(x,
 #' @return returns the table of topic probabilities
 #'
 #' @export
-predict <- function(topic.model, x,
-                    stoplist_file = "en.txt",
-                    token_regexp = "[A-Za-z]+",
-                    n_iterations = 100,
-                    sampling_interval = 10, # aka "thinning"
-                    burn_in = 10,
-                    random_seed = NULL){
+predict <- function(topic.model, x, stoplist_file = "en.txt",
+                    token_regexp = "[A-Za-z]+", n_iterations = 100,
+                    sampling_interval = 10, burn_in = 10, random_seed = NULL) {
+
   require(rJava)
   new_texts <- sapply(x, mallet_prepare)
 
-  mallet.instances = mallet::mallet.import(id.array = as.character(names(new_texts)),
-                                   text.array = as.character(new_texts),
-                                   stoplist.file = stoplist_file,
-                                   token.regexp = token_regexp)
-  comp_inst <- compatible_instances(as.character(names(new_texts)),
-                                    as.character(new_texts), mallet.instances)
-  inf <- inferencer(topic.model$model)
-  inf_top <- infer_topics(inf, comp_inst,
-                          n_iterations=n_iterations,
-                          sampling_interval=sampling_interval, # aka "thinning"
-                          burn_in=burn_in,
-                          random_seed=random_seed)
+  mallet.instances <-
+    mallet::mallet.import(id.array = as.character(names(new_texts)),
+                          text.array = as.character(new_texts),
+                          stoplist.file = stoplist_file,
+                          token.regexp = token_regexp)
 
+  comp_inst <- compatible_instances(as.character(names(new_texts)),
+                                    as.character(new_texts),
+                                    mallet.instances)
+
+  inf <- inferencer(topic.model$model)
+  inf_top <- infer_topics(inf, comp_inst, n_iterations = n_iterations,
+                          sampling_interval = sampling_interval,
+                          burn_in = burn_in, random_seed = random_seed)
   ml_inst <- as.data.frame(inf_top)
 
   ml_inst
 }
-
-
