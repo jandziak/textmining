@@ -1,6 +1,9 @@
 #' Function to create tmCorpus
 #'
 #' @param x source
+#' @param source directory to corpus on computer
+#' @param method method of reading the data
+#'
 #' @return returns tmCorpus object
 #'
 #' @export
@@ -19,6 +22,9 @@ tmCorpus <- function(x = NULL, source = NULL, method = "base") {
 #' Function to create tmParsed
 #'
 #' @param x source
+#' @param source directory to corpus on computer
+#' @param method method of reading the data
+#'
 #' @return returns tmParsed object
 #'
 #' @export
@@ -54,6 +60,8 @@ tmWordCountsTable <- function(x = NULL) {
 #' words counts.
 #'
 #' @param x source
+#' @param ... metadata to set. Can be set as language = "pl" or newmeta = "random"
+#'
 #' @return returns tmTextDocument
 #'
 #' @export
@@ -73,6 +81,7 @@ tmTextDocument <- function(x = NULL, ...) {
 #' @param author string authors name
 #' @param date Date - date of reading in/date of publication
 #' @param title string title of document
+#' @param ... other metadata
 #'
 #' @return returns tmMetaData object
 #'
@@ -150,6 +159,7 @@ mallet_prepare <- function(doc) {
 #' @param burn_in parameter of mallet model
 #' @param train parameter of mallet model
 #' @param maximize parameter of mallet model
+#' @param ... settings for mallet.doc.topics and mallet.topic.words
 #'
 #'
 #' @return returns object of a class tmTopicModel
@@ -236,6 +246,7 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
 #' Function to calculate topics and words arrays from the mallet model.
 #'
 #' @param model Mallet model.
+#' @param deparsed_corpus tmCorpus from which the model was made
 #'
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.

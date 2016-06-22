@@ -61,6 +61,7 @@ getMeta.default <- function(x, parameter, i = 1) {
 #' Function to change documents for textmining objects
 #'
 #' @param x object to retrive document fe tmCorpus or tmTextDocument
+#' @param doc element to be attached as content
 #' @param i index
 #'
 #' @return x with changed i-th document
@@ -87,8 +88,9 @@ setDoc.tmTextDocument <- function(x, doc, i = 1) {
 #' Function to access meta data for textmining objects
 #'
 #' @param x object to retrive document fe tmCorpus or tmTextDocument
-#' @param i index
 #' @param parameter name of metadata to be extracted
+#' @param value value of meta data to set
+#' @param i index
 #'
 #' @return returns i-th document of corpus x
 #'
