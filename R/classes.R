@@ -155,7 +155,7 @@ mallet_prepare <- function(doc) {
 #' @export
 train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
                   no_of_topics = 20, alpha_opt = 20, burn_in = 50, train = 200,
-                  maximize = 10) {
+                  maximize = 10, ...) {
 
   require(rJava)
   text_array <- sapply(x, mallet_prepare)
@@ -169,19 +169,25 @@ train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
                           stoplist.file = stoplist_file,
                           token.regexp = token_regexp)
 
-  topic.model <- mallet::MalletLDA(num.topics = no_of_topics)
-  topic.model$loadDocuments(mallet.instances)
+  topic_model <- mallet::MalletLDA(num.topics = no_of_topics)
+  topic_model$loadDocuments(mallet.instances)
 
-  topic.model$setAlphaOptimization(alpha_opt, burn_in)
+  vocabulary <- topic_model$getVocabulary()
+  word_freqs <- mallet::mallet.word.freqs(topic_model)
 
-  topic.model$train(train)
-  topic.model$maximize(maximize)
+  topic_model$setAlphaOptimization(alpha_opt, burn_in)
 
-  vocabulary <- topic.model$getVocabulary()
-  word.freqs <- mallet::mallet.word.freqs(topic.model)
+  topic_model$train(train)
+  topic_model$maximize(maximize)
 
-  topic.model <- list(model = topic.model)
-  tmTopicModel(topic.model)
+  doc_topics <- mallet::mallet.doc.topics(topic_model, ...)
+  topic_words <- mallet::mallet.topic.words(topic_model, ...)
+
+  topic_model <- list(model = topic_model, vocabulary = vocabulary,
+                      word_freqs = word_freqs, doc_topics = doc_topics,
+                      topic_words = topic_words)
+
+  tmTopicModel(topic_model)
 }
 
 #' Function to predict topic model probabilities for existing topic model
@@ -223,4 +229,29 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
   ml_inst <- as.data.frame(inf_top)
 
   ml_inst
+}
+
+#' Function to calculate topics and words arrays from the mallet model.
+#'
+#' @param model Mallet model.
+#'
+#' @return topics Array of the topics.
+#' @return words Array of the most important words in topic.
+#' @examples
+#' table_of_topics <- topic_table(model, tmCorpus)
+#' table_of_topics$topics
+#' table_of_topics$words
+
+topic_table <- function(model, deparsed_corpus){
+
+  doc_topics <- model$doc_topics
+  topic_words <- model$topic_words
+
+  colnames(topic_words) = model$vocabulary
+  rownames(doc_topics) = names(deparsed_corpus)
+  colnames(doc_topics) = 1:length(doc_topics[1, ])
+
+  list(topics = doc_topics,
+       words = topic_words)
+
 }

@@ -61,3 +61,10 @@ test_that("Predict class for topic model tmTopicModel", {
   pred <- predict(model, y)
   expect_equal(class(pred), "data.frame")
 })
+
+test_that("Topic table function", {
+  x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  model <- suppressMessages(train(x))
+  n1 <- topic_table(model, x)
+  expect_equal(names(n1), c("topics", "words"))
+})
