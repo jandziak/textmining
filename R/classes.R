@@ -152,7 +152,7 @@ mallet_prepare <- function(doc) {
 #' @export
 train <- function(x,
                   stoplist_file = "en.txt",
-                  token_regexp = "[A-za-z]+",
+                  token_regexp = "[A-Za-z]+",
                   no_of_topics = 20,
                   alpha_opt = 20,
                   burn_in = 50,
