@@ -18,7 +18,7 @@ getDoc.default <- function(x, i = 1) {
 }
 
 #' @export
-getDoc.tmTextDocument <- function(x) {
+getDoc.tmTextDocument <- function(x, i = 1) {
   x$text
 }
 
@@ -35,14 +35,14 @@ getMeta <- function(x, parameter, i = 1) {
   UseMethod("getMeta")
 }
 
-getMeta.tmMetaData <- function(x, parameter) {
+getMeta.tmMetaData <- function(x, parameter, i = 1) {
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
   meta_vector
 }
 
-getMeta.tmTextDocument <- function(x, parameter) {
+getMeta.tmTextDocument <- function(x, parameter, i = 1) {
   meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
@@ -79,7 +79,7 @@ setDoc.default <- function(x, doc, i = 1) {
 }
 
 #' @export
-setDoc.tmTextDocument <- function(x, doc) {
+setDoc.tmTextDocument <- function(x, doc, i = 1) {
   x$text <- doc
   x
 }
@@ -97,7 +97,7 @@ setMeta <- function(x, parameter, value, i = 1) {
   UseMethod("setMeta")
 }
 
-setMeta.tmMetaData <- function(x, parameter, value) {
+setMeta.tmMetaData <- function(x, parameter, value, i = 1) {
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
@@ -105,7 +105,7 @@ setMeta.tmMetaData <- function(x, parameter, value) {
   x
 }
 
-setMeta.tmTextDocument <- function(x, parameter, value) {
+setMeta.tmTextDocument <- function(x, parameter, value, i = 1) {
   meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
     stop(paste("There is no metadata: \"", parameter, "\"", sep = ""))
