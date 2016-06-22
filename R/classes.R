@@ -255,3 +255,24 @@ topic_table <- function(model, deparsed_corpus){
        words = topic_words)
 
 }
+
+#' Simple wordcloud visualization of the topics.
+#'
+#' @param topic_table List returned from the topic_table function.
+#' @param topic_id Id of the analised topic.
+#' @param no_of_words Number of words to be ploted.
+#' @param rot_per wordcloud param
+#' @param random_order order of words
+#'
+#' @examples
+#' topic_wordcloud(table_of_topics)
+
+topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
+                           rot_per = 0, random_order = FALSE){
+  current_topic = sort(topic_table$words[topic_id, ], decreasing = T
+                       )[1:no_of_words]
+  wordcloud(names(current_topic), current_topic,
+                 random.order = random_order,
+                 rot.per = rot_per)
+}
+
