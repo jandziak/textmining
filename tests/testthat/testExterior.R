@@ -68,3 +68,11 @@ test_that("Topic table function", {
   n1 <- topic_table(model, x)
   expect_equal(names(n1), c("topics", "words"))
 })
+
+test_that("Gepi graphics", {
+  x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  model <- suppressMessages(train(x))
+  table_topic <- topic_table(model, x)
+  network <- gepi_network(10 ,table_topic$words)
+  expect_equal(class(network), c("forceNetwork", "htmlwidget"))
+})
