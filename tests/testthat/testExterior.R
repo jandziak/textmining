@@ -76,3 +76,9 @@ test_that("Gepi graphics", {
   network <- gepi_network(10 ,table_topic$words)
   expect_equal(class(network), c("forceNetwork", "htmlwidget"))
 })
+
+test_that("Content returns the list content of a tmCorpus", {
+  x <- tmCorpus(c("Nothing is here", "Just list content"))
+  content_x <- content(x)
+  expect_equal(content_x, list("Nothing is here", "Just list content"))
+})
