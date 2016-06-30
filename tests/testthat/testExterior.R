@@ -82,3 +82,9 @@ test_that("Content returns the list content of a tmCorpus", {
   content_x <- content(x)
   expect_equal(content_x, list("Nothing is here", "Just list content"))
 })
+
+test_that("Content settr for the list content of a tmCorpus", {
+  x <- tmCorpus(c("Nothing is here", "Just list content"))
+  content(x) <- list("a", "b")
+  expect_equal(content(x), list("a", "b"))
+})
