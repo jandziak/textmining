@@ -328,3 +328,13 @@ gepi_network <- function(no_of_words, topic_words) {
 
   network
 }
+
+as.tmCorpus <- function(x, ...) {
+  UseMethod("as.tmCorpus")
+}
+
+as.tmCorpus.default <- function(x, ...) {
+  tmCorpus(x)
+}
+
+

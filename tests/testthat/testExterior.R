@@ -95,3 +95,9 @@ test_that("tm_map works for tmCorpus", {
   x <- tm_map(x, tm::removeWords, tm::stopwords("english"))
   expect_equal(content(x), list("", "b"))
 })
+
+test_that("Create tmCorpus from vector with as.tmCorpus", {
+  x <- c("sa", "As")
+  x <- as.tmCorpus(x)
+  expect_equal(x, tmCorpus(c("sa", "As")))
+})
