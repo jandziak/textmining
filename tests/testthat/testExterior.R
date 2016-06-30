@@ -88,3 +88,10 @@ test_that("Content settr for the list content of a tmCorpus", {
   content(x) <- list("a", "b")
   expect_equal(content(x), list("a", "b"))
 })
+
+test_that("tm_map works for tmCorpus", {
+  x <- tmCorpus(c("Nothing is here", "Just list content"))
+  content(x) <- list("a", "b")
+  x <- tm_map(x, tm::removeWords, tm::stopwords("english"))
+  expect_equal(content(x), list("", "b"))
+})
