@@ -348,3 +348,8 @@ as.tmCorpus.stylo.corpus <- function(x, ...) {
   names(x) <- NULL
   tmCorpus(x)
 }
+
+print.tmCorpus <- function(x, ...) {
+  print(paste(length(x), "tmTextDocument"))
+  lapply(x, function(y) print(getDoc(y)))
+}
