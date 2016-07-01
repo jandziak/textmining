@@ -337,4 +337,14 @@ as.tmCorpus.default <- function(x, ...) {
   tmCorpus(x)
 }
 
+as.tmCorpus.VCorpus <- function(x, ...) {
+  x <- lapply(x, function(y) y$content)
+  names(x) <- NULL
+  tmCorpus(x)
+}
 
+as.tmCorpus.stylo.corpus <- function(x, ...) {
+  x <- lapply(x, function(y) y)
+  names(x) <- NULL
+  tmCorpus(x)
+}

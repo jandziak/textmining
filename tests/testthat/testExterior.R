@@ -102,3 +102,19 @@ test_that("Create tmCorpus from vector with as.tmCorpus", {
   expect_equal(x, tmCorpus(c("sa", "As")))
 })
 
+test_that("Create tmCorpus from VCorpus with as.tmCorpus", {
+  x <- c("sa", "As")
+  V_x <- tm::VCorpus(tm::VectorSource(x))
+  x<- as.tmCorpus(V_x)
+  expect_equal(x, tmCorpus(c("sa", "As")))
+})
+
+test_that("Create tmCorpus from stylo.corpus with as.tmCorpus", {
+  dir.create("tmp")
+  writeLines("This is written file", "tmp/tmp1.txt")
+  writeLines("This is written file 2", "tmp/tmp2.txt")
+  x <- stylo::load.corpus(corpus.dir = "tmp")
+  unlink("tmp", recursive = TRUE)
+  x <- as.tmCorpus(x)
+  expect_equal(x, tmCorpus(c("This is written file", "This is written file 2")))
+})
