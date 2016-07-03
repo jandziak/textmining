@@ -118,3 +118,9 @@ test_that("Create tmCorpus from stylo.corpus with as.tmCorpus", {
   x <- as.tmCorpus(x)
   expect_equal(x, tmCorpus(c("This is written file", "This is written file 2")))
 })
+
+test_that("Content settr for the list content of a tmCorpus", {
+  x <- tmCorpus(c("Nothing is here", "Just list content"))
+  meta(x, "language")
+  expect_equal(meta(x, "language"), list("en", "en"))
+})

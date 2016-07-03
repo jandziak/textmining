@@ -353,3 +353,11 @@ print.tmCorpus <- function(x, ...) {
   print(paste(length(x), "tmTextDocument"))
   lapply(x, function(y) print(getDoc(y)))
 }
+
+meta <- function(x, tag, ...) {
+  UseMethod("meta")
+}
+
+meta.tmCorpus <- function(x, tag, ...) {
+  lapply(x, function(x) getMeta(x, tag))
+}
