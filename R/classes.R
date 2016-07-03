@@ -365,8 +365,8 @@ meta.tmCorpus <- function(x, tag, ...) {
 termFreq_tm <-
   function (doc, control = list())
   {
-    doc <- list(content = as.character(doc))
-    class(doc) <- unique(c(class, "PlainTextDocument", "TextDocument"))
+    doc <- tm::PlainTextDocument(x = getDoc(doc),
+                             language = getMeta(doc, "language"))
     stopifnot(is.list(control))
     .tokenize <- control$tokenize
     if (is.null(.tokenize) || identical(.tokenize, "words"))
@@ -444,7 +444,7 @@ TermDocumentMatrix.tmCorpus <-
   {
     stopifnot(is.list(control))
 
-    tflist <- lapply(unname(content(x)), termFreq_tm, control)
+    tflist <- lapply(x, termFreq_tm, control)
     tflist <- lapply(tflist, function(y) y[y > 0])
 
     v <- unlist(tflist)
