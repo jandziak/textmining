@@ -124,3 +124,9 @@ test_that("Content settr for the list content of a tmCorpus", {
   meta(x, "language")
   expect_equal(meta(x, "language"), list("en", "en"))
 })
+
+test_that("TermDocumentMatrix from tmCorpus", {
+  x <- tmCorpus(c("doc1", "doc2"))
+  y <- TermDocumentMatrix(x)
+  expect_equal(class(TermDocumentMatrix(x))[1], "TermDocumentMatrix")
+})
