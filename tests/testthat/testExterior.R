@@ -130,3 +130,9 @@ test_that("TermDocumentMatrix from tmCorpus", {
   y <- TermDocumentMatrix(x)
   expect_equal(class(TermDocumentMatrix(x))[1], "TermDocumentMatrix")
 })
+
+test_that("Set meta data for tmCorpus with meta function", {
+  x <- tmCorpus(c("doc1", "doc2"))
+  meta(x, tag = "language") <- c("pl", "pl")
+  expect_equal(getMeta(x, "language", 2), "pl")
+})

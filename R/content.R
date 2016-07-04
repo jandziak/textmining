@@ -16,6 +16,15 @@ content.tmCorpus <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
+'meta<-'<- function(x, tag, ..., value) {
+  UseMethod("meta<-")
+}
+
+'meta<-.tmCorpus' <- function(x, tag, ..., value) {
+  x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], "language", "pl"))
+  structure(x, class = "tmCorpus")
+}
+
 tm_map <- function(x, FUN, ...)
   UseMethod("tm_map", x)
 
