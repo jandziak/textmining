@@ -350,9 +350,15 @@ as.tmCorpus.stylo.corpus <- function(x, ...) {
 }
 
 print.tmCorpus <- function(x, ...) {
-  print(paste(length(x), "tmTextDocument"))
-  lapply(x, function(y) print(getDoc(y)))
+cat(format(x))
 }
+
+format.tmCorpus <-
+  function(x, ...)
+  {
+    c(sprintf("<<%s>>", class(x)[1L]),
+      sprintf("Content:  documents: %d", length(x)))
+  }
 
 meta <- function(x, tag, ...) {
   UseMethod("meta")
