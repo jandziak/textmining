@@ -1,21 +1,40 @@
 #' Function to create tmCorpus
 #'
-#' @param x source
-#' @param source directory to corpus on computer
+#' @param x source, for method stylo it supposed to be directory with Corpus files
+#' @param ... other arguments dependent on package that we use
 #' @param method method of reading the data
 #'
 #' @return returns tmCorpus object
 #'
 #' @export
-tmCorpus <- function(x = NULL, source = NULL, method = "base") {
-  if (!is.null(source)) {
-    x <- tmReadDirCorpus(source, method)
+tmCorpus <- function (x = NULL, ..., method = "base") {
+  if (method != "base") {
+    class(method) <- method
+    x <- tmExternalCoprus(method, x, ...)
+  } else {
+    if (is.null(x)) {
+      stop("argument \"x\" is missing")
+    }
+    doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
+    x <- structure(doc_list, class = "tmCorpus")
   }
-  if (is.null(x)) {
-    stop("argument \"x\" is missing")
-  }
-  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
-  x <- structure(doc_list, class = "tmCorpus")
+  x
+}
+
+tmExternalCoprus <- function(method, x, ...) {
+  UseMethod("tmExternalCoprus")
+}
+
+tmExternalCoprus.tm <- function(method, x, ...) {
+  x <- tm::VCorpus(x)
+  print(x)
+  x <- as.tmCorpus(x)
+  x
+}
+
+tmExternalCoprus.stylo <- function(method, x, ...) {
+  x <- stylo::load.corpus(corpus.dir = x, ...)
+  x <- as.tmCorpus(x)
   x
 }
 

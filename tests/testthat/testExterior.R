@@ -1,24 +1,34 @@
-# context("Exterior packages corpus read")
-# test_that("Reading corpus from other files works", {
-#   dir.create("tmp")
-#   writeLines("This is written file", "tmp/tmp1.txt")
-#   writeLines("This is written file 2", "tmp/tmp2.txt")
-#   rd <- try(tmCorpus(source = "tmp", method = "stylo"))
-#   unlink("tmp", recursive = TRUE)
-#   expect_equal(rd, tmCorpus(c("This is written file",
-#                               "This is written file 2")))
-# })
-#
-# test_that("Reading corpus from other files works", {
-#   dir.create("tmp")
-#   writeLines("This is written file", "tmp/tmp1.txt")
-#   writeLines("This is written file 2", "tmp/tmp2.txt")
-#   rd <- try(tmCorpus(source = "tmp", method = "tm"))
-#   unlink("tmp", recursive = TRUE)
-#   expect_equal(rd, tmCorpus(c("This is written file",
-#                               "This is written file 2")))
-# })
-#
+context("Exterior packages corpus read")
+test_that("Reading corpus from other files works", {
+  dir.create("tmp")
+  writeLines("This is written file", "tmp/tmp1.txt")
+  writeLines("This is written file 2", "tmp/tmp2.txt")
+  rd <- try(tmCorpus(x = "tmp", method = "stylo"))
+  unlink("tmp", recursive = TRUE)
+  print(rd)
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
+})
+
+test_that("Reading corpus from other files works", {
+  dir.create("tmp")
+  writeLines("This is written file", "tmp/tmp1.txt")
+  writeLines("This is written file 2", "tmp/tmp2.txt")
+  rd <- try(tmCorpus(x = tm::DirSource("tmp"), method = "tm"))
+  print(rd)
+  unlink("tmp", recursive = TRUE)
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
+})
+
+test_that("Reading corpus from tm VectorSource", {
+  rd <- try(tmCorpus(x = tm::VectorSource(c("This is written file",
+                                        "This is written file 2")),
+                     method = "tm"))
+  expect_equal(rd, tmCorpus(c("This is written file",
+                              "This is written file 2")))
+})
+
 # context("Read and parse document")
 # test_that("Read and parse using stylo", {
 #   dir.create("tmp")
