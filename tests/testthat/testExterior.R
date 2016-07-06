@@ -5,7 +5,6 @@ test_that("Reading corpus from other files works", {
   writeLines("This is written file 2", "tmp/tmp2.txt")
   rd <- try(tmCorpus(x = "tmp", method = "stylo"))
   unlink("tmp", recursive = TRUE)
-  print(rd)
   expect_equal(rd, tmCorpus(c("This is written file",
                               "This is written file 2")))
 })
@@ -15,7 +14,6 @@ test_that("Reading corpus from other files works", {
   writeLines("This is written file", "tmp/tmp1.txt")
   writeLines("This is written file 2", "tmp/tmp2.txt")
   rd <- try(tmCorpus(x = tm::DirSource("tmp"), method = "tm"))
-  print(rd)
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmCorpus(c("This is written file",
                               "This is written file 2")))

@@ -27,7 +27,6 @@ tmExternalCoprus <- function(method, x, ...) {
 
 tmExternalCoprus.tm <- function(method, x, ...) {
   x <- tm::VCorpus(x)
-  print(x)
   x <- as.tmCorpus(x)
   x
 }
