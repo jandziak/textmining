@@ -126,3 +126,9 @@ test_that("Set meta data for tmCorpus with meta function", {
   meta(x, tag = "language") <- c("pl", "pl")
   expect_equal(getMeta(x, "language", 2), "pl")
 })
+
+test_that("tm_filter and tm_index works for tmCorpus", {
+  x <- tmCorpus(c("company", "ala", "coMpany", "next"))
+  x <- tm_filter(x, FUN = function(x) any(grep("co[m]?pany", content(x))))
+  expect_equal(length(x), 1)
+})

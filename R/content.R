@@ -32,3 +32,23 @@ tm_map.tmCorpus <-function(x, FUN, ...) {
   content(x) <- lapply(content(x), FUN, ...)
   x
 }
+
+tm_filter <- function(x, FUN, ...) {
+  UseMethod("tm_filter", x)
+}
+
+tm_filter.tmCorpus <- function(x, FUN, ...)
+  x[tm_index(x, FUN, ...)]
+
+tm_index <- function(x, FUN, ...) {
+  UseMethod("tm_index", x)
+}
+
+tm_index.tmCorpus <- function(x, FUN, ...) {
+  unlist(lapply(x, FUN, ...))
+}
+
+
+content.tmTextDocument <- function(x) {
+  x$text
+}
