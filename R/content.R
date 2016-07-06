@@ -21,7 +21,7 @@ content.tmCorpus <- function(x) {
 }
 
 'meta<-.tmCorpus' <- function(x, tag, ..., value) {
-  x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], "language", "pl"))
+  x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], tag, value[[l]]))
   structure(x, class = "tmCorpus")
 }
 
