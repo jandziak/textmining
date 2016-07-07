@@ -52,3 +52,12 @@ tm_index.tmCorpus <- function(x, FUN, ...) {
 content.tmTextDocument <- function(x) {
   x$text
 }
+
+c.tmCorpus <- function(..., recursive = FALSE) {
+  x <- list(...)
+  x <- lapply(x, function(y) {class(y) <- "list"; y})
+  x <- do.call("c", lapply(x, function(y) y))
+  class(x) <- "tmCorpus"
+  meta(x, "id") <-  1:length(x)
+  x
+}

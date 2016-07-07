@@ -132,3 +132,10 @@ test_that("tm_filter and tm_index works for tmCorpus", {
   x <- tm_filter(x, FUN = function(x) any(grep("co[m]?pany", content(x))))
   expect_equal(length(x), 1)
 })
+
+test_that("tm_filter and tm_index works for tmCorpus", {
+  x <- tmCorpus(c("company", "ala"))
+  x <- c(x, x)
+  expect_equal(length(x), 4)
+  expect_equal(class(x), "tmCorpus")
+})
