@@ -16,4 +16,6 @@ Imports: stylo,
     mallet,
     rJava,
     networkD3,
-    wordcloud
+    wordcloud,
+    dplyr,
+    koRpus

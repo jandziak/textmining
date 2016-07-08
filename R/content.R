@@ -61,3 +61,16 @@ c.tmCorpus <- function(..., recursive = FALSE) {
   meta(x, "id") <-  1:length(x)
   x
 }
+
+tagdocument <- function(x, format = "obj", ...){
+  tagged_text <- koRpus::treetag(x, ..., format = format)
+  tagged_text
+}
+
+tagtmCorpus_helper <- function(x, ...) {
+  x <- content(x)
+  texts <- x %>%
+    lapply(tagdocument, ...) %>%
+    lapply(koRpus::taggedText)
+  texts
+}
