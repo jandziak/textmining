@@ -161,3 +161,11 @@ test_that("Class of the model is tmTopicModel", {
   model <- suppressMessages(train(y, method = "LDA_topic_models"))
   expect_equal(class(model), "tmTopicModel")
 })
+
+content("Content transformations for tmCorpus")
+test_that("tm_map function work for some transformations", {
+  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+                                                collapse = "")))
+  x <- tm_map(x, tm::content_transformer(tolower))
+  expect_equal(class(x), "tmCorpus")
+})

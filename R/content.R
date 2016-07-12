@@ -16,6 +16,14 @@ content.tmCorpus <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
+# content.character <- function(x) {
+#   x
+# }
+#
+# 'content<-.character' <- function(x, value) {
+#   value
+# }
+
 'meta<-'<- function(x, tag, ..., value) {
   UseMethod("meta<-")
 }
