@@ -185,38 +185,41 @@ mallet_prepare <- function(doc) {
 #' @export
 train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
                   no_of_topics = 20, alpha_opt = 20, burn_in = 50, train = 200,
-                  maximize = 10, ...) {
+                  maximize = 10, method = "mallet", ...) {
+  if (method == "mallet") {
+    require(rJava)
+    text_array <- sapply(x, mallet_prepare)
 
-  require(rJava)
-  text_array <- sapply(x, mallet_prepare)
+    if (is.null(names(text_array)))
+      names <- 1:length(text_array) else names <- names(text_array)
 
-  if (is.null(names(text_array)))
-    names <- 1:length(text_array) else names <- names(text_array)
+    mallet.instances <-
+      mallet::mallet.import(id.array = as.character(names),
+                            text.array = as.character(text_array),
+                            stoplist.file = stoplist_file,
+                            token.regexp = token_regexp)
 
-  mallet.instances <-
-    mallet::mallet.import(id.array = as.character(names),
-                          text.array = as.character(text_array),
-                          stoplist.file = stoplist_file,
-                          token.regexp = token_regexp)
+    topic_model <- mallet::MalletLDA(num.topics = no_of_topics)
+    topic_model$loadDocuments(mallet.instances)
 
-  topic_model <- mallet::MalletLDA(num.topics = no_of_topics)
-  topic_model$loadDocuments(mallet.instances)
+    vocabulary <- topic_model$getVocabulary()
+    word_freqs <- mallet::mallet.word.freqs(topic_model)
 
-  vocabulary <- topic_model$getVocabulary()
-  word_freqs <- mallet::mallet.word.freqs(topic_model)
+    topic_model$setAlphaOptimization(alpha_opt, burn_in)
 
-  topic_model$setAlphaOptimization(alpha_opt, burn_in)
+    topic_model$train(train)
+    topic_model$maximize(maximize)
 
-  topic_model$train(train)
-  topic_model$maximize(maximize)
+    doc_topics <- mallet::mallet.doc.topics(topic_model, ...)
+    topic_words <- mallet::mallet.topic.words(topic_model, ...)
 
-  doc_topics <- mallet::mallet.doc.topics(topic_model, ...)
-  topic_words <- mallet::mallet.topic.words(topic_model, ...)
-
-  topic_model <- list(model = topic_model, vocabulary = vocabulary,
-                      word_freqs = word_freqs, doc_topics = doc_topics,
-                      topic_words = topic_words)
-
+    topic_model <- list(model = topic_model, vocabulary = vocabulary,
+                        word_freqs = word_freqs, doc_topics = doc_topics,
+                        topic_words = topic_words)
+  } else {
+    model <- topicmodels::LDA(x, k = no_of_topics, ...)
+    topic_model <- list(model = model)
+  }
   tmTopicModel(topic_model)
 }
 

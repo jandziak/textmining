@@ -18,4 +18,5 @@ Imports: stylo,
     networkD3,
     wordcloud,
     dplyr,
-    koRpus
+    koRpus,
+    topicmodels
