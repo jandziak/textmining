@@ -241,6 +241,11 @@ train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
 predict <- function(topic.model, x, stoplist_file = "en.txt",
                     token_regexp = "[A-Za-z]+", n_iterations = 100,
                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
+  if (attr(class(topic.model$model),"package") == "topicmodels") {
+    topicProbabilities <- topicmodels::posterior(topic.model$model,x)
+    topicProbabilities <- as.data.frame(topicProbabilities$topics)
+    return(as.data.frame(topicProbabilities))
+  }
 
   require(rJava)
   new_texts <- sapply(x, mallet_prepare)
