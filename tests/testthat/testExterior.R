@@ -151,37 +151,45 @@
 #
 #   expect_equal(rd[[1]]$token, c("MUCH", "ADO", "ABOUT", "NOTHING"))
 # })
+#
+# context("Train function attached to the dtm for topicmodels pacakge")
+# test_that("Class of the model is tmTopicModel", {
+#   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#                                                 collapse = "")))
+#   y <- tm::DocumentTermMatrix(x)
+#   rownames(y) <- meta(x, "title")
+#   model <- suppressMessages(train(y, method = "LDA_topic_models"))
+#   expect_equal(class(model), "tmTopicModel")
+# })
+#
+# test_that("Predict posterior probabilities for new instances for topicmodels
+#           model", {
+#   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#                                                 collapse = "")))
+#   y <- tm::DocumentTermMatrix(x)
+#   rownames(y) <- meta(x, "title")
+#   model <- suppressMessages(train(y, method = "LDA_topic_models"))
+#   pred <- predict(model, y)
+#   topicProbabilities <- as.data.frame(model$model@gamma)
+#   names(topicProbabilities) <- as.character(1:20)
+#   row.names(topicProbabilities) <- NULL
+#   row.names(pred) <- NULL
+#   expect_equal(pred, topicProbabilities)
+# })
+#
+# content("Content transformations for tmCorpus")
+# test_that("tm_map function work for some transformations", {
+#   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#                                                 collapse = "")))
+#   x <- tm_map(x, tm::content_transformer(tolower))
+#   expect_equal(class(x), "tmCorpus")
+# })
 
-context("Train function attached to the dtm for topicmodels pacakge")
-test_that("Class of the model is tmTopicModel", {
+test_that("Terms for tmTopicModal", {
   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
                                                 collapse = "")))
   y <- tm::DocumentTermMatrix(x)
   rownames(y) <- meta(x, "title")
   model <- suppressMessages(train(y, method = "LDA_topic_models"))
-  expect_equal(class(model), "tmTopicModel")
+  expect_equal(class(terms(model,2)), "data.frame")
 })
-
-test_that("Predict posterior probabilities for new instances for topicmodels
-          model", {
-  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
-                                                collapse = "")))
-  y <- tm::DocumentTermMatrix(x)
-  rownames(y) <- meta(x, "title")
-  model <- suppressMessages(train(y, method = "LDA_topic_models"))
-  pred <- predict(model, y)
-  topicProbabilities <- as.data.frame(model$model@gamma)
-  names(topicProbabilities) <- as.character(1:20)
-  row.names(topicProbabilities) <- NULL
-  row.names(pred) <- NULL
-  expect_equal(pred, topicProbabilities)
-})
-
-content("Content transformations for tmCorpus")
-test_that("tm_map function work for some transformations", {
-  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
-                                                collapse = "")))
-  x <- tm_map(x, tm::content_transformer(tolower))
-  expect_equal(class(x), "tmCorpus")
-})
-

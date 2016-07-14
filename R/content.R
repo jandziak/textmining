@@ -82,3 +82,7 @@ tagtmCorpus_helper <- function(x, ...) {
     lapply(koRpus::taggedText)
   texts
 }
+
+terms.tmTopicModel <- function(x, ...) {
+  as.data.frame(topicmodels::terms(x$model, ...))
+}
