@@ -273,24 +273,21 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
 #' Function to calculate topics and words arrays from the mallet model.
 #'
 #' @param model Mallet model.
-#' @param deparsed_corpus tmCorpus from which the model was made
 #'
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.
 #'
 #' @export
-topic_table <- function(model, deparsed_corpus){
-
+topic_table <- function(model){
   doc_topics <- model$doc_topics
   topic_words <- model$topic_words
 
   colnames(topic_words) = model$vocabulary
-  rownames(doc_topics) = names(deparsed_corpus)
+  rownames(doc_topics) = model$doc_names
   colnames(doc_topics) = 1:length(doc_topics[1, ])
 
   list(topics = doc_topics,
        words = topic_words)
-
 }
 
 #' Simple wordcloud visualization of the topics.
