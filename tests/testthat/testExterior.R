@@ -194,6 +194,7 @@ test_that("Terms for tmTopicModal", {
   expect_equal(class(terms(model,2)), "data.frame")
 })
 
+
 test_that("Terms for tmTopicModal", {
   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
                                                 collapse = "")))

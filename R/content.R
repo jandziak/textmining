@@ -84,5 +84,26 @@ tagtmCorpus_helper <- function(x, ...) {
 }
 
 terms.tmTopicModel <- function(x, ...) {
-  as.data.frame(topicmodels::terms(x$model, ...))
+  if(class(x$model) == "jobjRef") {
+    terms <- terms.jobjRef(x, ...)
+  } else {
+    terms <- as.data.frame(topicmodels::terms(x$model,  ...))
+  }
+  terms
+}
+
+sorted_topic_words <- function(topic_no = 1, k = 1, topic_table) {
+  names(sort(topic_table$words[topic_no, ], decreasing = T)[1:k])
+}
+
+terms.jobjRef <- function(x, ...) {
+  no_topics <- dim(x$doc_topics)[2]
+  topic_table_ <- topic_table(x)
+  terms <- sapply(1:no_topics, function(x)
+    sorted_topic_words(topic_no = x, topic_table = topic_table_,...))
+  if(is.null(dim(terms)))
+    terms <- matrix(terms, nrow = 1)
+  terms <- as.data.frame(terms)
+  names(terms) <- paste("Topic", 1:no_topics)
+  terms
 }
