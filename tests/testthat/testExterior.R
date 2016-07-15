@@ -55,14 +55,14 @@
 # test_that("Topic table function", {
 #   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
 #   model <- suppressMessages(train(x))
-#   n1 <- topic_table(model, x)
+#   n1 <- topic_table(model)
 #   expect_equal(names(n1), c("topics", "words"))
 # })
 #
 # test_that("Gepi graphics", {
 #   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
 #   model <- suppressMessages(train(x))
-#   table_topic <- topic_table(model, x)
+#   table_topic <- topic_table(model)
 #   network <- gepi_network(10 ,table_topic$words)
 #   expect_equal(class(network), c("forceNetwork", "htmlwidget"))
 # })
@@ -192,4 +192,12 @@ test_that("Terms for tmTopicModal", {
   rownames(y) <- meta(x, "title")
   model <- suppressMessages(train(y, method = "LDA_topic_models"))
   expect_equal(class(terms(model,2)), "data.frame")
+})
+
+test_that("Terms for tmTopicModal", {
+  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+                                                collapse = "")))
+  model <- suppressMessages(train(x))
+  expect_equal(class(terms(model,2)), "data.frame")
+  expect_equal(class(terms(model,1)), "data.frame")
 })

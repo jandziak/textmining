@@ -299,8 +299,9 @@ topic_table <- function(model){
 #' @param random_order order of words
 #'
 #' @export
-topic_wordcloud<- function(topic_table, topic_id = 1, no_of_words = 10,
+topic_wordcloud<- function(model, topic_id = 1, no_of_words = 10,
                            rot_per = 0, random_order = FALSE){
+  topic_table <- topic_table(model)
   current_topic = sort(topic_table$words[topic_id, ], decreasing = T
                        )[1:no_of_words]
   wordcloud::wordcloud(names(current_topic), current_topic,
