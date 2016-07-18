@@ -242,12 +242,38 @@ train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
 predict <- function(topic.model, x, stoplist_file = "en.txt",
                     token_regexp = "[A-Za-z]+", n_iterations = 100,
                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
-  if (attr(class(topic.model$model),"package") == "topicmodels") {
-    topicProbabilities <- topicmodels::posterior(topic.model$model,x)
-    topicProbabilities <- as.data.frame(topicProbabilities$topics)
-    return(as.data.frame(topicProbabilities))
-  }
+  UseMethod("predict")
+}
 
+predict.tmTopicModel <- function(topic.model, x, stoplist_file = "en.txt",
+                    token_regexp = "[A-Za-z]+", n_iterations = 100,
+                    sampling_interval = 10, burn_in = 10, random_seed = NULL) {
+  predict(topic.model$model, x, stoplist_file, token_regexp, n_iterations,
+          sampling_interval, burn_in, random_seed)
+}
+
+predict.LDA_VEM  <- function(topic.model, x, stoplist_file = "en.txt",
+                            token_regexp = "[A-Za-z]+", n_iterations = 100,
+                            sampling_interval = 10, burn_in = 10,
+                            random_seed = NULL) {
+  topicProbabilities <- topicmodels::posterior(topic.model,x)
+  topicProbabilities <- as.data.frame(topicProbabilities$topics)
+  as.data.frame(topicProbabilities)
+}
+
+
+predict.jobjRef <- function(topic.model, x, stoplist_file = "en.txt",
+                            token_regexp = "[A-Za-z]+", n_iterations = 100,
+                            sampling_interval = 10, burn_in = 10,
+                            random_seed = NULL) {
+  predict_mallet_helper(topic.model, x, stoplist_file, token_regexp, n_iterations,
+                        sampling_interval, burn_in, random_seed)
+}
+
+predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
+                                  token_regexp = "[A-Za-z]+", n_iterations = 100,
+                                  sampling_interval = 10, burn_in = 10,
+                                  random_seed = NULL) {
   require(rJava)
   new_texts <- sapply(x, mallet_prepare)
 
@@ -261,7 +287,7 @@ predict <- function(topic.model, x, stoplist_file = "en.txt",
                                     as.character(new_texts),
                                     mallet.instances)
 
-  inf <- inferencer(topic.model$model)
+  inf <- inferencer(model)
   inf_top <- infer_topics(inf, comp_inst, n_iterations = n_iterations,
                           sampling_interval = sampling_interval,
                           burn_in = burn_in, random_seed = random_seed)
