@@ -216,7 +216,7 @@ train <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
     topic_model <- list(model = topic_model, vocabulary = vocabulary,
                         word_freqs = word_freqs, doc_topics = doc_topics,
                         topic_words = topic_words,
-                        doc_names <- as.character(meta(x,"title")))
+                        doc_names = as.character(meta(x,"title")))
   } else {
     model <- topicmodels::LDA(x, k = no_of_topics, ...)
     topic_model <- list(model = model)
