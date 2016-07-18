@@ -200,6 +200,15 @@ train.tmCorpus <- function(x, stoplist_file = "en.txt",
   tmTopicModel(trained)
 }
 
+DocumentTermMatrix <-
+  function(x, control = list())
+    t(TermDocumentMatrix(x, control))
+
+content_transformer <- function (x, ...) {
+  content(x) <- FUN(content(x), ...)
+  x
+}
+
 train.DocumentTermMatrix <- function(x, stoplist_file = "en.txt",
 
                                      token_regexp = "[A-Za-z]+",
