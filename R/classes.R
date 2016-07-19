@@ -187,14 +187,15 @@ train <- function(x, ...) {
   UseMethod("train")
 }
 
-train.tmCorpus <- function(x, stoplist_file = "en.txt",
+train.tmCorpus <- function(x, no_of_topics = 20,
+                           stoplist_file = "en.txt",
+                           token_regexp = "[A-Za-z]+",
+                           alpha_opt = 20,
+                           burn_in = 50, train = 200,
+                           maximize = 10, package = "mallet", ...) {
 
-                               token_regexp = "[A-Za-z]+",
-                               no_of_topics = 20, alpha_opt = 20,
-                               burn_in = 50, train = 200,
-                               maximize = 10, method = "mallet", ...) {
-
-    trained <- train_mallet_helper(x, stoplist_file, token_regexp, no_of_topics, alpha_opt,
+    trained <- train_mallet_helper(x, no_of_topics, stoplist_file,
+                                   token_regexp,  alpha_opt,
                         burn_in, train, maximize)
 
   tmTopicModel(trained)
@@ -209,21 +210,16 @@ content_transformer <- function (x, ...) {
   x
 }
 
-train.DocumentTermMatrix <- function(x, stoplist_file = "en.txt",
+train.DocumentTermMatrix <- function(x, no_of_topics = 20, ...) {
 
-                                     token_regexp = "[A-Za-z]+",
-                                     no_of_topics = 20, alpha_opt = 20,
-                                     burn_in = 50, train = 200,
-                                     maximize = 10, method = "mallet", ...) {
-
-  trained <- train_topicmodels_helper(x, stoplist_file, token_regexp, no_of_topics,
-                                        alpha_opt, burn_in, train, maximize)
+  trained <- train_topicmodels_helper(x, no_of_topics, ...)
   tmTopicModel(trained)
 }
 
-train_mallet_helper <- function(x, stoplist_file = "en.txt",
+train_mallet_helper <- function(x, no_of_topics = 20,
+                                stoplist_file = "en.txt",
                                 token_regexp = "[A-Za-z]+",
-                                no_of_topics = 20, alpha_opt = 20,
+                                alpha_opt = 20,
                                 burn_in = 50, train = 200,
                                 maximize = 10, ...) {
   require(rJava)
@@ -260,9 +256,7 @@ train_mallet_helper <- function(x, stoplist_file = "en.txt",
 }
 
 
-train_topicmodels_helper <- function(x, stoplist_file = "en.txt", token_regexp = "[A-Za-z]+",
-                  no_of_topics = 20, alpha_opt = 20, burn_in = 50, train = 200,
-                  maximize = 10, method = "mallet", ...) {
+train_topicmodels_helper <- function(x, no_of_topics = 20, ...) {
 
     model <- topicmodels::LDA(x, k = no_of_topics, ...)
     topic_model <- list(model = model)

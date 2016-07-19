@@ -158,7 +158,7 @@ test_that("Class of the model is tmTopicModel", {
                                                 collapse = "")))
   y <- DocumentTermMatrix(x)
   rownames(y) <- meta(x, "title")
-  model <- suppressMessages(train(y, method = "LDA_topic_models"))
+  model <- suppressMessages(train(y, package = "topicmodels"))
   expect_equal(class(model), "tmTopicModel")
 })
 
@@ -168,7 +168,7 @@ test_that("Predict posterior probabilities for new instances for topicmodels
                                                 collapse = "")))
   y <- DocumentTermMatrix(x)
   rownames(y) <- meta(x, "title")
-  model <- suppressMessages(train(y, method = "LDA_topic_models"))
+  model <- suppressMessages(train(y, package = "topicmodels"))
   pred <- predict(model, y)
   topicProbabilities <- as.data.frame(model$model@gamma)
   names(topicProbabilities) <- as.character(1:20)
@@ -177,20 +177,13 @@ test_that("Predict posterior probabilities for new instances for topicmodels
   expect_equal(pred, topicProbabilities)
 })
 
-# content("Content transformations for tmCorpus")
-# test_that("tm_map function work for some transformations", {
-#   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
-#                                                 collapse = "")))
-#   x <- tm_map(x, tm::content_transformer(tolower))
-#   expect_equal(class(x), "tmCorpus")
-# })
 
 test_that("Terms for tmTopicModal", {
   x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
                                                 collapse = "")))
   y <- DocumentTermMatrix(x)
   rownames(y) <- meta(x, "title")
-  model <- suppressMessages(train(y, method = "LDA_topic_models"))
+  model <- suppressMessages(train(y, package = "topicmodels"))
   expect_equal(class(terms(model,2)), "data.frame")
 })
 
