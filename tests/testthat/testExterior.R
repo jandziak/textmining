@@ -194,3 +194,26 @@ test_that("Terms for tmTopicModal", {
   expect_equal(class(terms(model,2)), "data.frame")
   expect_equal(class(terms(model,1)), "data.frame")
 })
+
+test_that("Test topicmodels for many models", {
+  k <- 30
+  SEED <- 2016
+  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+                                                collapse = "")))
+  y <- DocumentTermMatrix(x)
+  rownames(y) <- meta(x, "title")
+  jss_TM <-
+    list(VEM = train(y, k = k, control = list(seed = SEED)),
+         VEM_fixed = train(y, k = k,
+                         control = list(estimate.alpha = FALSE, seed = SEED)),
+         Gibbs = train(y, k = k, method = "Gibbs",
+                     control = list(seed = SEED, burnin = 1000,
+                                    thin = 100, iter = 1000)))
+         # CTM = CTM(JSS_dtm, k = k,
+         #           control = list(seed = SEED,
+         #                          var = list(tol = 10^-4),
+         #                          em = list(tol = 10^-3))))
+  expect_equal(class(jss_TM$VEM), "tmTopicModel")
+  expect_equal(class(jss_TM$VEM_fixed), "tmTopicModel")
+  expect_equal(class(jss_TM$Gibbs), "tmTopicModel")
+})
