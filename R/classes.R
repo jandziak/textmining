@@ -172,7 +172,7 @@ mallet_prepare <- function(doc) {
 #' @param x tmCorpus object
 #' @param stoplist_file directory of file with stopwords
 #' @param token_regexp regular expression patterns
-#' @param no_of_topics number of topics
+#' @param k number of topics
 #' @param alpha_opt parameter of mallet model
 #' @param burn_in parameter of mallet model
 #' @param train parameter of mallet model
@@ -187,14 +187,14 @@ train <- function(x, ...) {
   UseMethod("train")
 }
 
-train.tmCorpus <- function(x, no_of_topics = 20,
+train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
                            token_regexp = "[A-Za-z]+",
                            alpha_opt = 20,
                            burn_in = 50, train = 200,
                            maximize = 10, package = "mallet", ...) {
 
-    trained <- train_mallet_helper(x, no_of_topics, stoplist_file,
+    trained <- train_mallet_helper(x, k, stoplist_file,
                                    token_regexp,  alpha_opt,
                         burn_in, train, maximize)
 
@@ -210,13 +210,13 @@ content_transformer <- function (x, ...) {
   x
 }
 
-train.DocumentTermMatrix <- function(x, no_of_topics = 20, ...) {
+train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
-  trained <- train_topicmodels_helper(x, no_of_topics, ...)
+  trained <- train_topicmodels_helper(x, k, ...)
   tmTopicModel(trained)
 }
 
-train_mallet_helper <- function(x, no_of_topics = 20,
+train_mallet_helper <- function(x, k = 20,
                                 stoplist_file = "en.txt",
                                 token_regexp = "[A-Za-z]+",
                                 alpha_opt = 20,
@@ -234,7 +234,7 @@ train_mallet_helper <- function(x, no_of_topics = 20,
                           stoplist.file = stoplist_file,
                           token.regexp = token_regexp)
 
-  topic_model <- mallet::MalletLDA(num.topics = no_of_topics)
+  topic_model <- mallet::MalletLDA(num.topics = k)
   topic_model$loadDocuments(mallet.instances)
 
   vocabulary <- topic_model$getVocabulary()
@@ -256,9 +256,9 @@ train_mallet_helper <- function(x, no_of_topics = 20,
 }
 
 
-train_topicmodels_helper <- function(x, no_of_topics = 20, ...) {
+train_topicmodels_helper <- function(x, k = 20, ...) {
 
-    model <- topicmodels::LDA(x, k = no_of_topics, ...)
+    model <- topicmodels::LDA(x, k = k, ...)
     topic_model <- list(model = model)
     topic_model
 }
