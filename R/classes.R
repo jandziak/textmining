@@ -574,4 +574,3 @@ TermDocumentMatrix.tmCorpus <-
 
     tm:::.TermDocumentMatrix(m, weighting)
   }
-
