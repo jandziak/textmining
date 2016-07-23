@@ -222,7 +222,6 @@ train_mallet_helper <- function(x, k = 20,
                                 alpha_opt = 20,
                                 burn_in = 50, train = 200,
                                 maximize = 10, ...) {
-  require(rJava)
   text_array <- sapply(x, mallet_prepare)
 
   if (is.null(names(text_array)))
@@ -315,7 +314,6 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
                                   token_regexp = "[A-Za-z]+", n_iterations = 100,
                                   sampling_interval = 10, burn_in = 10,
                                   random_seed = NULL) {
-  require(rJava)
   new_texts <- sapply(x, mallet_prepare)
 
   mallet.instances <-

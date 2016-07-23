@@ -39,6 +39,7 @@ test_that("Read and parse using stylo", {
 context("Train function attached to the corpus")
 test_that("Class of the model is tmTopicModel", {
   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  require(rJava)
   model <- suppressMessages(train(x))
   expect_equal(class(model), "tmTopicModel")
 })
@@ -46,6 +47,7 @@ test_that("Class of the model is tmTopicModel", {
 context("Predict function attached to the corpus")
 test_that("Predict class for topic model tmTopicModel", {
   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  require(rJava)
   model <- suppressMessages(train(x))
   y <- tmCorpus(rep("as, aa a a a a ada s a a da d as a", 100))
   pred <- predict(model, y)
@@ -54,6 +56,7 @@ test_that("Predict class for topic model tmTopicModel", {
 
 test_that("Topic table function", {
   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  require(rJava)
   model <- suppressMessages(train(x))
   n1 <- topic_table(model)
   expect_equal(names(n1), c("topics", "words"))
@@ -61,6 +64,7 @@ test_that("Topic table function", {
 
 test_that("Gepi graphics", {
   x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+  require(rJava)
   model <- suppressMessages(train(x))
   table_topic <- topic_table(model)
   network <- gepi_network(10 ,table_topic$words)
