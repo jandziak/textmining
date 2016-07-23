@@ -564,7 +564,7 @@ TermDocumentMatrix.tmCorpus <-
 
     bg <- control$bounds$global
     if (length(bg) == 2L && is.numeric(bg)) {
-      rs <- row_sums(m > 0)
+      rs <- slam::row_sums(m > 0)
       m <- m[(rs >= bg[1]) & (rs <= bg[2]), ]
     }
 
@@ -574,7 +574,3 @@ TermDocumentMatrix.tmCorpus <-
 
     tm:::.TermDocumentMatrix(m, weighting)
   }
-
-
-
-#' @import rJava
