@@ -95,7 +95,7 @@ infer_topics <- function (inferencer, instances,
   sampling_interval <- as.integer(sampling_interval)
   burn_in <- as.integer(burn_in)
   if (!is.null(random_seed)) {
-    inferencer$setRandomSeed(as.integer(random.seed))
+    inferencer$setRandomSeed(as.integer(random_seed))
   }
 
   doc_topics <- vector("list", instances$size())
