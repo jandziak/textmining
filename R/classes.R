@@ -257,9 +257,11 @@ train_mallet_helper <- function(x, k = 20,
 
 
 train_topicmodels_helper <- function(x, k = 20, ...) {
-
     model <- topicmodels::LDA(x, k = k, ...)
-    topic_model <- list(model = model)
+    vocabulary <- topicmodels::terms(model)
+    word_topic_log_prob <- model@gamma
+    topic_model <- list(model = model, vocabulary = vocabulary,
+                        word_topic_log_prob = word_topic_log_prob)
     topic_model
 }
 
