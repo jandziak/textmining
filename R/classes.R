@@ -205,7 +205,7 @@ DocumentTermMatrix <-
   function(x, control = list())
     t(TermDocumentMatrix(x, control))
 
-content_transformer <- function (x, ...) {
+content_transformer <- function (x, FUN, ...) {
   content(x) <- FUN(content(x), ...)
   x
 }
@@ -574,3 +574,7 @@ TermDocumentMatrix.tmCorpus <-
 
     tm:::.TermDocumentMatrix(m, weighting)
   }
+
+
+
+#' @import rJava
