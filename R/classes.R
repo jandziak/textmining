@@ -179,7 +179,6 @@ mallet_prepare <- function(doc) {
 #' @param maximize parameter of mallet model
 #' @param ... settings for mallet.doc.topics and mallet.topic.words
 #'
-#'
 #' @return returns object of a class tmTopicModel
 #'
 #' @export
@@ -357,14 +356,14 @@ topic_table <- function(model){
 
 #' Simple wordcloud visualization of the topics.
 #'
-#' @param topic_table List returned from the topic_table function.
+#' @param model tmTopicModel object
 #' @param topic_id Id of the analised topic.
-#' @param no_of_words Number of words to be ploted.
+#' @param k number of words to be ploted.
 #' @param rot_per wordcloud param
 #' @param random_order order of words
 #'
 #' @export
-topic_wordcloud<- function(model, topic_id = 1, no_of_words = 10,
+topic_wordcloud<- function(model, topic_id = 1, k = 10,
                            rot_per = 0, random_order = FALSE){
   topic_table <- topic_table(model)
   current_topic = sort(topic_table$words[topic_id, ], decreasing = T
