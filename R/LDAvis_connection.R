@@ -14,13 +14,16 @@
 #' @export
 
 topicmodels_json_ldavis <- function(fitted, corpus, doc_term){
-
+  if(!requireNamespace("stringi", quietly = TRUE))
+    stop("Install package stringi")
+  if(!requireNamespace("LDAvis", quietly = TRUE))
+    stop("Install package LDAvis")
   # Find required quantities
   phi <- topicmodels::posterior(fitted)$terms %>% as.matrix
   theta <- topicmodels::posterior(fitted)$topics %>% as.matrix
   vocab <- colnames(phi)
   doc_length <- vector()
-  for (i in 1:(tm::length(corpus))) {
+  for (i in 1:length(corpus)) {
     temp <- paste(corpus[[i]]$content, collapse = ' ')
     doc_length <- c(doc_length, stringi::stri_count(temp, regex = '\\S+'))
   }
