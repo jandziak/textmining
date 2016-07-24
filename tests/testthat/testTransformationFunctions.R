@@ -22,30 +22,30 @@ test_that("Parsed one document tabelarises", {
   expect_equal(rd, tmWordCountsTable(list(df)))
 })
 
-context("Change to lowercase small letters corpus")
-test_that("Chenge to small letters", {
-  rd <- tmCorpus("doc")
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus("doc"))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus("Doc")
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus("doc"))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
-  rd <- transform(rd, tolower)
-  expect_equal(rd, tmCorpus(c("doc", "doc two", "three")))
-})
-
-test_that("Chenge to small letters different input/outcome", {
-  rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
-  rd <- transform(rd, toupper)
-  expect_equal(rd, tmCorpus(c("DOC", "DOC TWO", "THREE")))
-})
+# context("Change to lowercase small letters corpus")
+# test_that("Chenge to small letters", {
+#   rd <- tmCorpus("doc")
+#   rd <- transform(rd, tolower)
+#   expect_equal(rd, tmCorpus("doc"))
+# })
+#
+# test_that("Chenge to small letters different input/outcome", {
+#   rd <- tmCorpus("Doc")
+#   rd <- transform(rd, tolower)
+#   expect_equal(rd, tmCorpus("doc"))
+# })
+#
+# test_that("Chenge to small letters different input/outcome", {
+#   rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
+#   rd <- transform(rd, tolower)
+#   expect_equal(rd, tmCorpus(c("doc", "doc two", "three")))
+# })
+#
+# test_that("Chenge to small letters different input/outcome", {
+#   rd <- tmCorpus(c("Doc", "Doc two", "THREE"))
+#   rd <- transform(rd, toupper)
+#   expect_equal(rd, tmCorpus(c("DOC", "DOC TWO", "THREE")))
+# })
 
 context("ngrams")
 test_that("Create ngram document from Corpus", {
