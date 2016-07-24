@@ -14,23 +14,17 @@
 #' @export
 
 topicmodels_json_ldavis <- function(fitted, corpus, doc_term){
-  # Required packages
-  library(topicmodels)
-  library(dplyr)
-  library(stringi)
-  library(tm)
-  library(LDAvis)
 
   # Find required quantities
-  phi <- posterior(fitted)$terms %>% as.matrix
-  theta <- posterior(fitted)$topics %>% as.matrix
+  phi <- topicmodels::posterior(fitted)$terms %>% as.matrix
+  theta <- topicmodels::posterior(fitted)$topics %>% as.matrix
   vocab <- colnames(phi)
   doc_length <- vector()
-  for (i in 1:length(corpus)) {
+  for (i in 1:(tm::length(corpus))) {
     temp <- paste(corpus[[i]]$content, collapse = ' ')
-    doc_length <- c(doc_length, stri_count(temp, regex = '\\S+'))
+    doc_length <- c(doc_length, stringi::stri_count(temp, regex = '\\S+'))
   }
-  temp_frequency <- inspect(doc_term)
+  temp_frequency <- tm::inspect(doc_term)
   freq_matrix <- data.frame(ST = colnames(temp_frequency),
                             Freq = colSums(temp_frequency))
   rm(temp_frequency)
