@@ -7,7 +7,9 @@ Maintainer: Jan Idziak <JanIdziak@gmail.com>
 Description: At the beggining is just simple package, later I will change it for
     some more.
 Suggests:
-    testthat
+    testthat,
+    stringi,
+    LDAvis
 License: GPL-3
 RoxygenNote: 5.0.1
 Imports: stylo,
@@ -19,4 +21,6 @@ Imports: stylo,
     wordcloud,
     dplyr,
     koRpus,
-    topicmodels
+    topicmodels,
+    slam,
+    methods
