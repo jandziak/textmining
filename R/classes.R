@@ -466,7 +466,7 @@ termFreq_tm <-
     stopifnot(is.list(control))
     .tokenize <- control$tokenize
     if (is.null(.tokenize) || identical(.tokenize, "words"))
-      .tokenize <- tm:::words.PlainTextDocument
+      .tokenize <- words.PlainTextDocument
     else if (identical(.tokenize, "MC"))
       .tokenize <- tm::MC_tokenizer
     else if (identical(.tokenize, "scan"))
@@ -572,5 +572,6 @@ TermDocumentMatrix.tmCorpus <-
     if (is.null(weighting))
       weighting <- tm::weightTf
 
-    tm:::.TermDocumentMatrix(m, weighting)
+    .TermDocumentMatrix(m, weighting)
   }
+
