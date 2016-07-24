@@ -87,9 +87,6 @@ infer_topics <- function (inferencer, instances,
                           sampling_interval=10, # aka "thinning"
                           burn_in=10,
                           random_seed=NULL) {
-
-  require(rJava)
-
   iter <- instances$iterator()
   n_iterations <- as.integer(n_iterations)
   sampling_interval <- as.integer(sampling_interval)
