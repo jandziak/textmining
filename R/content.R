@@ -1,4 +1,3 @@
-#' @export
 content <- function(x) {
   UseMethod("content")
 }
