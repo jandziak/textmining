@@ -367,7 +367,7 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
                            rot_per = 0, random_order = FALSE){
   topic_table <- topic_table(model)
   current_topic = sort(topic_table$words[topic_id, ], decreasing = T
-                       )[1:no_of_words]
+                       )[1:k]
   wordcloud::wordcloud(names(current_topic), current_topic,
                  random.order = random_order,
                  rot.per = rot_per)
@@ -375,17 +375,17 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
 
 #' Function to plot topic network
 #'
-#' @param no_of_words Number of words from each topic to be included in graph
+#' @param k Number of words from each topic to be included in graph
 #' @param topic_words Words words extracted from the topic_table function
 #'
 #' @return network The graph visualising the network
 #'
 #' @export
-gepi_network <- function(no_of_words, topic_words) {
+gepi_network <- function(k, topic_words) {
   topic_names <- paste("Topic_", 1:dim(topic_words)[1], sep = "")
   row.names(topic_words) <- topic_names
   frequent_words <- sapply(topic_names, function(x)
-    list(sort(topic_words[x,], decreasing = T)[1:no_of_words]))
+    list(sort(topic_words[x,], decreasing = T)[1:k]))
   topic_words <- sapply(frequent_words, names)
   topic_word_values <- sapply(frequent_words, as.numeric)
 
@@ -402,7 +402,7 @@ gepi_network <- function(no_of_words, topic_words) {
                       size = size)
 
   from <- sapply(topic_words, function(x) which(Nodes == x)) - 1
-  to <- rep(0:(length(topic_names) - 1), each = no_of_words)
+  to <- rep(0:(length(topic_names) - 1), each = k)
   value <- as.vector(topic_word_values)
   value <- value * 20 / max(value)
   Links <- data.frame(source = from,
