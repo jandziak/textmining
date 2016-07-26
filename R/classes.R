@@ -433,7 +433,7 @@ as.tmCorpus.VCorpus <- function(x, ...) {
 }
 
 as.tmCorpus.stylo.corpus <- function(x, ...) {
-  x <- lapply(x, function(y) y)
+  x <- lapply(seq_along(x), function(i) paste(x[[i]], collapse = " "))
   names(x) <- NULL
   tmCorpus(x)
 }
