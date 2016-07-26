@@ -3,4 +3,7 @@
 #' @import topicmodels
 #' @import mallet
 #' @import dplyr
+#' @import tm
+#' @importFrom stats setNames
+#' @importFrom utils read.table
 NULL
