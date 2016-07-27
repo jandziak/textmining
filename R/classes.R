@@ -449,15 +449,6 @@ format.tmCorpus <-
       sprintf("Content:  documents: %d", length(x)))
   }
 
-# meta <- function(x, tag, ...) {
-#   UseMethod("meta")
-# }
-
-#' @export
-meta.tmCorpus <- function(x, tag, ...) {
-  lapply(x, function(x) getMeta(x, tag))
-}
-
 termFreq_tm <-
   function (doc, control = list())
   {

@@ -27,6 +27,15 @@ content.character <- function(x) {
   value
 }
 
+# meta <- function(x, tag, ...) {
+#   UseMethod("meta")
+# }
+
+#' @export
+meta.tmCorpus <- function(x, tag, ...) {
+  lapply(x, function(x) getMeta(x, tag))
+}
+
 # 'meta<-'<- function(x, tag, ..., value) {
 #   UseMethod("meta<-")
 # }
