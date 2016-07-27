@@ -1,15 +1,15 @@
-content <- function(x) {
-  UseMethod("content")
-}
+# content <- function(x) {
+#   UseMethod("content")
+# }
 
 #' @export
 content.tmCorpus <- function(x) {
   lapply(x, getDoc)
 }
 
-'content<-'<- function(x, value) {
-  UseMethod("content<-")
-}
+# 'content<-'<- function(x, value) {
+#   UseMethod("content<-")
+# }
 
 #' @export
 'content<-.tmCorpus' <- function(x, value) {
@@ -37,8 +37,8 @@ content.character <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
-tm_map <- function(x, FUN, ...)
-  UseMethod("tm_map", x)
+# tm_map <- function(x, FUN, ...)
+#   UseMethod("tm_map", x)
 
 #' @export
 tm_map.tmCorpus <-function(x, FUN, ...) {
@@ -46,17 +46,17 @@ tm_map.tmCorpus <-function(x, FUN, ...) {
   x
 }
 
-tm_filter <- function(x, FUN, ...) {
-  UseMethod("tm_filter", x)
-}
+# tm_filter <- function(x, FUN, ...) {
+#   UseMethod("tm_filter", x)
+# }
 
 #' @export
 tm_filter.tmCorpus <- function(x, FUN, ...)
   x[tm_index(x, FUN, ...)]
 
-tm_index <- function(x, FUN, ...) {
-  UseMethod("tm_index", x)
-}
+# tm_index <- function(x, FUN, ...) {
+#   UseMethod("tm_index", x)
+# }
 
 #' @export
 tm_index.tmCorpus <- function(x, FUN, ...) {

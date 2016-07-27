@@ -200,9 +200,9 @@ train.tmCorpus <- function(x, k = 20,
   tmTopicModel(trained)
 }
 
-DocumentTermMatrix <-
-  function(x, control = list())
-    t(TermDocumentMatrix(x, control))
+# DocumentTermMatrix <-
+#   function(x, control = list())
+#     t(TermDocumentMatrix(x, control))
 
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
@@ -258,49 +258,49 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
     topic_model
 }
 
-#' Function to predict topic model probabilities for existing topic model
-#'
-#' @param topic.model tmTopicModel obiect
-#' @param x tmCorpus object
-#' @param stoplist_file directory of file with stopwords
-#' @param token_regexp regular expression patterns
-#' @param burn_in parameter of mallet model
-#' @param sampling_interval parameter of mallet model
-#' @param n_iterations parameter of mallet model
-#' @param random_seed parameter of mallet model
-#' @param change predict structure so it fits normal
-#'
-#' @return returns the table of topic probabilities
-#'
-#' @export
-predict <- function(topic.model, x, stoplist_file = "en.txt",
-                    token_regexp = "[A-Za-z]+", n_iterations = 100,
-                    sampling_interval = 10, burn_in = 10, random_seed = NULL) {
-  UseMethod("predict")
-}
+#' #' Function to predict topic model probabilities for existing topic model
+#' #'
+#' #' @param topic.model tmTopicModel obiect
+#' #' @param x tmCorpus object
+#' #' @param stoplist_file directory of file with stopwords
+#' #' @param token_regexp regular expression patterns
+#' #' @param burn_in parameter of mallet model
+#' #' @param sampling_interval parameter of mallet model
+#' #' @param n_iterations parameter of mallet model
+#' #' @param random_seed parameter of mallet model
+#' #' @param change predict structure so it fits normal
+#' #'
+#' #' @return returns the table of topic probabilities
+#' #'
+#' #' @export
+#' predict <- function(topic.model, x, stoplist_file = "en.txt",
+#'                     token_regexp = "[A-Za-z]+", n_iterations = 100,
+#'                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
+#'   UseMethod("predict")
+#' }
 
-predict.tmTopicModel <- function(topic.model, x, stoplist_file = "en.txt",
+predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                     token_regexp = "[A-Za-z]+", n_iterations = 100,
                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
-  predict(topic.model$model, x, stoplist_file, token_regexp, n_iterations,
+  predict(object$model, x, stoplist_file, token_regexp, n_iterations,
           sampling_interval, burn_in, random_seed)
 }
 
-predict.LDA_VEM  <- function(topic.model, x, stoplist_file = "en.txt",
+predict.LDA_VEM  <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = "[A-Za-z]+", n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
                             random_seed = NULL) {
-  topicProbabilities <- topicmodels::posterior(topic.model,x)
+  topicProbabilities <- topicmodels::posterior(object,x)
   topicProbabilities <- as.data.frame(topicProbabilities$topics)
   as.data.frame(topicProbabilities)
 }
 
 
-predict.jobjRef <- function(topic.model, x, stoplist_file = "en.txt",
+predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = "[A-Za-z]+", n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
                             random_seed = NULL) {
-  predict_mallet_helper(topic.model, x, stoplist_file, token_regexp, n_iterations,
+  predict_mallet_helper(object, x, stoplist_file, token_regexp, n_iterations,
                         sampling_interval, burn_in, random_seed)
 }
 
@@ -449,10 +449,11 @@ format.tmCorpus <-
       sprintf("Content:  documents: %d", length(x)))
   }
 
-meta <- function(x, tag, ...) {
-  UseMethod("meta")
-}
+# meta <- function(x, tag, ...) {
+#   UseMethod("meta")
+# }
 
+#' @export
 meta.tmCorpus <- function(x, tag, ...) {
   lapply(x, function(x) getMeta(x, tag))
 }
@@ -530,10 +531,11 @@ termFreq_tm <-
     tab
   }
 
-TermDocumentMatrix <- function(x, control = list()) {
-  UseMethod("TermDocumentMatrix", x)
-}
+# TermDocumentMatrix <- function(x, control = list()) {
+#   UseMethod("TermDocumentMatrix", x)
+# }
 
+#' @export
 TermDocumentMatrix.tmCorpus <-
   function(x, control = list())
   {
