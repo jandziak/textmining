@@ -35,7 +35,6 @@ getMeta <- function(x, parameter, i = 1) {
   UseMethod("getMeta")
 }
 
-#' @export
 getMeta.tmMetaData <- function(x, parameter, i = 1) {
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
@@ -43,7 +42,6 @@ getMeta.tmMetaData <- function(x, parameter, i = 1) {
   meta_vector
 }
 
-#' @export
 getMeta.tmTextDocument <- function(x, parameter, i = 1) {
   meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
@@ -51,7 +49,6 @@ getMeta.tmTextDocument <- function(x, parameter, i = 1) {
   meta_vector
 }
 
-#' @export
 getMeta.default <- function(x, parameter, i = 1) {
   if (length(x) < i)
     stop("index \"i\" out of bands")
@@ -102,7 +99,6 @@ setMeta <- function(x, parameter, value, i = 1) {
   UseMethod("setMeta")
 }
 
-#' @export
 setMeta.tmMetaData <- function(x, parameter, value, i = 1) {
   meta_vector <- try(get(parameter, x), silent = T)
   if (class(meta_vector) == "try-error")
@@ -111,7 +107,6 @@ setMeta.tmMetaData <- function(x, parameter, value, i = 1) {
   x
 }
 
-#' @export
 setMeta.tmTextDocument <- function(x, parameter, value, i = 1) {
   meta_vector <- try(get(parameter, x$meta), silent = T)
   if (class(meta_vector) == "try-error")
@@ -120,7 +115,6 @@ setMeta.tmTextDocument <- function(x, parameter, value, i = 1) {
   x
 }
 
-#' @export
 setMeta.default <- function(x, parameter, value, i = 1) {
   if (length(x) < i)
     stop("index \"i\" out of bands")

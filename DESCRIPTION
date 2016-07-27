@@ -13,6 +13,8 @@ Suggests:
 License: GPL-3
 RoxygenNote: 5.0.1
 Imports: stylo,
+    tm,
+    NLP,
     mallet,
     rJava,
     networkD3,
@@ -22,5 +24,3 @@ Imports: stylo,
     topicmodels,
     slam,
     methods
-Depends: tm,
-    NLP
