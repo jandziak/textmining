@@ -1,15 +1,18 @@
-content <- function(x) {
-  UseMethod("content")
-}
+#' #' @export
+#' content <- function(x) {
+#'   UseMethod("content")
+#' }
 
 #' @export
+#' @method content tmCorpus
 content.tmCorpus <- function(x) {
   lapply(x, getDoc)
 }
 
-'content<-'<- function(x, value) {
-  UseMethod("content<-")
-}
+#' #' @export
+#' 'content<-'<- function(x, value) {
+#'   UseMethod("content<-")
+#' }
 
 #' @export
 'content<-.tmCorpus' <- function(x, value) {
@@ -17,19 +20,25 @@ content.tmCorpus <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
+#' @method content character
 #' @export
 content.character <- function(x) {
   x
 }
 
+#' Function to assign content to simple character
+#'
+#' @title Assign content to character
 #' @export
+#' @method content<- character
 'content<-.character' <- function(x, value) {
   value
 }
 
-'meta<-'<- function(x, tag, ..., value) {
-  UseMethod("meta<-")
-}
+#' #' @export
+#' 'meta<-'<- function(x, tag, ..., value) {
+#'   UseMethod("meta<-")
+#' }
 
 #' @export
 'meta<-.tmCorpus' <- function(x, tag, ..., value) {
@@ -37,26 +46,31 @@ content.character <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
-tm_map <- function(x, FUN, ...)
-  UseMethod("tm_map", x)
+#' #' @export
+#' tm_map <- function(x, FUN, ...)
+#'   UseMethod("tm_map", x)
 
 #' @export
+#' @method tm_map tmCorpus
 tm_map.tmCorpus <-function(x, FUN, ...) {
+  requireNamespace("tm")
   content(x) <- lapply(content(x), FUN, ...)
   x
 }
-
-tm_filter <- function(x, FUN, ...) {
-  UseMethod("tm_filter", x)
-}
+#'
+#' #' @export
+#' tm_filter <- function(x, FUN, ...) {
+#'   UseMethod("tm_filter", x)
+#' }
 
 #' @export
 tm_filter.tmCorpus <- function(x, FUN, ...)
   x[tm_index(x, FUN, ...)]
 
-tm_index <- function(x, FUN, ...) {
-  UseMethod("tm_index", x)
-}
+#' #' @export
+#' tm_index <- function(x, FUN, ...) {
+#'   UseMethod("tm_index", x)
+#' }
 
 #' @export
 tm_index.tmCorpus <- function(x, FUN, ...) {
@@ -90,6 +104,7 @@ tagtmCorpus_helper <- function(x, ...) {
     lapply(koRpus::taggedText)
   texts
 }
+
 
 #' @export
 terms.tmTopicModel <- function(x, ...) {

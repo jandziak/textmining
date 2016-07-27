@@ -1,4 +1,4 @@
-context("Exterior packages corpus read")
+ context("Exterior packages corpus read")
 test_that("Reading corpus from other files works", {
   dir.create("tmp")
   writeLines("This is written file", "tmp/tmp1.txt")
@@ -220,4 +220,12 @@ test_that("Test topicmodels for many models", {
   expect_equal(class(jss_TM$VEM), "tmTopicModel")
   expect_equal(class(jss_TM$VEM_fixed), "tmTopicModel")
   expect_equal(class(jss_TM$Gibbs), "tmTopicModel")
+})
+
+content("Content transformations for tmCorpus")
+test_that("tm_map function work for some transformations", {
+  x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+                                                collapse = "")))
+  x <- tm_map(x, tm::content_transformer(tolower))
+  expect_equal(class(x), "tmCorpus")
 })
