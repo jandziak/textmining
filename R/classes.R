@@ -204,11 +204,6 @@ DocumentTermMatrix <-
   function(x, control = list())
     t(TermDocumentMatrix(x, control))
 
-content_transformer <- function (x, FUN, ...) {
-  content(x) <- FUN(content(x), ...)
-  x
-}
-
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
@@ -273,7 +268,7 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #' @param sampling_interval parameter of mallet model
 #' @param n_iterations parameter of mallet model
 #' @param random_seed parameter of mallet model
-#'
+#' @param change predict structure so it fits normal
 #'
 #' @return returns the table of topic probabilities
 #'
@@ -418,26 +413,31 @@ gepi_network <- function(k, topic_words) {
   network
 }
 
+#' @export
 as.tmCorpus <- function(x, ...) {
   UseMethod("as.tmCorpus")
 }
 
+#' @export
 as.tmCorpus.default <- function(x, ...) {
   tmCorpus(x)
 }
 
+#' @export
 as.tmCorpus.VCorpus <- function(x, ...) {
   x <- lapply(x, function(y) y$content)
   names(x) <- NULL
   tmCorpus(x)
 }
 
+#' @export
 as.tmCorpus.stylo.corpus <- function(x, ...) {
   x <- lapply(seq_along(x), function(i) paste(x[[i]], collapse = " "))
   names(x) <- NULL
   tmCorpus(x)
 }
 
+#' @export
 print.tmCorpus <- function(x, ...) {
 cat(format(x))
 }

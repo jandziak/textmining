@@ -6,4 +6,6 @@
 #' @import tm
 #' @importFrom stats setNames
 #' @importFrom utils read.table
+#' @importFrom NLP content content<- meta meta<- words
+#' @importFrom tm tm_map tm_index tm_filter
 NULL

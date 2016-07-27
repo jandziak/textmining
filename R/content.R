@@ -2,6 +2,7 @@ content <- function(x) {
   UseMethod("content")
 }
 
+#' @export
 content.tmCorpus <- function(x) {
   lapply(x, getDoc)
 }
@@ -10,15 +11,18 @@ content.tmCorpus <- function(x) {
   UseMethod("content<-")
 }
 
+#' @export
 'content<-.tmCorpus' <- function(x, value) {
   x <- lapply(seq_along(x) ,function(l) {x[[l]]$text <- value[[l]]; x[[l]]})
   structure(x, class = "tmCorpus")
 }
 
+#' @export
 content.character <- function(x) {
   x
 }
 
+#' @export
 'content<-.character' <- function(x, value) {
   value
 }
@@ -27,6 +31,7 @@ content.character <- function(x) {
   UseMethod("meta<-")
 }
 
+#' @export
 'meta<-.tmCorpus' <- function(x, tag, ..., value) {
   x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], tag, value[[l]]))
   structure(x, class = "tmCorpus")
@@ -35,6 +40,7 @@ content.character <- function(x) {
 tm_map <- function(x, FUN, ...)
   UseMethod("tm_map", x)
 
+#' @export
 tm_map.tmCorpus <-function(x, FUN, ...) {
   content(x) <- lapply(content(x), FUN, ...)
   x
@@ -44,6 +50,7 @@ tm_filter <- function(x, FUN, ...) {
   UseMethod("tm_filter", x)
 }
 
+#' @export
 tm_filter.tmCorpus <- function(x, FUN, ...)
   x[tm_index(x, FUN, ...)]
 
@@ -51,15 +58,17 @@ tm_index <- function(x, FUN, ...) {
   UseMethod("tm_index", x)
 }
 
+#' @export
 tm_index.tmCorpus <- function(x, FUN, ...) {
   unlist(lapply(x, FUN, ...))
 }
 
-
+#' @export
 content.tmTextDocument <- function(x) {
   x$text
 }
 
+#' @export
 c.tmCorpus <- function(..., recursive = FALSE) {
   x <- list(...)
   x <- lapply(x, function(y) {class(y) <- "list"; y})
@@ -82,6 +91,7 @@ tagtmCorpus_helper <- function(x, ...) {
   texts
 }
 
+#' @export
 terms.tmTopicModel <- function(x, ...) {
   if(class(x$model) == "jobjRef") {
     terms <- terms.jobjRef(x, ...)
@@ -95,6 +105,7 @@ sorted_topic_words <- function(topic_no = 1, k = 1, topic_table) {
   names(sort(topic_table$words[topic_no, ], decreasing = T)[1:k])
 }
 
+#' @export
 terms.jobjRef <- function(x, ...) {
   no_topics <- dim(x$doc_topics)[2]
   topic_table_ <- topic_table(x)
