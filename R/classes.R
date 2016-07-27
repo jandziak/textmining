@@ -204,6 +204,7 @@ DocumentTermMatrix <-
   function(x, control = list())
     t(TermDocumentMatrix(x, control))
 
+#' @export
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
@@ -449,10 +450,11 @@ format.tmCorpus <-
       sprintf("Content:  documents: %d", length(x)))
   }
 
+#' @export
 meta <- function(x, tag, ...) {
   UseMethod("meta")
 }
-
+#' @export
 meta.tmCorpus <- function(x, tag, ...) {
   lapply(x, function(x) getMeta(x, tag))
 }
@@ -530,10 +532,12 @@ termFreq_tm <-
     tab
   }
 
+#' @export
 TermDocumentMatrix <- function(x, control = list()) {
   UseMethod("TermDocumentMatrix", x)
 }
 
+#' @export
 TermDocumentMatrix.tmCorpus <-
   function(x, control = list())
   {

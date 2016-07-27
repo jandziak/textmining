@@ -1,12 +1,15 @@
+#' @export
 content <- function(x) {
   UseMethod("content")
 }
 
 #' @export
+#' @method content tmCorpus
 content.tmCorpus <- function(x) {
   lapply(x, getDoc)
 }
 
+#' @export
 'content<-'<- function(x, value) {
   UseMethod("content<-")
 }
@@ -18,15 +21,21 @@ content.tmCorpus <- function(x) {
 }
 
 #' @export
+#' @method content character
 content.character <- function(x) {
   x
 }
 
+#' Function to assign content to simple character
+#'
+#' @title Assign content to character
 #' @export
+#' @method content<- character
 'content<-.character' <- function(x, value) {
   value
 }
 
+#' @export
 'meta<-'<- function(x, tag, ..., value) {
   UseMethod("meta<-")
 }
@@ -37,15 +46,19 @@ content.character <- function(x) {
   structure(x, class = "tmCorpus")
 }
 
+#' @export
 tm_map <- function(x, FUN, ...)
   UseMethod("tm_map", x)
 
 #' @export
+#' @method tm_map tmCorpus
 tm_map.tmCorpus <-function(x, FUN, ...) {
+  requireNamespace("tm")
   content(x) <- lapply(content(x), FUN, ...)
   x
 }
 
+#' @export
 tm_filter <- function(x, FUN, ...) {
   UseMethod("tm_filter", x)
 }
@@ -54,6 +67,7 @@ tm_filter <- function(x, FUN, ...) {
 tm_filter.tmCorpus <- function(x, FUN, ...)
   x[tm_index(x, FUN, ...)]
 
+#' @export
 tm_index <- function(x, FUN, ...) {
   UseMethod("tm_index", x)
 }
@@ -90,6 +104,7 @@ tagtmCorpus_helper <- function(x, ...) {
     lapply(koRpus::taggedText)
   texts
 }
+
 
 #' @export
 terms.tmTopicModel <- function(x, ...) {
