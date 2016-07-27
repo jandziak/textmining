@@ -12,10 +12,7 @@ Suggests:
     LDAvis
 License: GPL-3
 RoxygenNote: 5.0.1
-Imports: stylo,
-    tm,
-    NLP,
-    mallet,
+Imports: mallet,
     rJava,
     networkD3,
     wordcloud,
@@ -24,3 +21,6 @@ Imports: stylo,
     topicmodels,
     slam,
     methods
+Depends: stylo,
+    tm,
+    NLP,
