@@ -54,12 +54,10 @@ make_tabled <- function(x) {
 #' @return returns tmParsed object of ngrams
 #'
 #' @export
-ngram <- function(x) {
+ngram <- function(x, k = 1) {
   parsed_doc_list <- sapply(x, function(y) strsplit(getDoc(y), " "))
   names(parsed_doc_list) <- NULL
-  k <- length(parsed_doc_list[[1]])
-  parsed_doc_list <- sapply(1:(k - 1), function(i) paste(parsed_doc_list[[1]][i],
-                                                         parsed_doc_list[[1]][i + 1]))
-  x <- tmParsed(list(parsed_doc_list))
+  ngram_list <- lapply(parsed_doc_list, function(y) stylo::make.ngrams(y, k))
+  x <- tmParsed(ngram_list)
   x
 }

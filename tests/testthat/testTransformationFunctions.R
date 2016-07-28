@@ -50,6 +50,6 @@ test_that("Parsed one document tabelarises", {
 context("ngrams")
 test_that("Create ngram document from Corpus", {
   rd <- tmCorpus(c("This is document"))
-  rd <- ngram(rd)
+  rd <- ngram(rd, 2)
   expect_equal(rd, tmParsed(list(c("This is", "is document"))))
 })
