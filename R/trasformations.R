@@ -1,7 +1,12 @@
-#' Function to parse tmCorpus. As an outpus we have tmParsed object
+#' Function to parse tmCorpus. As an outpus we have tmParsed object.
 #'
 #' @param x tmCorpus object
 #' @return returns tmParsed object
+#'
+#' @examples
+#' corp <- tmCorpus(c("This is first document", "This is second"))
+#' parsed <- parse(corp)
+#' content(parsed)
 #'
 #' @export
 parse <- function(x) {
@@ -15,8 +20,6 @@ parse <- function(x) {
 #'
 #' @param x parsed tmTextDocument object.
 #' @return returns tmTextDocument with table of words counts
-#'
-#' @export
 tabler <- function(x) {
   x <- x %>% table %>% as.data.frame
   names(x) <- c("word", "count")
@@ -27,6 +30,11 @@ tabler <- function(x) {
 #'
 #' @param x tmParsed source
 #' @return returns tmWordCountsTable object
+#' @examples
+#' corp <- tmCorpus(c("This is first document", "This is second"))
+#' parsed <- parse(corp)
+#' tabled <- make_tabled(parsed)
+#' content(tabled)
 #'
 #' @export
 make_tabled <- function(x) {
@@ -52,6 +60,11 @@ make_tabled <- function(x) {
 #'
 #' @param x tmCorpus object
 #' @return returns tmParsed object of ngrams
+#' @examples
+#' corp <- tmCorpus(c("This is first document", "This is second"))
+#' parsed_ngrams <- ngram(corp, k = 2)
+#' tabled <- make_tabled(parsed_ngrams)
+#' content(tabled)
 #'
 #' @export
 ngram <- function(x, k = 1) {
