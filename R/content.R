@@ -7,12 +7,23 @@ content.tmCorpus <- function(x) {
   lapply(x, getDoc)
 }
 
+#' @export
+content.tmParsed <- function(x) {
+  lapply(x, getDoc)
+}
+
 # 'content<-'<- function(x, value) {
 #   UseMethod("content<-")
 # }
 
 #' @export
 'content<-.tmCorpus' <- function(x, value) {
+  x <- lapply(seq_along(x) ,function(l) {x[[l]]$text <- value[[l]]; x[[l]]})
+  structure(x, class = "tmCorpus")
+}
+
+#' @export
+'content<-.tmParsed' <- function(x, value) {
   x <- lapply(seq_along(x) ,function(l) {x[[l]]$text <- value[[l]]; x[[l]]})
   structure(x, class = "tmCorpus")
 }
