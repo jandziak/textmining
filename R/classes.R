@@ -53,7 +53,7 @@ tmParsed <- function(x = NULL, source = NULL, method = "stylo") {
   if (is.null(x)) {
     stop("argument \"x\" is missing")
   }
-  doc_list <- lapply(x, tmTextDocument)
+  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
   x <- structure(doc_list, class = "tmParsed")
   x
 }
