@@ -44,17 +44,17 @@ make_tabled <- function(x) {
   s
 }
 
-#' #' Transform function to lowercase
-#' #'
-#' #' @param x source
-#' #' @param FUN transformation function
-#' #' @return returns corpus object after transformation
-#' #'
-#' #' @export
-#' transform <- function(x, FUN) {
-#'   x <- x %>% sapply(., function(y) FUN(getDoc(y)))
-#'   tmCorpus(x)
-#' }
+# #' Transform function to lowercase
+# #'
+# #' @param x source
+# #' @param FUN transformation function
+# #' @return returns corpus object after transformation
+# #'
+# #' @export
+# transform <- function(x, FUN) {
+#   x <- x %>% sapply(., function(y) FUN(getDoc(y)))
+#   tmCorpus(x)
+# }
 
 #' Function to create ngram docs
 #'
