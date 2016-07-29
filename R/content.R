@@ -12,9 +12,20 @@ content.tmParsed <- function(x) {
   lapply(x, getDoc)
 }
 
+#' @export
+content.tmWordCountsTable <- function(x) {
+  lapply(x, getDoc)
+}
+
 # 'content<-'<- function(x, value) {
 #   UseMethod("content<-")
 # }
+
+#' @export
+'content<-.tmWordCountsTable' <- function(x, value) {
+  x <- lapply(seq_along(x) ,function(l) {x[[l]]$text <- value[[l]]; x[[l]]})
+  structure(x, class = "tmWordCountsTable")
+}
 
 #' @export
 'content<-.tmCorpus' <- function(x, value) {
