@@ -47,6 +47,12 @@ meta.tmCorpus <- function(x, tag, ...) {
   lapply(x, function(x) getMeta(x, tag))
 }
 
+#' @export
+meta.tmTextDocument <- function(x, tag, ...) {
+  getMeta(x, tag)
+}
+
+
 # 'meta<-'<- function(x, tag, ..., value) {
 #   UseMethod("meta<-")
 # }
