@@ -48,8 +48,18 @@ meta.tmCorpus <- function(x, tag, ...) {
 }
 
 #' @export
+meta.tmParsed <- function(x, tag, ...) {
+  lapply(x, function(x) getMeta(x, tag))
+}
+
+#' @export
 meta.tmTextDocument <- function(x, tag, ...) {
   getMeta(x, tag)
+}
+
+#' @export
+'meta<-.tmTextDocument' <- function(x, tag, ..., value) {
+  setMeta(x, tag, value)
 }
 
 
@@ -61,6 +71,12 @@ meta.tmTextDocument <- function(x, tag, ...) {
 'meta<-.tmCorpus' <- function(x, tag, ..., value) {
   x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], tag, value[[l]]))
   structure(x, class = "tmCorpus")
+}
+
+#' @export
+'meta<-.tmParsed' <- function(x, tag, ..., value) {
+  x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], tag, value[[l]]))
+  structure(x, class = "tmParsed")
 }
 
 # tm_map <- function(x, FUN, ...)
