@@ -103,7 +103,7 @@ getMeta.default <- function(x, parameter, i = 1) {
 #'
 #' text <- tmTextDocument("Text document new")
 #' text <- setDoc(text, "Content no 1")
-#' setDoc(text)
+#' getDoc(text)
 #' content(text)
 #'
 #' parsed <- tmParsed(list(c("Parsed", "doc", "one"), c("Parsed", "two")))
