@@ -5,6 +5,14 @@
 #' @param method method of reading the data
 #'
 #' @return returns tmCorpus object
+#' @examples
+#' corp <- tmCorpus(c("This is corp", "Document 2"))
+#' corp <- tmCorpus(list("This is corp", "Document 2"))
+#' corp <- tmCorpus(VectorSource(c("This is corp", "Document 2")), package = "tm")
+#'\dontrun{
+#' corp <- tmCorpus(DirSource("directory"), package = "tm")
+#' corp <- tmCorpus("directory", package = "stylo")
+#'}
 #'
 #' @export
 tmCorpus <- function (x = NULL, ..., method = "base") {
@@ -44,6 +52,17 @@ tmExternalCoprus.stylo <- function(method, x, ...) {
 #' @param method method of reading the data
 #'
 #' @return returns tmParsed object
+#' @examples
+#' corp <- tmCorpus(c("This is corp", "Document 2"))
+#' parsed <- parse(corp)
+#' parsed_ngram <- ngram(corp, k = 2)
+#' parsed <- tmParsed(list(c("This", "is", "corp"), c("Document", "2")))
+#'\dontrun{
+#' corp <- tmCorpus("directory", package = "stylo")
+#' parsed <- parse(corp)
+#' parsed_ngram <- ngram(corp, k = 2)
+#' parsed <- tmParsed(source = "directory", method = "stylo")
+#'}
 #'
 #' @export
 tmParsed <- function(x = NULL, source = NULL, method = "stylo") {
@@ -60,8 +79,20 @@ tmParsed <- function(x = NULL, source = NULL, method = "stylo") {
 
 #' Function to create tmWordCountsTable
 #'
-#' @param x source
+#' @param x source tmParsed
 #' @return returns tmWordCountsTable object
+#' @examples
+#' corp <- tmCorpus(c("This is corp", "Document two is this"))
+#' parsed <- parse(corp)
+#' parsed_ngram <- ngram(corp, k = 2)
+#' tabled <- make_tabled(parsed)
+#' tabled_ngram <- make_tabled(parsed_ngram)
+#'\dontrun{
+#' corp <- tmCorpus("directory", package = "stylo")
+#' parsed <- parse(corp)
+#' parsed_ngram <- ngram(corp, k = 2)
+#' parsed <- tmParsed(source = "directory", method = "stylo")
+#'}
 #'
 #' @export
 tmWordCountsTable <- function(x = NULL) {
@@ -81,6 +112,9 @@ tmWordCountsTable <- function(x = NULL) {
 #' @param ... metadata to set. Can be set as language = "pl" or newmeta = "random"
 #'
 #' @return returns tmTextDocument
+#' @examples
+#' text <-  tmTextDocument("This is text")
+#' text2 <- tmTextDocument("This is text", language = "en", title = "My test")
 #'
 #' @export
 tmTextDocument <- function(x = NULL, ...) {
@@ -102,6 +136,9 @@ tmTextDocument <- function(x = NULL, ...) {
 #' @param ... other metadata
 #'
 #' @return returns tmMetaData object
+#' @examples
+#' tmMetaData(id = 1, author = "Author", newmetadata = "random")
+#' tmMetaData(title = "New title")
 #'
 #' @export
 tmMetaData <- function(id = 1, language = "en", author = character(0),
@@ -111,15 +148,6 @@ tmMetaData <- function(id = 1, language = "en", author = character(0),
                  title = title, ...), class = "tmMetaData")
 }
 
-#' Function to create tmCorpus
-#'
-#' @param source directory containing files to read
-#' @param method method of data extraction to be used
-#' @param parse bool decide if documents should be parsed
-#'
-#' @return returns character vector
-#'
-#' @export
 tmReadDirCorpus <- function(source, method, parse = F) {
   if (parse == T) {
     if (method == "stylo") {
@@ -144,13 +172,6 @@ tmReadDirCorpus <- function(source, method, parse = F) {
   x
 }
 
-#' Function to create tmTopicModel
-#'
-#' @param model LDA model
-#'
-#' @return returns object of a class tmTopicModel
-#'
-#' @export
 tmTopicModel <- function(model) {
   class(model) <- "tmTopicModel"
   model

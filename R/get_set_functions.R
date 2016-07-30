@@ -111,6 +111,7 @@ getMeta.default <- function(x, parameter, i = 1) {
 #' getDoc(parsed, 2)
 #' content(parsed) <- list(c("Changed", "document", "one"), c("Changed", "two"))
 #' content(parsed)
+#'
 #' @export
 setDoc <- function(x, doc, i = 1) {
   UseMethod("setDoc")
@@ -156,6 +157,7 @@ setDoc.tmTextDocument <- function(x, doc, i = 1) {
 #' getMeta(parsed, parameter = "title",  2)
 #' meta(parsed, "title") <- c("T1", "T2")
 #' meta(parsed, "title")
+#'
 #' @export
 setMeta <- function(x, parameter, value, i = 1) {
   UseMethod("setMeta")
