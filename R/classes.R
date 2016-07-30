@@ -1,8 +1,8 @@
 #' Function to create tmCorpus
 #'
-#' @param x source, for method stylo it supposed to be directory with Corpus files
+#' @param x source, for package stylo it supposed to be directory with Corpus files
 #' @param ... other arguments dependent on package that we use
-#' @param method method of reading the data
+#' @param package package of reading the data could be tm or stylo
 #'
 #' @return returns tmCorpus object
 #' @examples
@@ -15,10 +15,10 @@
 #'}
 #'
 #' @export
-tmCorpus <- function (x = NULL, ..., method = "base") {
-  if (method != "base") {
-    class(method) <- method
-    x <- tmExternalCoprus(method, x, ...)
+tmCorpus <- function (x = NULL, ..., package = "base") {
+  if (package != "base") {
+    class(package) <- package
+    x <- tmExternalCoprus(package, x, ...)
   } else {
     if (is.null(x)) {
       stop("argument \"x\" is missing")
@@ -29,17 +29,17 @@ tmCorpus <- function (x = NULL, ..., method = "base") {
   x
 }
 
-tmExternalCoprus <- function(method, x, ...) {
+tmExternalCoprus <- function(package, x, ...) {
   UseMethod("tmExternalCoprus")
 }
 
-tmExternalCoprus.tm <- function(method, x, ...) {
+tmExternalCoprus.tm <- function(package, x, ...) {
   x <- tm::VCorpus(x)
   x <- as.tmCorpus(x)
   x
 }
 
-tmExternalCoprus.stylo <- function(method, x, ...) {
+tmExternalCoprus.stylo <- function(package, x, ...) {
   x <- stylo::load.corpus(corpus.dir = x, ...)
   x <- as.tmCorpus(x)
   x
@@ -49,7 +49,7 @@ tmExternalCoprus.stylo <- function(method, x, ...) {
 #'
 #' @param x source
 #' @param source directory to corpus on computer
-#' @param method method of reading the data
+#' @param package package of reading the data could be tm or stylo
 #'
 #' @return returns tmParsed object
 #' @examples
@@ -61,13 +61,13 @@ tmExternalCoprus.stylo <- function(method, x, ...) {
 #' corp <- tmCorpus("directory", package = "stylo")
 #' parsed <- parse(corp)
 #' parsed_ngram <- ngram(corp, k = 2)
-#' parsed <- tmParsed(source = "directory", method = "stylo")
+#' parsed <- tmParsed(source = "directory", package = "stylo")
 #'}
 #'
 #' @export
-tmParsed <- function(x = NULL, source = NULL, method = "stylo") {
+tmParsed <- function(x = NULL, source = NULL, package = "stylo") {
   if (!is.null(source)) {
-    x <- tmReadDirCorpus(source, method, parse = T)
+    x <- tmReadDirCorpus(source, package, parse = T)
   }
   if (is.null(x)) {
     stop("argument \"x\" is missing")
@@ -91,7 +91,7 @@ tmParsed <- function(x = NULL, source = NULL, method = "stylo") {
 #' corp <- tmCorpus("directory", package = "stylo")
 #' parsed <- parse(corp)
 #' parsed_ngram <- ngram(corp, k = 2)
-#' parsed <- tmParsed(source = "directory", method = "stylo")
+#' parsed <- tmParsed(source = "directory", package = "stylo")
 #'}
 #'
 #' @export
@@ -148,19 +148,19 @@ tmMetaData <- function(id = 1, language = "en", author = character(0),
                  title = title, ...), class = "tmMetaData")
 }
 
-tmReadDirCorpus <- function(source, method, parse = F) {
+tmReadDirCorpus <- function(source, package, parse = F) {
   if (parse == T) {
-    if (method == "stylo") {
+    if (package == "stylo") {
       x <- stylo::load.corpus.and.parse(corpus.dir = source)
       names(x) <- NULL
     }
   } else {
-    if (method == "base") {
+    if (package == "base") {
       files <- dir(path = source, pattern = "*.txt")
       x <- sapply(files, function(x) read.table(paste(source, "/", x, sep = ""),
                                                 stringsAsFactors = FALSE))
       x <- as.character(x)
-    } else if (method == "stylo") {
+    } else if (package == "stylo") {
       x <- stylo::load.corpus(corpus.dir = source)
       x <- as.character(x)
     } else {
@@ -352,7 +352,7 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
 
 #' Function to calculate topics and words arrays from the mallet model.
 #'
-#' @param model Mallet model.
+#' @param model tmTopicModel mallet type model.
 #'
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.

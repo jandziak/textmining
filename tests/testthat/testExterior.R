@@ -3,7 +3,7 @@ test_that("Reading corpus from other files works", {
   dir.create("tmp")
   writeLines("This is written file", "tmp/tmp1.txt")
   writeLines("This is written file 2", "tmp/tmp2.txt")
-  rd <- try(tmCorpus(x = "tmp", method = "stylo"))
+  rd <- try(tmCorpus(x = "tmp", package = "stylo"))
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmCorpus(c("This is written file",
                               "This is written file 2")))
@@ -13,7 +13,7 @@ test_that("Reading corpus from other files works", {
   dir.create("tmp")
   writeLines("This is written file", "tmp/tmp1.txt")
   writeLines("This is written file 2", "tmp/tmp2.txt")
-  rd <- try(tmCorpus(x = tm::DirSource("tmp"), method = "tm"))
+  rd <- try(tmCorpus(x = tm::DirSource("tmp"), package = "tm"))
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmCorpus(c("This is written file",
                               "This is written file 2")))
@@ -22,7 +22,7 @@ test_that("Reading corpus from other files works", {
 test_that("Reading corpus from tm VectorSource", {
   rd <- try(tmCorpus(x = tm::VectorSource(c("This is written file",
                                         "This is written file 2")),
-                     method = "tm"))
+                     package = "tm"))
   expect_equal(rd, tmCorpus(c("This is written file",
                               "This is written file 2")))
 })
@@ -31,7 +31,7 @@ context("Read and parse document")
 test_that("Read and parse using stylo", {
   dir.create("tmp")
   writeLines("this is written file", "tmp/tmp1.txt")
-  rd <- try(tmParsed(source = "tmp", method = "stylo"))
+  rd <- try(tmParsed(source = "tmp", package = "stylo"))
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmParsed(list(c("this", "is", "written", "file"))))
 })
