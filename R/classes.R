@@ -300,6 +300,7 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #'   UseMethod("predict")
 #' }
 
+#' @export
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                     token_regexp = "[A-Za-z]+", n_iterations = 100,
                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
@@ -307,6 +308,7 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
           sampling_interval, burn_in, random_seed)
 }
 
+#' @export
 predict.LDA_VEM  <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = "[A-Za-z]+", n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
@@ -316,7 +318,7 @@ predict.LDA_VEM  <- function(object, x, stoplist_file = "en.txt",
   as.data.frame(topicProbabilities)
 }
 
-
+#' @export
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = "[A-Za-z]+", n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
@@ -356,6 +358,28 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
 #'
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.
+#' @examples
+#' library(rJava)
+#' x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#'                                               collapse = "")))
+#'
+#' model <- train(x)
+#' new_x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#'                                                   collapse = "")))
+#'
+#' pred <- predict(model, x = new_x)
+#' topic_table(model)
+#'
+#' y <- DocumentTermMatrix(x)
+#' rownames(y) <- meta(x, "title")
+#' jss_TM <-
+#'   list(VEM = train(y, k = k, control = list(seed = SEED)),
+#'        VEM_fixed = train(y, k = k,
+#'                          control = list(estimate.alpha = FALSE, seed = SEED)),
+#'        Gibbs = train(y, k = k, method = "Gibbs",
+#'                      control = list(seed = SEED, burnin = 1000,
+#'                                     thin = 100, iter = 1000)))
+#' pred_VEM <- predict(jss_TM$VEM, new_x)
 #'
 #' @export
 topic_table <- function(model){
@@ -377,6 +401,13 @@ topic_table <- function(model){
 #' @param k number of words to be ploted.
 #' @param rot_per wordcloud param
 #' @param random_order order of words
+#' @examples
+#' library(rJava)
+#' x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
+#'                                               collapse = "")))
+#'
+#' model <- train(x)
+#' topic_wordcloud(model, topic_id = 2, k = 11)
 #'
 #' @export
 topic_wordcloud<- function(model, topic_id = 1, k = 10,
@@ -395,7 +426,12 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
 #' @param topic_words Words words extracted from the topic_table function
 #'
 #' @return network The graph visualising the network
-#'
+#' @examples
+#' x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
+#' require(rJava)
+#' model <- suppressMessages(train(x))
+#' table_topic <- topic_table(model)
+#' network <- gepi_network(10 ,table_topic$words)
 #' @export
 gepi_network <- function(k, topic_words) {
   topic_names <- paste("Topic_", 1:dim(topic_words)[1], sep = "")
