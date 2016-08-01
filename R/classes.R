@@ -207,6 +207,7 @@ train <- function(x, ...) {
   UseMethod("train")
 }
 
+#' @export
 train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
                            token_regexp = "[A-Za-z]+",
@@ -225,6 +226,7 @@ train.tmCorpus <- function(x, k = 20,
 #   function(x, control = list())
 #     t(TermDocumentMatrix(x, control))
 
+#' @export
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
