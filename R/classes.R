@@ -361,6 +361,7 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
 #' @return topics Array of the topics.
 #' @return words Array of the most important words in topic.
 #' @examples
+#' \dontrun{
 #' library(rJava)
 #' x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
 #'                                               collapse = "")))
@@ -382,7 +383,7 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
 #'                      control = list(seed = SEED, burnin = 1000,
 #'                                     thin = 100, iter = 1000)))
 #' pred_VEM <- predict(jss_TM$VEM, new_x)
-#'
+#'}
 #' @export
 topic_table <- function(model){
   doc_topics <- model$doc_topics
@@ -404,13 +405,14 @@ topic_table <- function(model){
 #' @param rot_per wordcloud param
 #' @param random_order order of words
 #' @examples
+#' \dontrun{
 #' library(rJava)
 #' x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
 #'                                               collapse = "")))
 #'
 #' model <- train(x)
 #' topic_wordcloud(model, topic_id = 2, k = 11)
-#'
+#'}
 #' @export
 topic_wordcloud<- function(model, topic_id = 1, k = 10,
                            rot_per = 0, random_order = FALSE){
@@ -429,11 +431,13 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
 #'
 #' @return network The graph visualising the network
 #' @examples
+#' \dontrun{
 #' x <- tmCorpus(rep("as, a , a ,s  l k l l k k j h g f f hg j aaa", 100))
 #' require(rJava)
 #' model <- suppressMessages(train(x))
 #' table_topic <- topic_table(model)
 #' network <- gepi_network(10 ,table_topic$words)
+#'}
 #' @export
 gepi_network <- function(k, topic_words) {
   topic_names <- paste("Topic_", 1:dim(topic_words)[1], sep = "")
@@ -491,7 +495,7 @@ as.tmCorpus.VCorpus <- function(x, ...) {
 
 #' @export
 as.tmCorpus.stylo.corpus <- function(x, ...) {
-  x <- lapply(x, function(y) y)
+  x <- lapply(seq_along(x), function(i) paste(x[[i]], collapse = " "))
   names(x) <- NULL
   tmCorpus(x)
 }
