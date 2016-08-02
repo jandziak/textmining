@@ -210,7 +210,7 @@ train <- function(x, ...) {
 #' @export
 train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
-                           token_regexp = "[A-Za-z]+",
+                           token_regexp = regexp_token,
                            alpha_opt = 20,
                            burn_in = 50, train = 200,
                            maximize = 10, package = "mallet", ...) {
@@ -235,7 +235,7 @@ train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
 train_mallet_helper <- function(x, k = 20,
                                 stoplist_file = "en.txt",
-                                token_regexp = "[A-Za-z]+",
+                                token_regexp = regexp_token,
                                 alpha_opt = 20,
                                 burn_in = 50, train = 200,
                                 maximize = 10, ...) {
@@ -297,14 +297,14 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #' #'
 #' #' @export
 #' predict <- function(topic.model, x, stoplist_file = "en.txt",
-#'                     token_regexp = "[A-Za-z]+", n_iterations = 100,
+#'                     token_regexp = regexp_token, n_iterations = 100,
 #'                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
 #'   UseMethod("predict")
 #' }
 
 #' @export
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
-                    token_regexp = "[A-Za-z]+", n_iterations = 100,
+                    token_regexp = regexp_token, n_iterations = 100,
                     sampling_interval = 10, burn_in = 10, random_seed = NULL) {
   predict(object$model, x, stoplist_file, token_regexp, n_iterations,
           sampling_interval, burn_in, random_seed)
@@ -312,7 +312,7 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
 
 #' @export
 predict.LDA  <- function(object, x, stoplist_file = "en.txt",
-                            token_regexp = "[A-Za-z]+", n_iterations = 100,
+                            token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
                             random_seed = NULL) {
   topicProbabilities <- topicmodels::posterior(object,x)
@@ -322,7 +322,7 @@ predict.LDA  <- function(object, x, stoplist_file = "en.txt",
 
 #' @export
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
-                            token_regexp = "[A-Za-z]+", n_iterations = 100,
+                            token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
                             random_seed = NULL) {
   predict_mallet_helper(object, x, stoplist_file, token_regexp, n_iterations,
@@ -330,7 +330,7 @@ predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
 }
 
 predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
-                                  token_regexp = "[A-Za-z]+", n_iterations = 100,
+                                  token_regexp = regexp_token, n_iterations = 100,
                                   sampling_interval = 10, burn_in = 10,
                                   random_seed = NULL) {
   new_texts <- sapply(x, mallet_prepare)

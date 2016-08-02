@@ -16,3 +16,29 @@ TermDocumentMatrix_classes <- c("TermDocumentMatrix", "simple_triplet_matrix")
 
 words.PlainTextDocument <- function (x, ...)
   tm::scan_tokenizer(x)
+
+regexp_token <- paste("[^A-Za-z",
+      # Latin supplement (Western):
+      "\U00C0-\U00FF",
+      # Latin supplement (Eastern):
+      "\U0100-\U01BF",
+      # Latin extended (phonetic):
+      "\U01C4-\U02AF",
+      # modern Greek:
+      "\U0386\U0388-\U03FF",
+      # Cyrillic:
+      "\U0400-\U0481\U048A-\U0527",
+      # Hebrew:
+      "\U05D0-\U05EA\U05F0-\U05F4",
+      # Arabic:
+      "\U0620-\U065F\U066E-\U06D3\U06D5\U06DC",
+      # extended Latin:
+      "\U1E00-\U1EFF",
+      # ancient Greek:
+      "\U1F00-\U1FBC\U1FC2-\U1FCC\U1FD0-\U1FDB\U1FE0-\U1FEC\U1FF2-\U1FFC",
+      # Coptic:
+      "\U03E2-\U03EF\U2C80-\U2CF3",
+      # Georgian:
+      "\U10A0-\U10FF",
+      "]+",
+      sep="")
