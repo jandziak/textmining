@@ -311,7 +311,7 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
 }
 
 #' @export
-predict.LDA_VEM  <- function(object, x, stoplist_file = "en.txt",
+predict.LDA  <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = "[A-Za-z]+", n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
                             random_seed = NULL) {
@@ -369,7 +369,7 @@ predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
 #' new_x <- tmCorpus(lapply(1:100, function(x) paste(sample(LETTERS, 11),
 #'                                                   collapse = "")))
 #'
-#' pred <- predict(model, x = new_x)
+#'
 #' topic_table(model)
 #'
 #' y <- DocumentTermMatrix(x)
@@ -491,7 +491,7 @@ as.tmCorpus.VCorpus <- function(x, ...) {
 
 #' @export
 as.tmCorpus.stylo.corpus <- function(x, ...) {
-  x <- lapply(seq_along(x), function(i) paste(x[[i]], collapse = " "))
+  x <- lapply(x, function(y) y)
   names(x) <- NULL
   tmCorpus(x)
 }
