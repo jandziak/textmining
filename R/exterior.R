@@ -18,7 +18,7 @@ words.PlainTextDocument <- function (x, ...)
   tm::scan_tokenizer(x)
 
 regexp_token <-
-  paste("[^A-Za-z",
+  paste("[A-Za-z",
         # Latin supplement (Western):
         "\U00C0-\U00FF",
         # Latin supplement (Eastern):
