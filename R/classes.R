@@ -23,7 +23,7 @@ tmCorpus <- function (x = NULL, ..., package = "base") {
     if (is.null(x)) {
       stop("argument \"x\" is missing")
     }
-    doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
+    doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[],...))
     x <- structure(doc_list, class = "tmCorpus")
   }
   x
