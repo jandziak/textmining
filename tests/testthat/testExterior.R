@@ -148,12 +148,15 @@ context("Usage of treetagger")
 test_that("Tree tagger can be applied to tmCorpus object", {
   q <- c("MUCH ADO ABOUT NOTHING", "Persons Represented.")
   x <- tmCorpus(q)
+  dir_tt <- dir("C:\\TreeTagger")
+  if(length(dir_tt) !=0){
   rd <- tagtmCorpus_helper(x, treetagger = "manual",
                            lang = "en",
                            TT.options = list(path = "C:\\TreeTagger",
                                              preset = "en"))
 
   expect_equal(rd[[1]]$token, c("MUCH", "ADO", "ABOUT", "NOTHING"))
+  }
 })
 
 context("Train function attached to the dtm for topicmodels pacakge")
