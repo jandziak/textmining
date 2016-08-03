@@ -422,12 +422,19 @@
   #' @export
   topic_wordcloud<- function(model, topic_id = 1, k = 10,
                              rot_per = 0, random_order = FALSE){
-    topic_table <- topic_table(model)
-    current_topic = sort(topic_table$words[topic_id, ], decreasing = T
-                         )[1:k]
+    if(class(model$model) == "jobjRef")
+    {
+      topic_table <- topic_table(model)
+      current_topic = sort(topic_table$words[topic_id, ], decreasing = T
+      )[1:k]
+    } else {
+      topic_table <- posterior(model$model)
+      current_topic = sort(topic_table$terms[topic_id, ], decreasing = T
+      )[1:k]
+    }
     wordcloud::wordcloud(names(current_topic), current_topic,
-                   random.order = random_order,
-                   rot.per = rot_per)
+                         random.order = random_order,
+                         rot.per = rot_per)
   }
 
   #' Function to plot topic network
