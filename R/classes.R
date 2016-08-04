@@ -677,6 +677,8 @@
 
       .TermDocumentMatrix(m, weighting)
     }
+
+#' @export
 '[.tmCorpus' <- function(x, i) {
   class(x) <- "list"
   x <- x[i]
