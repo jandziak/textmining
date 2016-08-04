@@ -20,7 +20,8 @@ Imports: mallet,
     koRpus,
     topicmodels,
     slam,
-    methods
+    methods,
+    SnowballC
 Depends: stylo,
     tm,
     NLP,
