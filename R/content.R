@@ -131,8 +131,10 @@ c.tmCorpus <- function(..., recursive = FALSE) {
   x
 }
 
-tagdocument <- function(x, format = "obj", ...){
-  tagged_text <- koRpus::treetag(x, ..., format = format)
+tagdocument <- function(x, format = "obj", stopwords = tm::stopwords("en"),
+                        stemmer = SnowballC::wordStem, ...){
+  tagged_text <- koRpus::treetag(x, ..., format = format, stemmer = stemmer,
+                                 stopwords = stopwords)
   tagged_text
 }
 
