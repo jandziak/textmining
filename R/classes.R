@@ -330,7 +330,7 @@
   predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                       token_regexp = regexp_token, n_iterations = 100,
                       sampling_interval = 10, burn_in = 10, random_seed = NULL) {
-    predict(object$model, x, stoplist_file, token_regexp, n_iterations,
+    predict(object$model, x, object$stoplist_file, token_regexp, n_iterations,
             sampling_interval, burn_in, random_seed)
   }
 
@@ -350,7 +350,7 @@
                               sampling_interval = 10, burn_in = 10,
                               random_seed = NULL) {
 
-    predict_mallet_helper(object, x, object$stoplist_file, token_regexp, n_iterations,
+    predict_mallet_helper(object, x, stoplist_file, token_regexp, n_iterations,
                           sampling_interval, burn_in, random_seed)
   }
 
