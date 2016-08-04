@@ -221,9 +221,11 @@
                              burn_in = 50, train = 200,
                              maximize = 10, package = "mallet", ...) {
 
-      trained <- train_mallet_helper(x, k, stoplist_file,
-                                     token_regexp,  alpha_opt,
-                          burn_in, train, maximize)
+    wd <- getwd()
+    trained <- try(train_mallet_helper(x, k, stoplist_file,
+                                   token_regexp,  alpha_opt,
+                                   burn_in, train, maximize))
+    setwd(wd)
 
     tmTopicModel(trained)
   }
@@ -245,22 +247,7 @@
                                   alpha_opt = 20,
                                   burn_in = 50, train = 200,
                                   maximize = 10, ...) {
-    wd <- getwd()
-    if (length(stoplist_file) != 1){
-      rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
-      name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
-      print(name_stoplist_file)
-      while(sum(rep(name_stoplist_file, length(dir)) == dir()) != 0) {
-        rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
-        name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
-        print(name_stoplist_file)
-      }
-      setwd(tempdir())
-      writeLines(stoplist_file, name_stoplist_file)
-    } else {
-      name_stoplist_file <- stoplist_file
-    }
-
+    name_stoplist_file <- stopwords_temp_mallet(stoplist_file)
     text_array <- sapply(x, mallet_prepare)
     if (is.null(names(text_array)))
       names <- 1:length(text_array) else names <- names(text_array)
@@ -291,7 +278,6 @@
                         doc_names = as.character(meta(x,"title")),
                         name_stoplist_file = name_stoplist_file,
                         stoplist_file = stoplist_file)
-    setwd(wd)
     topic_model
   }
 
@@ -349,31 +335,19 @@
                               token_regexp = regexp_token, n_iterations = 100,
                               sampling_interval = 10, burn_in = 10,
                               random_seed = NULL) {
-
-    predict_mallet_helper(object, x, stoplist_file, token_regexp, n_iterations,
-                          sampling_interval, burn_in, random_seed)
+    wd <- getwd()
+    pred <- try(predict_mallet_helper(object, x, stoplist_file, token_regexp,
+                                      n_iterations, sampling_interval, burn_in,
+                                      random_seed))
+    setwd(wd)
+    pred
   }
 
   predict_mallet_helper <- function(model, x, stoplist_file = "en.txt",
                                     token_regexp = regexp_token, n_iterations = 100,
                                     sampling_interval = 10, burn_in = 10,
                                     random_seed = NULL) {
-    wd <- getwd()
-    if (length(stoplist_file) != 1){
-      rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
-      name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
-      print(name_stoplist_file)
-      while(sum(rep(name_stoplist_file, length(dir)) == dir()) != 0) {
-        rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
-        name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
-        print(name_stoplist_file)
-      }
-      setwd(tempdir())
-      writeLines(stoplist_file, name_stoplist_file)
-    } else {
-      name_stoplist_file <- stoplist_file
-    }
-
+    name_stoplist_file <- stopwords_temp_mallet(stoplist_file)
     new_texts <- sapply(x, mallet_prepare)
 
     mallet.instances <-
@@ -391,7 +365,6 @@
                             sampling_interval = sampling_interval,
                             burn_in = burn_in, random_seed = random_seed)
     ml_inst <- as.data.frame(inf_top)
-    setwd(wd)
     ml_inst
   }
 

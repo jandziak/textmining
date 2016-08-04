@@ -55,3 +55,24 @@ stopwords_temp <- function() {
   }
   return(wd)
 }
+
+# Function returns name of stopwordlist file in appropriate temp directory
+# As a side effect it changes the directory into tempdir()
+
+stopwords_temp_mallet <- function(stoplist_file) {
+  if (length(stoplist_file) != 1){
+    rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+    name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+    print(name_stoplist_file)
+    while(sum(rep(name_stoplist_file, length(dir)) == dir()) != 0) {
+      rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+      name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+      print(name_stoplist_file)
+    }
+    setwd(tempdir())
+    writeLines(stoplist_file, name_stoplist_file)
+  } else {
+    name_stoplist_file <- stoplist_file
+  }
+  return(stoplist_file)
+}
