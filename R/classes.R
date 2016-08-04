@@ -350,7 +350,7 @@
                               sampling_interval = 10, burn_in = 10,
                               random_seed = NULL) {
 
-    predict_mallet_helper(object, x, model$stoplist_file, token_regexp, n_iterations,
+    predict_mallet_helper(object, x, object$stoplist_file, token_regexp, n_iterations,
                           sampling_interval, burn_in, random_seed)
   }
 
