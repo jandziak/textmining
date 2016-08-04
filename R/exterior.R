@@ -43,3 +43,15 @@ regexp_token <-
         "\U10A0-\U10FF",
         "]+",
         sep="")
+
+#Function returns working directory and changes it temporarely
+#onto temp directory and saves there stopwords file
+
+stopwords_temp <- function() {
+  wd <- getwd()
+  setwd(tempdir())
+  if (sum(dir() == rep("en.txt", length(dir()))) != 1) {
+    writeLines(c("and,", "me,", "you"), "en.txt")
+  }
+  return(wd)
+}

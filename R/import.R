@@ -8,4 +8,6 @@
 #' @importFrom stats setNames predict
 #' @importFrom utils read.table
 #' @importFrom NLP content content<- meta meta<- words
+#' @importFrom stats rnorm
+#'
 NULL
