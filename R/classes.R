@@ -256,7 +256,6 @@
         print(name_stoplist_file)
       }
       setwd(tempdir())
-      print(tempdir())
       writeLines(stoplist_file, name_stoplist_file)
     } else {
       name_stoplist_file <- stoplist_file
@@ -350,7 +349,8 @@
                               token_regexp = regexp_token, n_iterations = 100,
                               sampling_interval = 10, burn_in = 10,
                               random_seed = NULL) {
-    predict_mallet_helper(object, x, stoplist_file, token_regexp, n_iterations,
+
+    predict_mallet_helper(object, x, model$stoplist_file, token_regexp, n_iterations,
                           sampling_interval, burn_in, random_seed)
   }
 
@@ -358,12 +358,28 @@
                                     token_regexp = regexp_token, n_iterations = 100,
                                     sampling_interval = 10, burn_in = 10,
                                     random_seed = NULL) {
+    wd <- getwd()
+    if (length(stoplist_file) != 1){
+      rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+      name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+      print(name_stoplist_file)
+      while(sum(rep(name_stoplist_file, length(dir)) == dir()) != 0) {
+        rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+        name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+        print(name_stoplist_file)
+      }
+      setwd(tempdir())
+      writeLines(stoplist_file, name_stoplist_file)
+    } else {
+      name_stoplist_file <- stoplist_file
+    }
+
     new_texts <- sapply(x, mallet_prepare)
 
     mallet.instances <-
       mallet::mallet.import(id.array = as.character(names(new_texts)),
                             text.array = as.character(new_texts),
-                            stoplist.file = stoplist_file,
+                            stoplist.file = name_stoplist_file,
                             token.regexp = token_regexp)
 
     comp_inst <- compatible_instances(as.character(names(new_texts)),
@@ -375,7 +391,7 @@
                             sampling_interval = sampling_interval,
                             burn_in = burn_in, random_seed = random_seed)
     ml_inst <- as.data.frame(inf_top)
-
+    setwd(wd)
     ml_inst
   }
 
