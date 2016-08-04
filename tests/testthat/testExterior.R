@@ -162,7 +162,6 @@ test_that("Tree tagger can be applied to tmCorpus object", {
                            lang = "en",
                            TT.options = list(path = "C:\\TreeTagger",
                                              preset = "en"))
-  }
   expect_equal(rd[[1]]$token, c("MUCH", "ADO", "ABOUT", "NOTHING"))
   }
 })
