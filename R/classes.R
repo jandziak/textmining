@@ -663,6 +663,10 @@
 #'
 #' @param x source, for package stylo it supposed to be directory with Corpus files
 #' @param ... metadata
+#' @param treetagger treetagger settings
+#' @param lang language
+#' @param path treetagger path
+#' @param preset language seting
 #'
 #' @return returns tmTaggedCorpus object
 #' @examples
@@ -680,5 +684,9 @@ tmTaggedCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
   x <- structure(doc_list, class = "tmTaggedCorpus")
 }
 
-
-
+#' @export
+as.tmCorpus.tmTaggedCorpus <- function(x, column) {
+  x <- content(x)
+  x <- lapply(x, function(y) paste(y[, column], collapse = " "))
+  tmCorpus(x)
+}
