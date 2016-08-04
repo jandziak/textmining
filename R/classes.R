@@ -245,15 +245,31 @@
                                   alpha_opt = 20,
                                   burn_in = 50, train = 200,
                                   maximize = 10, ...) {
-    text_array <- sapply(x, mallet_prepare)
+    wd <- getwd()
+    if (length(stoplist_file) != 1){
+      rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+      name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+      print(name_stoplist_file)
+      while(sum(rep(name_stoplist_file, length(dir)) == dir()) != 0) {
+        rnd <- gsub(pattern = "\\.", x = rnorm(1), replacement = 0)
+        name_stoplist_file <- paste("stopwords", rnd, ".txt", sep ="")
+        print(name_stoplist_file)
+      }
+      setwd(tempdir())
+      print(tempdir())
+      writeLines(stoplist_file, name_stoplist_file)
+    } else {
+      name_stoplist_file <- stoplist_file
+    }
 
+    text_array <- sapply(x, mallet_prepare)
     if (is.null(names(text_array)))
       names <- 1:length(text_array) else names <- names(text_array)
 
     mallet.instances <-
       mallet::mallet.import(id.array = as.character(names),
                             text.array = as.character(text_array),
-                            stoplist.file = stoplist_file,
+                            stoplist.file = name_stoplist_file,
                             token.regexp = token_regexp)
 
     topic_model <- mallet::MalletLDA(num.topics = k)
@@ -273,7 +289,10 @@
     topic_model <- list(model = topic_model, vocabulary = vocabulary,
                         word_freqs = word_freqs, doc_topics = doc_topics,
                         topic_words = topic_words,
-                        doc_names = as.character(meta(x,"title")))
+                        doc_names = as.character(meta(x,"title")),
+                        name_stoplist_file = name_stoplist_file,
+                        stoplist_file = stoplist_file)
+    setwd(wd)
     topic_model
   }
 
