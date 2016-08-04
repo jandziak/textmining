@@ -658,3 +658,27 @@
   class(x) <- "tmCorpus"
   x
 }
+
+#' Function to create tmTaggedCorpus
+#'
+#' @param x source, for package stylo it supposed to be directory with Corpus files
+#' @param ... metadata
+#'
+#' @return returns tmTaggedCorpus object
+#' @examples
+#' corp <- tmCorpus(c("This is corp", "Document 2"))
+#' tg_corp <- tmTaggedCorpus(corp)
+#'
+#' @export
+tmTaggedCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
+                            path = "C:\\TreeTagger", preset = "en") {
+  x <- rd <- tagtmCorpus_helper(corp, treetagger = treetagger, lang = lang,
+                                TT.options = list(path = path, preset = preset))
+
+  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[],
+                                                   ...))
+  x <- structure(doc_list, class = "tmTaggedCorpus")
+}
+
+
+
