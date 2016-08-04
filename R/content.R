@@ -172,3 +172,27 @@ terms.jobjRef <- function(x, ...) {
   names(terms) <- paste("Topic", 1:no_topics)
   terms
 }
+
+
+
+#' @export
+content.tmTaggedCorpus <- function(x) {
+  lapply(x, getDoc)
+}
+
+#' @export
+'content<-.tmTaggedCorpus' <- function(x, value) {
+  x <- lapply(seq_along(x) ,function(l) {x[[l]]$text <- value[[l]]; x[[l]]})
+  structure(x, class = "tmTaggedCorpus")
+}
+
+#' @export
+meta.tmTaggedCorpus <- function(x, tag, ...) {
+  lapply(x, function(x) getMeta(x, tag))
+}
+
+#' @export
+'meta<-.tmTaggedCorpus' <- function(x, tag, ..., value) {
+  x <- lapply(seq_along(x) ,function(l) setMeta(x[[l]], tag, value[[l]]))
+  structure(x, class = "tmTaggedCorpus")
+}
