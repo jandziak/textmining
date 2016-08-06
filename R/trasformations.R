@@ -74,3 +74,12 @@ ngram <- function(x, k = 1) {
   x <- tmParsed(ngram_list)
   x
 }
+
+#' @export
+tm_filter.tmTaggedCorpus <- function(x, FUN, ...)
+  x[tm_index(x, FUN, ...)]
+
+#' @export
+tm_index.tmTaggedCorpus <- function(x, FUN, ...) {
+  unlist(lapply(x, FUN, ...))
+}
