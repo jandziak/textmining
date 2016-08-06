@@ -31,7 +31,7 @@ context("Read and parse document")
 test_that("Read and parse using stylo", {
   dir.create("tmp")
   writeLines("this is written file", "tmp/tmp1.txt")
-  rd <- try(tmParsed(source = "tmp", package = "stylo"))
+  rd <- try(tmParsed(x = "tmp", package = "stylo"))
   unlink("tmp", recursive = TRUE)
   expect_equal(rd, tmParsed(list(c("this", "is", "written", "file"))))
 })

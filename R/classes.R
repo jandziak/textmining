@@ -68,14 +68,16 @@ tmExternalCoprus.stylo <- function(package, x, files = "all",
 #'}
 #'
 #' @export
-tmParsed <- function(x = NULL, source = NULL, package = "stylo") {
-  if (!is.null(source)) {
-    x <- tmReadDirCorpus(source, package, parse = T)
+tmParsed <- function(x = NULL, package = "base", ...) {
+  if (package != "base") {
+    class(package) <- package
+    x <- tmExternalParsedCoprus(package, x, ...)
+  } else {
+    if (is.null(x)) {
+      stop("argument \"x\" is missing")
+    }
   }
-  if (is.null(x)) {
-    stop("argument \"x\" is missing")
-  }
-  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]))
+  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[]), ...)
   x <- structure(doc_list, class = "tmParsed")
   x
 }
@@ -149,6 +151,18 @@ tmMetaData <- function(id = 1, language = "en", author = character(0),
                        title = paste("Document_", id, sep = ""), ...) {
   structure(list(id = id, language = language, author = author, date = date,
                  title = title, ...), class = "tmMetaData")
+}
+
+tmExternalParsedCoprus <- function(package, x, files = "all",
+                                   encoding = "UTF-8",
+                                   readerControl = list(reader = reader(x),
+                                                        language = "en")) {
+  if (package == "stylo") {
+    x <- stylo::load.corpus.and.parse(corpus.dir = "tmp")
+    names(x) <- NULL
+  }
+  class(x) <- "list"
+  x
 }
 
 tmReadDirCorpus <- function(source, package, parse = F, files = "all",
