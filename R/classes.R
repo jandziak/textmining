@@ -676,7 +676,7 @@ TermDocumentMatrix.tmCorpus <-
 #' @export
 tmTaggedCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
                             path = "C:\\TreeTagger", preset = "en") {
-  x <- rd <- tagtmCorpus_helper(corp, treetagger = treetagger, lang = lang,
+  x <- tagtmCorpus_helper(x, treetagger = treetagger, lang = lang,
                                 TT.options = list(path = path, preset = preset))
   doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[],
                                                    ...))
@@ -689,12 +689,3 @@ as.tmCorpus.tmTaggedCorpus <- function(x, column) {
   x <- lapply(x, function(y) paste(y[, column], collapse = " "))
   tmCorpus(x)
 }
-
-q <- c("MUCH ADO ABOUT NOTHING", "Persons Represented.")
-x <- tmCorpus(q)
-dir_tt <- dir("C:\\TreeTagger")
-if(length(dir_tt) !=0){
-  rd <- tagtmCorpus_helper(x, treetagger = "manual",
-                           lang = "en",
-                           TT.options = list(path = "C:\\TreeTagger",
-                                             preset = "en"))
