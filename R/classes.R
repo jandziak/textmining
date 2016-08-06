@@ -208,24 +208,24 @@ mallet_prepare <- function(doc) {
   return(x)
 }
 
-#' Function to create train Topic Model
-#'
-#' @param x tmCorpus object
-#' @param stoplist_file directory of file with stopwords
-#' @param token_regexp regular expression patterns
-#' @param k number of topics
-#' @param alpha_opt parameter of mallet model
-#' @param burn_in parameter of mallet model
-#' @param train parameter of mallet model
-#' @param maximize parameter of mallet model
-#' @param ... settings for mallet.doc.topics and mallet.topic.words
-#'
-#' @return returns object of a class tmTopicModel
-#'
-#' @export
-train <- function(x, ...) {
-  UseMethod("train")
-}
+#' #' Function to create train Topic Model
+#' #'
+#' #' @param x tmCorpus object
+#' #' @param stoplist_file directory of file with stopwords
+#' #' @param token_regexp regular expression patterns
+#' #' @param k number of topics
+#' #' @param alpha_opt parameter of mallet model
+#' #' @param burn_in parameter of mallet model
+#' #' @param train parameter of mallet model
+#' #' @param maximize parameter of mallet model
+#' #' @param ... settings for mallet.doc.topics and mallet.topic.words
+#' #'
+#' #' @return returns object of a class tmTopicModel
+#' #'
+#' #' @export
+#' train <- function(x, ...) {
+#'   UseMethod("train")
+#' }
 
 #' @export
 train.tmCorpus <- function(x, k = 20,
