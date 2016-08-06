@@ -9,4 +9,5 @@
 #' @importFrom utils read.table
 #' @importFrom NLP content content<- meta meta<- words
 #' @importFrom stats rnorm
+#' @importFrom caret train createDataPartition
 NULL
