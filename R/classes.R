@@ -676,8 +676,22 @@ TermDocumentMatrix.tmCorpus <-
 #' @export
 tmTaggedCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
                             path = "C:\\TreeTagger", preset = "en") {
+  UseMethod("tmTaggedCorpus")
+}
+
+#' @export
+tmTaggedCorpus.tmCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
+                            path = "C:\\TreeTagger", preset = "en") {
   x <- tagtmCorpus_helper(x, treetagger = treetagger, lang = lang,
                                 TT.options = list(path = path, preset = preset))
+  doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[],
+                                                   ...))
+  x <- structure(doc_list, class = "tmTaggedCorpus")
+}
+
+#' @export
+tmTaggedCorpus.list <- function (x = NULL, ..., treetagger = "manual", lang = "en",
+                                     path = "C:\\TreeTagger", preset = "en") {
   doc_list <- lapply(x, function(y) tmTextDocument(y, id = parent.frame()$i[],
                                                    ...))
   x <- structure(doc_list, class = "tmTaggedCorpus")
