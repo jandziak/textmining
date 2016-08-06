@@ -24,3 +24,5 @@ vignettes/*.pdf
 man 
 tmp
 en.txt
+
+LDAvis_connection.R
