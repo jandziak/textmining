@@ -59,6 +59,8 @@ make_tabled <- function(x) {
 #' Function to create ngram docs
 #'
 #' @param x tmCorpus object
+#' @param k number of words in ngram
+#'
 #' @return returns tmParsed object of ngrams
 #' @examples
 #' corp <- tmCorpus(c("This is first document", "This is second"))
