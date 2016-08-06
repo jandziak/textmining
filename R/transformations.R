@@ -104,7 +104,7 @@ tm_index.tmTaggedCorpus <- function(x, FUN, ...) {
 #' }
 #'
 #' @export
-filter_documents <- function(x, column, value, ...) {
+filter_documents <- function(x, column, value) {
   z <- lapply(content(x), function(y) y[y[, column] == value, ])
   tmTaggedCorpus(z)
 }
