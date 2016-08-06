@@ -523,6 +523,7 @@ topic_network <- function(k, model) {
 #' Create textmining Corpus
 #'
 #' @param x source object, can be tmTaggedText VCorpus or stylo.corpus.
+#' @param ... metadata to be added
 #'
 #' @examples
 #' tmCorpus(c("This is new corpus", "And I like It"))
