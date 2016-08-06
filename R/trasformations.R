@@ -83,3 +83,29 @@ tm_filter.tmTaggedCorpus <- function(x, FUN, ...)
 tm_index.tmTaggedCorpus <- function(x, FUN, ...) {
   unlist(lapply(x, FUN, ...))
 }
+
+
+#' Function to filter tagged text
+#'
+#' @param x tmTaggedCorpus
+#' @param column column name
+#' @param value filtered value
+#'
+#' @examples
+#' \dontrun{
+#' library(dplyr)
+#' library(textmining)
+#' corp <- tmCorpus(c("This is corp corp", "Document 2 corp corp"))
+#' rd <- tmTaggedCorpus(corp)
+#' filtered_tmTaggedCorpus <- filter_documents(rd, "tag", "NP")
+#' corpus <- tmCorpus(filtered_tmTaggedCorpus)
+#' }
+#'
+#' @export
+filter_documents <- function(x, column, value, ...) {
+  z <- lapply(content(x), function(y) y[y[, column] == value, ])
+  tmTaggedCorpus(z)
+}
+
+
+
