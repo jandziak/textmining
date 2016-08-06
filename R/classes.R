@@ -462,7 +462,7 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
 #' Function to plot topic network
 #'
 #' @param k Number of words from each topic to be included in graph
-#' @param topic_words Words words extracted from the topic_table function
+#' @param model trained tmTopicModel object
 #'
 #' @return network The graph visualising the network
 #' @examples
