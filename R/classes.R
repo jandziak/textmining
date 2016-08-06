@@ -51,8 +51,8 @@ tmExternalCoprus.stylo <- function(package, x, files = "all",
 #' Function to create tmParsed
 #'
 #' @param x source
-#' @param source directory to corpus on computer
 #' @param package package of reading the data could be tm or stylo
+#' @param ... metadata for the tmParsed document
 #'
 #' @return returns tmParsed object
 #' @examples
