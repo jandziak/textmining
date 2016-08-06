@@ -72,5 +72,5 @@ stopwords_temp_mallet <- function(stoplist_file) {
   } else {
     name_stoplist_file <- stoplist_file
   }
-  return(stoplist_file)
+  return(name_stoplist_file)
 }
