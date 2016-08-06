@@ -329,7 +329,8 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #' @export
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                                  token_regexp = regexp_token, n_iterations = 100,
-                                 sampling_interval = 10, burn_in = 10, random_seed = NULL) {
+                                 sampling_interval = 10, burn_in = 10,
+                                 random_seed = NULL, ...) {
   predict(object$model, x, object$stoplist_file, token_regexp, n_iterations,
           sampling_interval, burn_in, random_seed)
 }
@@ -338,7 +339,7 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
 predict.LDA  <- function(object, x, stoplist_file = "en.txt",
                          token_regexp = regexp_token, n_iterations = 100,
                          sampling_interval = 10, burn_in = 10,
-                         random_seed = NULL) {
+                         random_seed = NULL, ...) {
   topicProbabilities <- topicmodels::posterior(object,x)
   topicProbabilities <- as.data.frame(topicProbabilities$topics)
   as.data.frame(topicProbabilities)
@@ -348,7 +349,7 @@ predict.LDA  <- function(object, x, stoplist_file = "en.txt",
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
-                            random_seed = NULL) {
+                            random_seed = NULL, ...) {
   wd <- getwd()
   pred <- try(predict_mallet_helper(object, x, stoplist_file, token_regexp,
                                     n_iterations, sampling_interval, burn_in,
@@ -728,7 +729,7 @@ tmTaggedCorpus.list <- function (x = NULL, ..., treetagger = "manual", lang = "e
 }
 
 #' @export
-as.tmCorpus.tmTaggedCorpus <- function(x, column) {
+as.tmCorpus.tmTaggedCorpus <- function(x, column, ...) {
   x <- content(x)
   x <- lapply(x, function(y) paste(y[, column], collapse = " "))
   tmCorpus(x)
