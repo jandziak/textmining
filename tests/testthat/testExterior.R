@@ -75,7 +75,7 @@ test_that("Gepi graphics", {
   model <- suppressMessages(train(x))
   setwd(wd)
   table_topic <- topic_table(model)
-  network <- gepi_network(10 ,table_topic$words)
+  network <- topic_network(10, model)
   expect_equal(class(network), c("forceNetwork", "htmlwidget"))
 })
 

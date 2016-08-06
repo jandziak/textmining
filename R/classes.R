@@ -450,7 +450,7 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
     current_topic = sort(topic_table$words[topic_id, ], decreasing = T
     )[1:k]
   } else {
-    topic_table <- posterior(model$model)
+    topic_table <- topicmodels::posterior(model$model)
     current_topic = sort(topic_table$terms[topic_id, ], decreasing = T
     )[1:k]
   }
@@ -471,10 +471,18 @@ topic_wordcloud<- function(model, topic_id = 1, k = 10,
 #' require(rJava)
 #' model <- suppressMessages(train(x))
 #' table_topic <- topic_table(model)
-#' network <- gepi_network(10 ,table_topic$words)
+#' network <- topic_network(10 ,table_topic$words)
 #'}
 #' @export
-gepi_network <- function(k, topic_words) {
+topic_network <- function(k, model) {
+  if(class(model$model) == "jobjRef")
+  {
+    topic_table <- topic_table(model)
+    topic_words <- topic_table$words
+  } else {
+    topic_table <- topicmodels::posterior(model$model)
+    topic_words <- topic_table$terms
+  }
   topic_names <- paste("Topic_", 1:dim(topic_words)[1], sep = "")
   row.names(topic_words) <- topic_names
   frequent_words <- sapply(topic_names, function(x)
