@@ -159,12 +159,12 @@ terms <- function(x, ...) {
 }
 
 #' @name terms
-#' @export terms.tmTopicModel
 #'
 #' @method terms tmTopicModel
 #'
 #' @title terms for \code{tmTopicModel} object
 #'
+#' @export terms
 terms.tmTopicModel <- function(x, ...) {
   if(class(x$model) == "jobjRef") {
     terms <- terms.jobjRef(x, ...)
@@ -179,12 +179,12 @@ sorted_topic_words <- function(topic_no = 1, k = 1, topic_table) {
 }
 
 #' @name terms
-#' @export terms.jobjRef
 #'
 #' @method terms jobjRef
 #'
 #' @title terms for \code{jobjRef} object
 #'
+#' @export terms
 terms.jobjRef <- function(x, ...) {
   no_topics <- dim(x$doc_topics)[2]
   topic_table_ <- topic_table(x)
