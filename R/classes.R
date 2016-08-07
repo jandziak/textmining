@@ -208,16 +208,10 @@ mallet_prepare <- function(doc) {
   return(x)
 }
 
+
 #' #' Function to create train Topic Model
 #' #'
 #' #' @param x tmCorpus object
-#' #' @param stoplist_file directory of file with stopwords
-#' #' @param token_regexp regular expression patterns
-#' #' @param k number of topics
-#' #' @param alpha_opt parameter of mallet model
-#' #' @param burn_in parameter of mallet model
-#' #' @param train parameter of mallet model
-#' #' @param maximize parameter of mallet model
 #' #' @param ... settings for mallet.doc.topics and mallet.topic.words
 #' #'
 #' #' @return returns object of a class tmTopicModel
@@ -227,7 +221,23 @@ mallet_prepare <- function(doc) {
 #'   UseMethod("train")
 #' }
 
-#' @export
+##' @name train
+##' @export train.tmCorpus
+##'
+##' @method train tmCorpus
+##'
+##' @title train for \code{tmCorpus} object
+##' @param x A \code{tmCorpus} object or \code{DocumentTermMatrix} object
+##' @param k number of topics
+##' @param stoplist_file file direcroty or vector of stopwords
+##' @param token_regexp regular expression token
+##' @param alpha_opt mallet LDA topic model parameter
+##' @param burn_in mallet LDA topic model parameter
+##' @param train mallet LDA topic model parameter
+##' @param maximize mallet LDA topic model parameter
+##' @param package package to train topic mdoel can be set to "mallet" or "topicmodels"
+##' @param ... other model arguments
+##'
 train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
                            token_regexp = regexp_token,
@@ -244,11 +254,13 @@ train.tmCorpus <- function(x, k = 20,
   tmTopicModel(trained)
 }
 
-# DocumentTermMatrix <-
-#   function(x, control = list())
-#     t(TermDocumentMatrix(x, control))
-
-#' @export
+##' @name train
+##' @export train.DocumentTermMatrix
+##'
+##' @method train DocumentTermMatrix
+##'
+##' @title train for \code{DocumentTermMatrix} object
+##'
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
@@ -326,7 +338,23 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #'   UseMethod("predict")
 #' }
 
-#' @export
+
+##' @name predict
+##' @export predict.tmTopicModel
+##'
+##' @method predict tmTopicModel
+##'
+##' @title predict for \code{tmTopicModel} object
+##' @param object A \code{tmTopicModel} or \code{LDA} or \code{jobjRef} object
+##' @param x new data to predict probabilities of topics
+##' @param stoplist_file file direcroty or vector of stopwords
+##' @param token_regexp regular expression token
+##' @param n_iterations mallet LDA topic model parameter
+##' @param burn_in mallet LDA topic model parameter
+##' @param sampling_interval mallet LDA topic model parameter
+##' @param random_seed random seed
+##' @param ... other motdel arguments
+##'
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                                  token_regexp = regexp_token, n_iterations = 100,
                                  sampling_interval = 10, burn_in = 10,
@@ -335,17 +363,26 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
           sampling_interval, burn_in, random_seed)
 }
 
-#' @export
-predict.LDA  <- function(object, x, stoplist_file = "en.txt",
-                         token_regexp = regexp_token, n_iterations = 100,
-                         sampling_interval = 10, burn_in = 10,
-                         random_seed = NULL, ...) {
+##' @name predict
+##' @export predict.LDA
+##'
+##' @method predict LDA
+##'
+##' @title predict for \code{LDA} object
+##'
+predict.LDA  <- function(object, x, ...) {
   topicProbabilities <- topicmodels::posterior(object,x)
   topicProbabilities <- as.data.frame(topicProbabilities$topics)
   as.data.frame(topicProbabilities)
 }
 
-#' @export
+##' @name predict
+##' @export predict.jobjRef
+##'
+##' @method predict jobjRef
+##'
+##' @title predict for \code{jobjRef} object
+##'
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
