@@ -146,7 +146,25 @@ tagtmCorpus_helper <- function(x, ...) {
   texts
 }
 
+#' Function to return the most frequent terms of tmTopicModels
+#'
+#' @param x tmTopicModel
+#' @param ... addictional parameters fe k - number of terms per topic
+#'
+#' @return data.frame with terms for topics
+#'
 #' @export
+terms <- function(x, ...) {
+  UseMethod("terms")
+}
+
+#' @name terms
+#' @export terms.tmTopicModel
+#'
+#' @method terms tmTopicModel
+#'
+#' @title terms for \code{tmTopicModel} object
+#'
 terms.tmTopicModel <- function(x, ...) {
   if(class(x$model) == "jobjRef") {
     terms <- terms.jobjRef(x, ...)
@@ -160,7 +178,13 @@ sorted_topic_words <- function(topic_no = 1, k = 1, topic_table) {
   names(sort(topic_table$words[topic_no, ], decreasing = T)[1:k])
 }
 
-#' @export
+#' @name terms
+#' @export terms.jobjRef
+#'
+#' @method terms jobjRef
+#'
+#' @title terms for \code{jobjRef} object
+#'
 terms.jobjRef <- function(x, ...) {
   no_topics <- dim(x$doc_topics)[2]
   topic_table_ <- topic_table(x)
