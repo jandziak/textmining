@@ -739,9 +739,10 @@ TermDocumentMatrix.tmCorpus <-
 #'
 #' @return returns tmTaggedCorpus object
 #' @examples
+#' \dontrun{
 #' corp <- tmCorpus(c("This is corp", "Document 2"))
 #' tg_corp <- tmTaggedCorpus(corp)
-#'
+#'}
 #' @export
 tmTaggedCorpus <- function (x = NULL, ..., treetagger = "manual", lang = "en",
                             path = "C:\\TreeTagger", preset = "en") {
