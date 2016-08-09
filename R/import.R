@@ -10,4 +10,5 @@
 #' @importFrom NLP content content<- meta meta<- words
 #' @importFrom stats rnorm
 #' @importFrom caret train createDataPartition
+#' @import SnowballC
 NULL
