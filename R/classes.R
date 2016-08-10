@@ -221,23 +221,23 @@ mallet_prepare <- function(doc) {
 #'   UseMethod("train")
 #' }
 
-##' @name train
-##'
-##' @method train tmCorpus
-##'
-##' @title train for \code{tmCorpus} object
-##' @param x A \code{tmCorpus} object or \code{DocumentTermMatrix} object
-##' @param k number of topics
-##' @param stoplist_file file direcroty or vector of stopwords
-##' @param token_regexp regular expression token
-##' @param alpha_opt mallet LDA topic model parameter
-##' @param burn_in mallet LDA topic model parameter
-##' @param train mallet LDA topic model parameter
-##' @param maximize mallet LDA topic model parameter
-##' @param package package to train topic mdoel can be set to "mallet" or "topicmodels"
-##' @param ... other model arguments
-##'
-##' @export train
+#' @name train
+#'
+#' @method train tmCorpus
+#'
+#' @title train for \code{tmCorpus} object
+#' @param x A \code{tmCorpus} object or \code{DocumentTermMatrix} object
+#' @param k number of topics
+#' @param stoplist_file file direcroty or vector of stopwords
+#' @param token_regexp regular expression token
+#' @param alpha_opt mallet LDA topic model parameter
+#' @param burn_in mallet LDA topic model parameter
+#' @param train mallet LDA topic model parameter
+#' @param maximize mallet LDA topic model parameter
+#' @param package package to train topic mdoel can be set to "mallet" or "topicmodels"
+#' @param ... other model arguments
+#'
+#' @export train
 train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
                            token_regexp = regexp_token,
@@ -254,13 +254,13 @@ train.tmCorpus <- function(x, k = 20,
   tmTopicModel(trained)
 }
 
-##' @name train
-##'
-##' @method train DocumentTermMatrix
-##'
-##' @title train for \code{DocumentTermMatrix} object
-##'
-##' @export train
+#' @name train
+#'
+#' @method train DocumentTermMatrix
+#'
+#' @title train for \code{DocumentTermMatrix} object
+#'
+#' @export train
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
@@ -339,22 +339,22 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #' }
 
 
-##' @name predict
-##'
-##' @method predict tmTopicModel
-##'
-##' @title predict for \code{tmTopicModel} object
-##' @param object A \code{tmTopicModel} or \code{LDA} or \code{jobjRef} object
-##' @param x new data to predict probabilities of topics
-##' @param stoplist_file file direcroty or vector of stopwords
-##' @param token_regexp regular expression token
-##' @param n_iterations mallet LDA topic model parameter
-##' @param burn_in mallet LDA topic model parameter
-##' @param sampling_interval mallet LDA topic model parameter
-##' @param random_seed random seed
-##' @param ... other motdel arguments
-##'
-##' @export predict
+#' @name predict
+#'
+#' @method predict tmTopicModel
+#'
+#' @title predict for \code{tmTopicModel} object
+#' @param object A \code{tmTopicModel} or \code{LDA} or \code{jobjRef} object
+#' @param x new data to predict probabilities of topics
+#' @param stoplist_file file direcroty or vector of stopwords
+#' @param token_regexp regular expression token
+#' @param n_iterations mallet LDA topic model parameter
+#' @param burn_in mallet LDA topic model parameter
+#' @param sampling_interval mallet LDA topic model parameter
+#' @param random_seed random seed
+#' @param ... other motdel arguments
+#'
+#' @export predict
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                                  token_regexp = regexp_token, n_iterations = 100,
                                  sampling_interval = 10, burn_in = 10,
@@ -363,26 +363,26 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
           sampling_interval, burn_in, random_seed)
 }
 
-##' @name predict
-##'
-##' @method predict LDA
-##'
-##' @title predict for \code{LDA} object
-##'
-##' @export predict
+#' @name predict
+#'
+#' @method predict LDA
+#'
+#' @title predict for \code{LDA} object
+#'
+#' @export predict
 predict.LDA  <- function(object, x, ...) {
   topicProbabilities <- topicmodels::posterior(object,x)
   topicProbabilities <- as.data.frame(topicProbabilities$topics)
   as.data.frame(topicProbabilities)
 }
 
-##' @name predict
-##'
-##' @method predict jobjRef
-##'
-##' @title predict for \code{jobjRef} object
-##'
-##' @export predict
+#' @name predict
+#'
+#' @method predict jobjRef
+#'
+#' @title predict for \code{jobjRef} object
+#'
+#' @export predict
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
