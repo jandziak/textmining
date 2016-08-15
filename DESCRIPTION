@@ -25,4 +25,4 @@ Imports: mallet,
 Depends: stylo,
     tm,
     NLP,
-	caret
+    caret
