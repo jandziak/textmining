@@ -164,7 +164,8 @@ terms <- function(x, ...) {
 #'
 #' @title terms for \code{tmTopicModel} object
 #'
-#' @export terms
+#' @export
+#' @export terms.tmTopicModel
 terms.tmTopicModel <- function(x, ...) {
   if(class(x$model) == "jobjRef") {
     terms <- terms.jobjRef(x, ...)
@@ -184,7 +185,8 @@ sorted_topic_words <- function(topic_no = 1, k = 1, topic_table) {
 #'
 #' @title terms for \code{jobjRef} object
 #'
-#' @export terms
+#' @export
+#' @export terms.jobjRef
 terms.jobjRef <- function(x, ...) {
   no_topics <- dim(x$doc_topics)[2]
   topic_table_ <- topic_table(x)

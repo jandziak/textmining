@@ -238,6 +238,7 @@ mallet_prepare <- function(doc) {
 #' @param ... other model arguments
 #'
 #' @export
+#' @export train.tmCorpus
 train.tmCorpus <- function(x, k = 20,
                            stoplist_file = "en.txt",
                            token_regexp = regexp_token,
@@ -261,6 +262,7 @@ train.tmCorpus <- function(x, k = 20,
 #' @title train for \code{DocumentTermMatrix} object
 #'
 #' @export
+#' @export train.DocumentTermMatrix
 train.DocumentTermMatrix <- function(x, k = 20, ...) {
 
   trained <- train_topicmodels_helper(x, k, ...)
@@ -355,6 +357,7 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #' @param ... other motdel arguments
 #'
 #' @export
+#' @export predict.tmTopicModel
 predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
                                  token_regexp = regexp_token, n_iterations = 100,
                                  sampling_interval = 10, burn_in = 10,
@@ -370,6 +373,7 @@ predict.tmTopicModel <- function(object, x, stoplist_file = "en.txt",
 #' @title predict for \code{LDA} object
 #'
 #' @export
+#' @export predict.LDA
 predict.LDA  <- function(object, x, ...) {
   topicProbabilities <- topicmodels::posterior(object,x)
   topicProbabilities <- as.data.frame(topicProbabilities$topics)
@@ -383,6 +387,7 @@ predict.LDA  <- function(object, x, ...) {
 #' @title predict for \code{jobjRef} object
 #'
 #' @export
+#' @export predict.jobjRef
 predict.jobjRef <- function(object, x, stoplist_file = "en.txt",
                             token_regexp = regexp_token, n_iterations = 100,
                             sampling_interval = 10, burn_in = 10,
