@@ -1,15 +1,13 @@
 Package: textmining
 Version: 0.0.1
 Date: 2016-09-07
-Title: Text Mining and Topic Modeling Package.
+Title: The Package that Integrates Text Mining and Topic Modeling Packages
 Authors@R: c(
     person("Jan", "Idziak", email = "JanIdziak@gmail.com", role = "cre"),
     person("Maciej", "Eder", email = "maciejeder@gmail.com", role = "aut"),
     person("Tomasz", "Melcer", email = "liori@exroot.org", role = "aut"))
 Maintainer: Jan Idziak <JanIdziak@gmail.com>
-Description: A framework for text mining and topic modelling. It provides 
-	easy interface for using different topic modeling methods within R. Note: For
-    full functionality a local installation of TreeTagger is recommended.
+Description: A framework for text mining and topic modelling. It provides an easy interface for using different topic modeling methods within R, by integrating the already existing packages, such as tm, NLP, koRpus, SnowballC mallet, topicmodels, stylo. Full functionality of the package requires a local installation of TreeTagger.
 Suggests:
     testthat,
     stringi,
