@@ -4,8 +4,8 @@ Date: 2016-09-07
 Title: Text Mining and Topic Modeling Package.
 Authors@R: c(
     person("Jan", "Idziak", email = "JanIdziak@gmail.com", role = "cre"),
-    person("Maciej", "Eder", email = "maciejeder@gmail.com ", role = "aut"),
-    person("Tomasz", "Melcer", email = "liori@exroot.org 	", role = "aut"))
+    person("Maciej", "Eder", email = "maciejeder@gmail.com", role = "aut"),
+    person("Tomasz", "Melcer", email = "liori@exroot.org", role = "aut"))
 Maintainer: Jan Idziak <JanIdziak@gmail.com>
 Description: A framework for text mining and topic modelling. It provides 
 	easy interface for using different topic modeling methods within R. Note: For
