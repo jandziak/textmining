@@ -1,4 +1,5 @@
-# mallet-inference.R
+# Author Andrew Goldostone
+# helper_predict.R
 #
 # functions for using MALLET's topic-inference functionality: given an
 # existing topic model, estimate topic proportions for new documents

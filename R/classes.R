@@ -340,11 +340,14 @@ train_topicmodels_helper <- function(x, k = 20, ...) {
 #'   UseMethod("predict")
 #' }
 
-
+#' Function to predict topic model probabilities for an existing topic model. 
+#' The code snippets for Mallet interface were derived from Andrew Goldstone's 
+#' solution, posted at https://gist.github.com/agoldst/edcfd45b5ac371296b76
+#' 
 #' @name predict
 #'
 #' @method predict tmTopicModel
-#'
+#' @references \url{https://gist.github.com/agoldst/edcfd45b5ac371296b76}
 #' @title predict for \code{tmTopicModel} object
 #' @param object A \code{tmTopicModel} or \code{LDA} or \code{jobjRef} object
 #' @param x new data to predict probabilities of topics
